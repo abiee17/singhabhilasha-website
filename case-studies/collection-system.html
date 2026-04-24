@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Collection System — Crossword Jam · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141210; --paper:#f4ecd8; --paper-2:#ece1c6;
+  --ochre:#c69214; --ochre-deep:#8a6310; --highlight:#ffd84d;
+  --line:#1a1814; --muted:#6b6354; --red:#b53a2a;
+  --grid:rgba(20,18,16,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(198,146,20,.08), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(181,58,42,.05), transparent 40%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: auto, auto, 28px 28px, 28px 28px;
+}
+.mono{font-family:"JetBrains Mono",monospace}
+a{color:inherit}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:18px 36px;border-bottom:1.5px solid var(--ink);
+  position:sticky;top:0;background:var(--paper);z-index:20;
+}
+.back{
+  display:inline-flex;gap:10px;align-items:center;
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  border:1.5px solid var(--ink);padding:8px 14px;background:var(--paper);
+  box-shadow:3px 3px 0 var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s;
+}
+.back:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);background:var(--highlight)}
+.topbar .crumb{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.hero{max-width:1120px;margin:0 auto;padding:80px 36px 40px}
+.eyebrow{display:flex;gap:12px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.eyebrow .tick{width:10px;height:10px;background:var(--highlight);border:1.5px solid var(--ink);display:inline-block}
+.hero h1{font-size:clamp(48px,8vw,110px);line-height:.92;margin:0 0 20px;letter-spacing:-.025em;font-weight:700}
+.hero h1 em{font-style:italic;color:var(--ochre);font-family:"Space Grotesk"}
+.hero .sub{font-size:clamp(18px,2.1vw,24px);line-height:1.45;max-width:780px;color:var(--ink);margin:0 0 36px}
+.hero .sub b{background:linear-gradient(transparent 62%,rgba(255,216,77,.7) 62%,rgba(255,216,77,.7) 92%,transparent 92%);padding:0 2px;font-weight:600}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px 40px;padding:22px 0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);margin-bottom:48px}
+.meta-grid dt{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.meta-grid dd{margin:0;font-size:15px;font-weight:600;line-height:1.4}
+
+.hero-img{
+  aspect-ratio:16/9;border:1.5px solid var(--ink);background:var(--paper-2);margin:0 0 60px;
+  box-shadow:8px 8px 0 var(--ink);overflow:hidden;
+}
+.hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+section.block{max-width:1120px;margin:0 auto;padding:0 36px 80px}
+section.block.dark{background:var(--ink);color:var(--paper);max-width:none;margin:60px 0;padding:80px 36px}
+section.block.dark .inner{max-width:1120px;margin:0 auto}
+section.block.dark .sec-num{color:#a8a08a}
+
+.sec-head{display:flex;gap:24px;align-items:end;justify-content:space-between;border-bottom:1.5px solid currentColor;padding-bottom:14px;margin-bottom:36px;opacity:.95}
+.sec-num{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sec-title{font-size:clamp(30px,4.5vw,52px);line-height:1;margin:8px 0 0;letter-spacing:-.02em;font-weight:700}
+.sec-title em{font-style:italic;color:var(--ochre)}
+section.block.dark .sec-title em{color:var(--highlight)}
+.sec-kick{font-family:"Caveat",cursive;font-weight:700;font-size:22px;color:var(--red)}
+section.block.dark .sec-kick{color:var(--highlight)}
+
+.prose{max-width:780px;font-size:17px;line-height:1.6}
+.prose p{margin:0 0 16px}
+.prose b{font-weight:700}
+.prose .lead{font-size:19px;line-height:1.55;color:var(--ink);font-weight:500}
+section.block.dark .prose .lead{color:var(--paper)}
+.prose cite{font-style:italic;color:var(--muted);font-size:.9em}
+section.block.dark .prose cite{color:#b8ae93}
+
+.pull-quote{border-left:3px solid var(--ochre);padding:12px 0 12px 22px;margin:28px 0;font-family:"Space Grotesk";font-weight:500;font-size:18px;line-height:1.5;color:var(--ink);max-width:720px;font-style:italic}
+section.block.dark .pull-quote{color:var(--paper);border-left-color:var(--highlight)}
+
+.principle-list{display:grid;gap:10px;margin:20px 0 0;padding:0;list-style:none}
+.principle-list li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:14px 0;border-top:1px solid currentColor;font-size:15px;line-height:1.5;opacity:.95}
+.principle-list li:last-child{border-bottom:1px solid currentColor}
+.principle-list li::before{content:attr(data-tag);font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre);padding-top:3px;min-width:110px}
+section.block.dark .principle-list li::before{color:var(--highlight)}
+
+.callout{
+  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+  border:1.5px solid currentColor;background:transparent;
+  padding:18px 22px;margin:24px 0;border-radius:2px;
+}
+.callout .num{font-family:"Space Grotesk";font-size:52px;font-weight:700;letter-spacing:-.03em;color:var(--ochre);line-height:1}
+section.block.dark .callout{background:#1d1a15;border-color:var(--paper)}
+section.block.dark .callout .num{color:var(--highlight)}
+.callout .label{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.callout .txt{font-size:14px;line-height:1.45}
+
+ul.gaps{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+ul.gaps li{
+  border:1.5px solid currentColor;background:transparent;padding:16px 18px;
+  display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;font-size:15px;line-height:1.5;
+}
+ul.gaps li::before{
+  content:attr(data-n);font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.1em;
+  background:var(--ochre);color:var(--ink);padding:4px 6px;border:1.5px solid var(--ink);text-align:center;
+}
+section.block.dark ul.gaps li::before{background:var(--highlight)}
+
+.octa-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:20px}
+.octa-wrap .num-big{font-size:120px;font-weight:700;letter-spacing:-.04em;line-height:.9;color:var(--ochre)}
+.octa-wrap .num-big small{display:block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.octa-wrap .axes{display:grid;gap:10px;font-size:14px}
+.octa-wrap .axis{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center}
+.octa-wrap .axis span{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.octa-wrap .axis .bar{height:8px;background:#2b271f;border:1.5px solid var(--paper);position:relative}
+.octa-wrap .axis .bar i{display:block;height:100%;background:var(--paper);width:50%}
+
+.drives-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:28px 0 6px}
+.drives-grid .drive{border:1.5px solid currentColor;padding:14px 16px;background:transparent;font-size:13.5px;line-height:1.45}
+.drives-grid .drive .n{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--muted);display:block;margin-bottom:4px}
+.drives-grid .drive .d{font-weight:700;font-size:15px;margin-bottom:4px}
+.drives-grid .drive.highlight{background:var(--ochre);color:var(--ink);border-color:var(--ink)}
+.drives-grid .drive.highlight .n{color:var(--ink);opacity:.7}
+
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:32px 0}
+.gallery figure{margin:0;border:1.5px solid var(--ink);background:var(--paper-2);overflow:hidden;box-shadow:4px 4px 0 var(--ink);transition:transform .2s,box-shadow .2s}
+.gallery figure:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink)}
+.gallery img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.gallery figure:nth-child(even){transform:rotate(.3deg)}
+.gallery figure:nth-child(odd){transform:rotate(-.3deg)}
+
+.wide-mock{border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);margin:32px 0;overflow:hidden}
+.wide-mock img{display:block;width:100%;height:auto}
+
+.scope{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px}
+.scope-card{border:1.5px solid currentColor;padding:24px;background:transparent}
+.scope-card h4{margin:0 0 6px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.scope-card .tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:block}
+.scope-card ul{margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.55}
+.scope-card ul li{margin-bottom:8px}
+.scope-card ul li b{font-weight:700}
+
+.outcome-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:28px 0}
+.outcome-row .stat{border:1.5px solid currentColor;padding:22px 20px}
+.outcome-row .stat .n{font-size:40px;font-weight:700;letter-spacing:-.03em;color:var(--ochre);line-height:1}
+section.block.dark .outcome-row .stat .n{color:var(--highlight)}
+.outcome-row .stat .l{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+.note{font-family:"Caveat",cursive;font-weight:700;color:var(--red);font-size:22px;margin-top:30px;display:block}
+section.block.dark .note{color:var(--highlight)}
+
+.nextprev{max-width:1120px;margin:0 auto;padding:60px 36px 100px;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;border-top:1.5px solid var(--ink)}
+.nextprev a{text-decoration:none;font-weight:600}
+.nextprev a:hover{color:var(--red)}
+.nextprev .to-portfolio{text-align:center;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+@media (max-width: 800px){
+  .topbar{padding:14px 20px}
+  section.block{padding:0 20px 60px}
+  .hero{padding:40px 20px 20px}
+  .octa-wrap{grid-template-columns:1fr}
+  .scope{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .nextprev{grid-template-columns:1fr;padding:40px 20px 80px;text-align:center}
+  .drives-grid{grid-template-columns:1fr 1fr}
+  .principle-list li{grid-template-columns:1fr}
+  .principle-list li::before{min-width:auto;margin-bottom:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 06 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Playsimple · 2022</span></div>
+  <h1>The Collection System — giving <em>ownership</em> a home inside a casual word game.</h1>
+  <p class="sub">How a sole user researcher at <b>Playsimple</b> proposed and shaped a new meta-system for <b>Crossword Jam</b>, a free-to-play word game with <b>10M+ downloads</b> — built on the 4th Octalysis drive and scoped to ship inside a live product's 6-month plan.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Sole User Researcher / UX Contribution</dd></div>
+    <div><dt>Team</dt><dd>Playsimple Games — Crossword Jam</dd></div>
+    <div><dt>Audience</dt><dd>45+ global F2P players</dd></div>
+    <div><dt>Scale</dt><dd>10M+ downloads</dd></div>
+    <div><dt>Outcome</dt><dd>Feature prioritized for 6-month roadmap after planning phase</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/collection-system/01.webp" alt="Collection System hero — cover for the case study">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">Plenty of play. <em>No place</em> to keep the trophies.</h2>
+    </div>
+    <div class="sec-kick">↳ what was missing</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Crossword Jam is a long-running casual word game at Playsimple, running a steady cadence of events and tournaments. Players were playing — a lot — but at the system level, there was no meaningful <b>ownership</b>.</p>
+
+    <p>Avatars, badges, a scrapbook — these existed, but as <b>generic and weak</b> ownership mechanics. When a limited-time event ended, the rewards it generated disappeared with it. There was no trophy shelf. No place to look back. No way to show another player what you'd done.</p>
+
+    <p>Casual free-to-play games typically run on three nested loops. The <b>core loop</b> is the puzzle itself — 30 seconds to a few minutes. The <b>session loop</b> strings puzzles together through lives and energy. The <b>meta loop</b> is where ownership, progression, and narrative live — measured in weeks and months. The first two are tight and well-studied across the industry. The third is where games either hold a player past their first month or leak them quietly into the uninstall stack.</p>
+
+    <p>Crossword Jam's core and session loops were healthy. The meta was thin. Events would run, produce rewards, and then <b>dissolve</b> — the rewards evaporating with the event window. Across a 12-month player arc, someone could earn hundreds of collectibles and end up with nothing tangible to point at. That's psychologically inverted from how human effort actually works: we expect <em>accumulation</em>. We expect to be able to see what we made.</p>
+
+    <p>In a hardcore RPG the meta-layer fills itself — character progression, inventory, tier advancement, achievements, leaderboards. Casual word games deliberately strip those mechanics out; they'd alienate the 45+ audience the game was built for. Which means the designer has to add ownership back in, carefully, as a separate layer — heavy enough to register, light enough not to pull the game out of the "casual" shape the audience already liked.</p>
+  </div>
+</section>
+
+<!-- FRAMEWORK (dark) -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / Framework</div>
+        <h2 class="sec-title">Octalysis <em>Score: 766</em></h2>
+      </div>
+      <div class="sec-kick">↳ fairly balanced, one drive sagging</div>
+    </div>
+
+    <div class="octa-wrap">
+      <div class="num-big">766<small>Octalysis Composite Score</small></div>
+      <div class="axes">
+        <div class="axis"><span>White / Black Hat</span><div class="bar"><i style="width:52%"></i></div></div>
+        <div class="axis"><span>Left / Right Brain</span><div class="bar"><i style="width:50%"></i></div></div>
+        <div class="axis"><span>Intrinsic / Extrinsic</span><div class="bar"><i style="width:54%"></i></div></div>
+        <div class="axis"><span>Drive 4 · Ownership</span><div class="bar"><i style="width:28%;background:var(--red)"></i></div></div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:36px">
+      <p class="lead">Yu-Kai Chou's <b>Octalysis framework</b> reads a game along eight motivational drives. Each drive can be scored across five levels of intensity; the composite surfaces where a design over-indexes and where it's starving the player. Used as an audit tool, it turns an argument from <em>"this feature would be cool"</em> into something structural: <em>"which drive are we actually strengthening, and at what cost to the others?"</em></p>
+
+      <div class="drives-grid">
+        <div class="drive"><span class="n">Drive 1</span><div class="d">Epic Meaning</div>Serving something larger than the self.</div>
+        <div class="drive"><span class="n">Drive 2</span><div class="d">Accomplishment</div>Progress, mastery, and status.</div>
+        <div class="drive"><span class="n">Drive 3</span><div class="d">Empowerment</div>Creativity &amp; expressive feedback.</div>
+        <div class="drive highlight"><span class="n">Drive 4 · weakest</span><div class="d">Ownership</div>The stuff you've earned and now keep.</div>
+        <div class="drive"><span class="n">Drive 5</span><div class="d">Social Influence</div>Peer validation and comparison.</div>
+        <div class="drive"><span class="n">Drive 6</span><div class="d">Scarcity</div>Rarity, exclusivity, time-gates.</div>
+        <div class="drive"><span class="n">Drive 7</span><div class="d">Unpredictability</div>Variable rewards and surprise.</div>
+        <div class="drive"><span class="n">Drive 8</span><div class="d">Avoidance</div>Not losing what you already have.</div>
+      </div>
+
+      <p>The three balance axes told the same story from three angles. Crossword Jam sits comfortably on <b>White Hat / Black Hat</b> (growth and mastery vs loss aversion and urgency) — no dramatic imbalance to correct. <b>Left / Right Brain</b> (extrinsic rewards vs intrinsic curiosity) was also near even. <b>Intrinsic / Extrinsic motivation</b> likewise balanced. The foundation was healthy. The sag wasn't on any axis — it was a specific, localized hole on Drive 4.</p>
+
+      <p class="lead" style="margin-top:28px">Drive 4 maps to a well-documented phenomenon from behavioral economics: the <b>endowment effect</b> (Thaler, 1980). People assign more value to things they possess than to identical things they don't. Once a player <em>owns</em> a puzzle-set or a tournament trophy inside the game, its mere presence deepens their attachment to the game — independent of any gameplay utility the object provides. The designer's job is just to set up the conditions for ownership to register: <b>persistence, visibility, social legibility</b>.</p>
+
+      <p>But there's a trap right next to it. <b>Deci &amp; Ryan's Self-Determination Theory</b> shows that badly-deployed extrinsic rewards can erode intrinsic motivation — the <em>overjustification effect</em>. Start paying someone to do something they already enjoyed, and they may enjoy it less. For Crossword Jam this was a live risk: a meta-layer that turned word-solving from "fun puzzle" into "chore for collectible #127 of 200" would hurt the exact engagement it was trying to reinforce.</p>
+
+      <div class="pull-quote">The collection had to feel like <em>preservation</em>, not a checklist. Owning the trophy shelf — not chasing it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Problem Statement</div>
+      <h2 class="sec-title">What the <em>players were missing</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ written as gaps</div>
+  </div>
+  <div class="prose">
+    <p>Each gap below is a small leak in retention. Individually, none of them churn a player — casual audiences are forgiving. Collectively, they shape a game that works in time windows the player's memory doesn't share. The gaps sort into <b>primary</b> (what the player feels directly) and <b>secondary</b> (what the system fails to do).</p>
+
+    <p style="margin-bottom:8px"><b>Primary gaps</b></p>
+    <ul class="gaps" style="margin-bottom:16px">
+      <li data-n="01">Multi-duration events disappear when the event isn't live — and the rewards they generate disappear with them.</li>
+      <li data-n="02">Players have no place to look back at their rewards, event stats, or what they've earned over time.</li>
+      <li data-n="03">No way to showcase achievements to other players — a gap for the "displayer" player type who derives motivation from being seen.</li>
+    </ul>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:32px">All three share one pattern: <b>failures of persistence</b>. The game runs on a clock; the player's sense of self doesn't. The player's relationship to the game is cumulative, but the game's memory of the player resets every event.</p>
+
+    <p style="margin-bottom:8px"><b>Secondary gaps</b></p>
+    <ul class="gaps">
+      <li data-n="04">Weak interconnection between event systems — no continuity across what the game offers week to week.</li>
+      <li data-n="05">No long-term collection mechanic that nudges retention beyond the event-of-the-moment.</li>
+    </ul>
+    <p style="font-size:15px;color:var(--muted);margin-top:16px">The secondary gaps are <b>architectural</b>. The game has many events, but they don't talk to each other. Nothing compounds. Every event is a standalone spike of engagement followed by a decay back to baseline — exactly the kind of pattern that produces strong short-term KPIs and weak long-term retention.</p>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / Objectives</div>
+        <h2 class="sec-title">What the feature <em>has to do</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ user + product, held in tension</div>
+    </div>
+    <div class="prose">
+      <p class="lead">The feature had to sit in a careful middle. <em>Too rewarding</em> and extrinsic motivation starts to crowd out play (the overjustification risk from SDT). <em>Too invisible</em> and nobody registers it. The objectives were written around that tension — each one worded to satisfy a user need without overpaying for it.</p>
+
+      <ul class="gaps">
+        <li data-n="01">Create one central location for all in-game collectibles — past and present.</li>
+        <li data-n="02">Make tournament &amp; event backgrounds accessible long after the events end.</li>
+        <li data-n="03">Signal clearly <b>when</b> a collectible is live and <b>how</b> to earn it.</li>
+        <li data-n="04">Let players see — at a glance — when an event is contributing to their collection.</li>
+        <li data-n="05">Improve retention and event-clear rates as the system-level outcome.</li>
+      </ul>
+
+      <h4 style="margin:36px 0 8px;font-size:18px;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;color:var(--highlight)">Design Principles Carried Through</h4>
+      <ul class="principle-list">
+        <li data-tag="01 · Preservation">The feature should make existing events feel more permanent — not replace them, not compete with them.</li>
+        <li data-tag="02 · Legibility">A player should always know whether a given action contributes to their collection, without needing to read copy.</li>
+        <li data-tag="03 · Restraint">The collection is a meta-layer, not a new core loop. It must never become the primary reason to play.</li>
+        <li data-tag="04 · Passive first">Most collectibles arrive as the byproduct of normal play. Only a minority require deliberate chasing.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / Solution</div>
+      <h2 class="sec-title">One place. <em>Everything earned, kept.</em></h2>
+    </div>
+    <div class="sec-kick">↳ Collection System</div>
+  </div>
+  <div class="prose">
+    <p class="lead">A central Collection screen within Crossword Jam where all earned items — event rewards, tournament backgrounds, puzzle sets — live permanently. Each entry points back at the event that produced it, closing the loop between playing <em>now</em> and looking back <em>later</em>. Introducing this system is directly tied to strengthening the 4th Octalysis drive (Ownership) without pulling resources from the other seven.</p>
+
+    <p>Architecturally, the Collection System is a <b>retrieval layer</b>, not a generation layer. It doesn't issue new rewards — it organizes and preserves rewards that other systems already produce. This is a deliberate design choice, and it unlocks three properties at once:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Cheap"><b>to maintain</b> — new events auto-populate the Collection for free; no per-event content work.</li>
+      <li data-tag="Easy"><b>to extend</b> — new event categories become new sections; the interface is forward-compatible with features that don't exist yet.</li>
+      <li data-tag="Low-risk"><b>to ship</b> — introduces no new mechanics that could destabilize the core loop. Nothing breaks if the feature underperforms.</li>
+    </ul>
+
+    <p style="margin-top:28px">Each player archetype gets something out of the same system, without the designer having to build four parallel features. The <b>completionist</b> gets a progress surface. The Bartle-<b>socializer / exhibitor</b> (the "displayer" from the gap analysis) gets a showcase when collections become comparable. The <b>casual passer-through</b> gets a soft reason to come back (<em>"there's something new to look at"</em>). And the <b>lapsed player</b> — returning after two months — gets proof their past self was here, which reduces the re-onboarding cost of <em>"why am I doing this again?"</em>. All from one layer.</p>
+
+    <div class="gallery">
+      <figure><img src="../assets/case-studies/collection-system/04.webp" alt="Collection System UI — screen 01" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/05.webp" alt="Collection System UI — screen 02" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/06.webp" alt="Collection System UI — screen 03" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/07.webp" alt="Collection System UI — screen 04" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/08.webp" alt="Collection System UI — screen 05" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/09.webp" alt="Collection System UI — screen 06" loading="lazy"></figure>
+    </div>
+
+    <span class="note">↓ plus mockups for each event type feeding the collection</span>
+
+    <div class="gallery">
+      <figure><img src="../assets/case-studies/collection-system/12.webp" alt="Letter Hunt event" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/15.webp" alt="Jigsaw event" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/18.webp" alt="Country Tour tournament" loading="lazy"></figure>
+      <figure><img src="../assets/case-studies/collection-system/22.webp" alt="Treasure Hunt event" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- SCOPE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 06 / Scope</div>
+      <h2 class="sec-title">What <em>feeds</em> the collection.</h2>
+    </div>
+    <div class="sec-kick">↳ events &amp; tournaments</div>
+  </div>
+  <div class="prose">
+    <p>Scope was designed along three <b>temporal rhythms</b>, chosen deliberately. Weekly cadence (Letter Hunt, Treasure Hunt) builds habit — players form a repeat visit pattern almost without noticing. Monthly cadence (Base events, Theme events) creates anticipation — enough gap between instances that each one feels fresh. Quarterly cadence (Jigsaw) creates surprise — rare enough that the event itself is an occasion. The Collection System had to absorb all three rhythms without privileging any one of them, which made the interface design question <em>"does this page read equally well for a daily visitor, a weekly visitor, or a player opening it after a month away?"</em></p>
+  </div>
+
+  <div class="scope">
+    <div class="scope-card">
+      <span class="tag">01 · Single-player Events</span>
+      <h4>Puzzle &amp; collectible events</h4>
+      <ul>
+        <li><b>Jigsaw</b> — 1-day event, twice in a 3-4 month cycle</li>
+        <li><b>Letter Hunt</b> — 2 days / week, plus 3 days at Halloween</li>
+      </ul>
+    </div>
+    <div class="scope-card">
+      <span class="tag">02 · Multi-player Tournaments</span>
+      <h4>Country Tours &amp; themed tournaments</h4>
+      <ul>
+        <li><b>Country Tours</b> — week-long tournaments over various countries with puzzle/collectibles</li>
+        <li><b>Base events</b> — monthly</li>
+        <li><b>Theme events</b> — monthly</li>
+        <li><b>Treasure Hunt</b> — weekdays</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:36px">
+    <p>The listed eight event types define scope for <em>day one</em>. But scope for the feature's life is broader: every future event plugs into the same <b>registration surface</b>, meaning event #9 — whatever it ends up being — inherits the meta-layer for free. The contract between the event system and the Collection is the actual shipped artifact. The eight event-specific flows are just the first instances of that contract.</p>
+  </div>
+</section>
+
+<!-- WIDE TOURNAMENT MOCK -->
+<section class="block">
+  <div class="wide-mock">
+    <img src="../assets/case-studies/collection-system/27.webp" alt="Country Tour tournament — full mockup" loading="lazy">
+  </div>
+  <div class="gallery">
+    <figure><img src="../assets/case-studies/collection-system/30.webp" alt="Event mockup 1" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/collection-system/33.webp" alt="Event mockup 2" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/collection-system/36.webp" alt="Event mockup 3" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/collection-system/40.webp" alt="Event mockup 4" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 07 / Outcome</div>
+        <h2 class="sec-title">From audit to <em>roadmap</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ what shipped out of the research</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="stat"><div class="n">10M+</div><div class="l">Downloads (title)</div></div>
+      <div class="stat"><div class="n">6 mo</div><div class="l">Planning cycle</div></div>
+      <div class="stat"><div class="n">766</div><div class="l">Octalysis score</div></div>
+      <div class="stat"><div class="n">45+</div><div class="l">Target audience</div></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">The Collection System was proposed during the 6-month planning cycle, accepted, and prioritized through the product iterations that followed — a concrete feature born from a sole user researcher mapping a long-term ownership gap inside a live F2P title serving 45+ global players.</p>
+
+      <p>The durable win, though, sits one layer deeper than the feature itself. Naming the drives explicitly converted a <em>subjective</em> design argument — <em>"this feature would be cool"</em> — into a <em>structural</em> one: <em>"this feature strengthens Drive 4, which is our weakest drive, without damaging Drive 2 or Drive 7."</em> That shift matters more than the score. When a single user researcher is embedded on a game team, the distinction between being <b>consulted</b> and being <b>decisive</b> is load-bearing.</p>
+
+      <p>Casual F2P titles rarely maintain an active user research function. When they do, the dividend is almost never usability tweaks — it's meta-layer design. The Collection System is a small, specific example of what a research-aware casual game looks like when meta is given the same rigor as the core loop: an Octalysis audit, an endowment-effect-shaped solution, an SDT-aware restraint.</p>
+    </div>
+    <span class="note">↑ careful with Extrinsic. never kill Intrinsic.</span>
+  </div>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="wedding-match3.html">← prev: Mili Match</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="emotions-journaling.html" style="text-align:right">next: Emotions Journaling →</a>
+</nav>
+
+</body>
+</html>

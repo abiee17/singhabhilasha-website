@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Emotions Journaling with Virtual Pets · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 07 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Master's Thesis · NID</span></div>
+  <h1>Emotions as <em>pets</em> — a gamified journal for things we didn't know we needed to track.</h1>
+  <p class="sub">A mobile journaling app that externalises feelings as a virtual creature — built on <b>Ekman's basic emotions</b>, the <b>Feelings Wheel</b>, and research grounded in the mental health of <b>Indian women aged 22-32</b>.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>UX / UI · Research · Concept · Visual Design</dd></div>
+    <div><dt>Scope</dt><dd>Research → Ideation → Concept Map → App Design</dd></div>
+    <div><dt>Target User</dt><dd>Indian women, 22-32</dd></div>
+    <div><dt>Theoretical Anchor</dt><dd>Ekman · Willcox · Theory of Attention</dd></div>
+    <div><dt>App Sections</dt><dd>Onboarding · Journal · Pet House · SOS</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/emotions-journaling/01.webp" alt="Emotions Journaling app — cover">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">Most days, people can't <em>name</em> what they're feeling.</h2>
+    </div>
+    <div class="sec-kick">↳ the research wedge</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The research question started narrow and personal: <em>can digital interventions help women cope better with the daily stresses and small circumstances of life — aiming toward better mental health?</em> The target demographic was <b>Indian women aged 22-32</b>, a group sitting at the intersection of career pressure, relationship stress, and a cultural habit of under-speaking about mental health.</p>
+
+    <p>Inside that wedge, a repeated pattern surfaced: people know <em>something</em> is off, but they can't locate the feeling. The conventional journaling answer is a blank page — which is exactly the wrong UI for someone who doesn't yet have the words. "Write about your day" asks for the hardest kind of output (free-form self-analysis) at the moment when the user has the least capacity for it.</p>
+
+    <p>The design question reframed: instead of asking users to <em>name</em> an emotion and <em>narrate</em> around it, could the app <b>externalise</b> the emotion — render it as a visible object the user could care for — and let tracking become a byproduct of care?</p>
+
+    <div class="pull-quote">Writing asks you to produce. A pet asks you to notice. For mental health, noticing is the hard step.</div>
+  </div>
+</section>
+
+<!-- FOUNDATIONS -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / Foundations</div>
+        <h2 class="sec-title">Borrowing a <em>vocabulary</em> from psychology.</h2>
+      </div>
+      <div class="sec-kick">↳ what the design stands on</div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">To let users track feelings without having language for them, the app had to supply the language. Three established frameworks shaped the vocabulary:</p>
+
+      <ul class="principle-list">
+        <li data-tag="Ekman">Paul Ekman's <b>six basic emotions</b> — Happy, Sad, Fear, Disgust, Anger, Surprise — extended in the design to include Bored, Irritated, and Harassed. These are the coarsest, most universal labels; they give someone with <em>no</em> vocabulary a place to start.</li>
+        <li data-tag="Willcox">The <b>Feelings Wheel</b> (Gloria Willcox, 1982) — a concentric diagram radiating outward from six core affects (Mad, Sad, Scared, Peaceful, Powerful, Joyful) into increasingly specific feelings (Submissive, Excited, Embarrassed, Thankful, etc.). Widely used in therapy and education because it converts <em>"I feel bad"</em> into <em>"I feel foolish and rejected, which is different from feeling guilty"</em>.</li>
+        <li data-tag="Inside Out">Pixar's <b>Inside Out</b> as a cultural framing — the film demonstrates, for a mass audience, that emotions can be externalised as characters and that <em>combinations</em> of them (Joy + Sadness = Melancholy) are real feelings with their own names. It's the bridge between clinical vocabulary and everyday intuition.</li>
+      </ul>
+
+      <p style="margin-top:28px">Borrowing across these three registers — clinical (Ekman), therapeutic (Willcox), cultural (Inside Out) — gave the app a vocabulary that was scientifically grounded without <em>feeling</em> clinical. The UI could show a mood wheel that a therapist would recognise, using metaphors that a 24-year-old who watched Pixar movies would already have loaded.</p>
+    </div>
+
+    <div class="gallery">
+      <figure><img src="../assets/case-studies/emotions-journaling/16.webp" alt="Core elements — 6 basic emotions, Feelings Wheel, Inside Out inspiration" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH / IDEATION -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Ideation</div>
+      <h2 class="sec-title">Six concepts. <em>One</em> direction.</h2>
+    </div>
+    <div class="sec-kick">↳ from research to wedge</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">Early research produced a dense concept map — multiple angles on the same question, each grounded in a different piece of psychology or game design literature.</p>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/emotions-journaling/11.webp" alt="Concept map — research question, idea map, idea table with 6 concepts" loading="lazy">
+  </div>
+
+  <div class="prose" style="margin-top:36px">
+    <p>The concept map splits into two halves. On the left, a free-form <b>Idea Map</b> brainstorming domains: control games as anxiety reducers (<em>Civilization</em>, AoE), role-play as creative outlet (<em>The Sims</em>, <em>Fallout</em>), animals and babies as empathy triggers (zoo effect), Theory of Attention and focus-shifting as worry interruption (<em>Flowy</em>), humour as stress relief, biofeedback, acts of kindness, and the <b>Paradox of Choice</b>. On the right, six explicit <b>concept candidates</b>:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Concept 1">An animal-based game where acts of kindness trigger instant feedback — <em>gratitude research</em> into the design loop.</li>
+      <li data-tag="Concept 2">Voice-based biofeedback — the player speaks or laughs aloud to release bottled emotions; audio becomes the medicine.</li>
+      <li data-tag="Concept 3">Physical biofeedback exercises tied to mental-and-physical fitness; meditation layered in for active destressing.</li>
+      <li data-tag="Concept 4">Quick multiplayer roleplay sessions for loneliness — a shared, short, low-stakes social ritual.</li>
+      <li data-tag="Concept 5">A control-based game built to initiate <em>flow state</em> (Csikszentmihalyi) — distract from the current mood by absorbing attention.</li>
+      <li data-tag="Concept 6">A daily-life simulator where the player exercises the control they may feel they lack — the Paradox-of-Choice research weaponised into play.</li>
+    </ul>
+
+    <p style="margin-top:24px">The winning direction wasn't any of the six alone — it was <b>Concept 1 fused with tracking mechanics</b>. An animal that registers the user's emotional state, responds to acts of kindness, and preserves the history — a <em>Tamagotchi for the nervous system</em>. That framing unlocks two things at once: externalisation (the pet <em>has</em> your feelings so you don't have to carry them) and persistence (the pet remembers, so you don't have to).</p>
+  </div>
+</section>
+
+<!-- THE PET MECHANIC -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / The Pet Mechanic</div>
+        <h2 class="sec-title">Externalisation as the <em>core verb</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ why it works</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Virtual pets aren't new — the Tamagotchi (1996) is the canonical reference, and the genre has accrued decades of research on attachment, anthropomorphism, and care-giving motivation. What's new here is repurposing the mechanic for <b>self-report tracking</b>.</p>
+
+      <p>In a standard mood journal, the user is the narrator. They must name what they feel and type it. The failure mode is obvious: if you already can't name it, the blank field is intimidating. In the pet model, the user is the <b>caregiver</b>. The pet has a state. The user notices the state — <em>how is it today?</em> — and adjusts it (feeds it, plays with it, calms it, comforts it). Naming happens as a side effect of caring, not as a prerequisite.</p>
+
+      <p>This matters because of two well-studied phenomena:</p>
+
+      <ul class="principle-list">
+        <li data-tag="Anthropomorphism">People readily project agency and feelings onto creatures — even simple ones. A few pixels and a breathing animation are enough for the user's brain to assign intentions and moods. The pet doesn't need to be sophisticated; the user does the work.</li>
+        <li data-tag="Care-giver motivation">Caring for another thing is psychologically easier than caring for the self. <b>Self-compassion research</b> (Kristin Neff and others) shows that people routinely extend kindness to others that they deny themselves. The pet is a receiver of that displaced kindness — which, functionally, still benefits the user.</li>
+      </ul>
+
+      <p style="margin-top:24px">The app is, in effect, a <b>soft cognitive behavioural scaffold</b>. The user tracks mood, but the interface never asks them to. They practice naming emotions, but the UI never calls it practice. They build a habit of checking in with themselves, but the habit is shaped as checking in on something else.</p>
+
+      <div class="pull-quote">"How is my pet today?" is a softer question than "How am I today?" — and often produces a more honest answer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- APP STRUCTURE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / App Structure</div>
+      <h2 class="sec-title">Four rooms, <em>one</em> rhythm.</h2>
+    </div>
+    <div class="sec-kick">↳ onboarding · journal · pet house · SOS</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">The final app organises around four experience zones, each serving a different psychological function and a different moment of the day.</p>
+
+    <ul class="principle-list">
+      <li data-tag="01 Onboarding">An account, a name, a date-of-birth, a short <b>personality quiz</b> — then the pet <em>hatches</em>. Critically, the pet's early behaviour is informed by the onboarding answers, which makes the attachment feel earned rather than assigned.</li>
+      <li data-tag="02 Journal">A daily check-in surface. A <b>mood slider</b>, a <b>daily card</b>, a <b>short message to the pet</b>, and guided prompts — all structured around the Ekman/Willcox vocabulary so the friction of naming is minimised. Streaks and a progress view provide the retention scaffold without the gamification feeling aggressive.</li>
+      <li data-tag="03 Pet House">An ambient space — the pet's environment with a <b>day/night cycle</b> and lightweight <b>nurture mini-games</b>. Low-stakes, high-frequency interactions that give the user a reason to open the app when they're not actively in distress.</li>
+      <li data-tag="04 SOS Support">An explicit crisis surface. A <b>panic / emergency</b> entry point with a <b>feelings slider</b> tuned for high-intensity moments, and a <em>"let's talk"</em> chat that routes to appropriate resources. Designed to be one tap away from any screen, because when someone needs it they can't navigate.</li>
+    </ul>
+
+    <p style="margin-top:28px">The four zones map cleanly onto <b>four cognitive states</b>: setup (low-effort, one-time), reflection (daily, structured), ambient presence (frequent, low-effort), and emergency (rare, high-intensity). The design choice was to resist <em>collapsing</em> them into a single "journal" — the Pet House and SOS are emphatically <b>not</b> journaling surfaces, because forcing someone in crisis to type a reflection would be actively harmful.</p>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/emotions-journaling/26.webp" alt="SCREENS overview — all four app sections" loading="lazy">
+  </div>
+</section>
+
+<!-- FLOWS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 06 / Flows</div>
+      <h2 class="sec-title">Screens &amp; interactions.</h2>
+    </div>
+    <div class="sec-kick">↳ onboarding, journal, pet house</div>
+  </div>
+
+  <div class="gallery">
+    <figure><img src="../assets/case-studies/emotions-journaling/02.webp" alt="Onboarding flow" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/03.webp" alt="Personality quiz" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/04.webp" alt="Pet hatching" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/05.webp" alt="Journal entry" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/06.webp" alt="Mood slider" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/07.webp" alt="Prompt card" loading="lazy"></figure>
+  </div>
+
+  <div class="gallery">
+    <figure><img src="../assets/case-studies/emotions-journaling/08.webp" alt="Pet house ambient" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/17.webp" alt="Pet nurture" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/18.webp" alt="Progress view" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/20.webp" alt="SOS support" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/22.webp" alt="Feelings slider" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/emotions-journaling/23.webp" alt="Let's talk chat" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 07 / What it's actually doing</div>
+        <h2 class="sec-title">A small, deliberate <em>cognitive scaffold</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ the invisible mechanics</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="stat"><div class="n">9</div><div class="l">Base emotions (6+3)</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">App zones</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Concepts explored</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">User, many states</div></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">Strip the illustration and the app is doing three quiet things at once: building a <b>vocabulary</b> (via Ekman / Willcox), scaffolding a <b>habit</b> (via daily pet interaction), and preserving a <b>history</b> (via persistent state that outlasts any single moment of distress).</p>
+
+      <p>None of the three is novel on its own. Mood trackers exist. Virtual pets have existed for three decades. CBT-flavoured self-reflection apps are a crowded category. What's specific here is the <b>routing of attention</b>: the user is never asked to be the subject of the interaction. They're asked to be the caregiver. The tracking happens to them, as a side-effect of care.</p>
+
+      <p>The thesis was concept-stage — the brief was to prove out a direction, not launch a product. But the design resolves far enough down the stack that every screen in the SCREENS grid is a concrete answer to a concrete question: <em>how do we let a user name "irritated" when they don't feel like typing?</em> <em>How do we let them interact with the app on a day they don't want to reflect?</em> <em>How do we be present in a crisis without adding friction?</em></p>
+
+      <div class="pull-quote">The best interventions don't look like interventions. They look like companionship.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="collection-system.html">← prev: Collection System</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="research-strategies.html" style="text-align:right">next: Research Strategies →</a>
+</nav>
+
+</body>
+</html>

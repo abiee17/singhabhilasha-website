@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Prathmic Institute Management — Edu SaaS · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 10 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Prathmic Education · UX/UI revamp</span></div>
+  <h1>When a UX revamp <em>doubled</em> the sales-pitch asking price.</h1>
+  <p class="sub">A full UX/UI overhaul of <b>Prathmic Education's</b> institute-management SaaS — a complex multi-role platform serving <b>admins, teachers, staff, students, and parents</b> across desktop, tablet, and mobile. The shipped design directly enabled the sales team to <b>double</b> the product's asking price in pitches.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>UX / UI · design system lead</dd></div>
+    <div><dt>Client</dt><dd>Prathmic Education</dd></div>
+    <div><dt>Product</dt><dd>Institute Management App (EdTech SaaS)</dd></div>
+    <div><dt>Surfaces</dt><dd>Desktop · Tablet · Mobile</dd></div>
+    <div><dt>Commercial outcome</dt><dd>2× asking price in sales pitch</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/edu-saas-dashboard/01.webp" alt="Prathmic Institute Management App — desktop + mobile dashboards">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">Edu-SaaS is commoditised. <em>UX is the last pricing lever</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ where a revamp pays for itself</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Institute-management software — attendance, gradebooks, fee management, transport, announcements — is a mature category. Every incumbent has the same feature list. The spec sheets are indistinguishable. A school principal evaluating three vendors will find Vendor A, B, and C all claim the same modules.</p>
+
+    <p>This matters commercially. When feature parity is the floor, <b>the product that wins the sales pitch is not the one with more features — it's the one whose screens make the buyer feel competent</b>. A dashboard that looks professional, reads at a glance, and handles edge cases gracefully becomes, in the pitch, the visible proof that the vendor is serious. A dashboard that looks dated, reads as cluttered, or hesitates on responsive breakpoints becomes the reason to say <em>"thanks, we'll get back to you."</em></p>
+
+    <p>The UX/UI revamp for Prathmic's institute-management app was commissioned with this commercial reality in view. The brief wasn't <em>add features</em>. It was <em>make the product feel worth twice what we're currently asking for.</em></p>
+
+    <div class="pull-quote">You can't out-feature the category. You can out-design it.</div>
+  </div>
+</section>
+
+<!-- FIVE ROLES -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / The Multi-Role Problem</div>
+        <h2 class="sec-title">Five stakeholders. <em>One product.</em></h2>
+      </div>
+      <div class="sec-kick">↳ admin · teacher · staff · student · parent</div>
+    </div>
+    <div class="prose">
+      <p class="lead">An institute-management platform is not a single app wearing five hats — it's five apps that share a backend. Each role has a different mental model of what the product <em>is</em>, and designing for any one of them at the expense of the others is how enterprise software becomes a joke.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Admin"><b>Runs the institute.</b> Needs bird's-eye view: attendance rates, fee collection, enrollment pipeline, staff utilisation, budget vs actuals. Lives on desktop. Reading dense tables is the job. Information density is a feature, not a bug.</li>
+        <li data-tag="Teacher"><b>Runs a classroom.</b> Needs today's roster, today's schedule, quick gradebook entry, announcements to post. Toggles between desktop (planning) and mobile (in-class). Speed matters; three-tap journeys are the ceiling.</li>
+        <li data-tag="Staff"><b>Runs operations.</b> Transport logs, inventory intake, accounting entries, admissions desk intake. Narrow workflows, repeated many times a day. Needs the opposite of dashboard fireworks — just fast, specific forms that don't get in the way.</li>
+        <li data-tag="Student"><b>Uses it as daily utility.</b> Timetable, homework, announcements, grades. Expects the ergonomics of a consumer app, not an enterprise dashboard. Mobile-first by default.</li>
+        <li data-tag="Parent"><b>Wants reassurance, not complexity.</b> Child's attendance, fees due, announcements, upcoming events. The least time spent per session of any role. Every screen has to answer <em>"is my kid okay?"</em> in under three seconds.</li>
+      </ul>
+
+      <p style="margin-top:24px">The principle that governed the revamp: <b>show each role only what matters to that role, in the grammar that role reads fastest</b>. Admin screens lean into density and data-tables; student and parent screens lean into cards, icons, and generous whitespace. Teacher screens navigate between both worlds, carefully.</p>
+
+      <p>This also maps onto Stephen Few's dashboard design principles — every dashboard serves a specific audience, at a specific cadence, answering a specific question. Trying to serve all audiences on one screen is the single most common dashboard failure mode; the remedy is role-scoped views, not more widgets.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Workflow</div>
+      <h2 class="sec-title">Sketch first. <em>Figma second.</em></h2>
+    </div>
+    <div class="sec-kick">↳ low-fi before mid-fi before pixel</div>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/edu-saas-dashboard/22.webp" alt="From UX to UI — hand sketches exploring composition, structure, functionality" loading="lazy">
+  </div>
+
+  <div class="prose" style="margin-top:28px">
+    <p class="lead">Enterprise dashboards are the category where starting in Figma bites back hardest. The tool is so capable that a designer can produce a plausible-looking screen before they've answered whether the underlying information hierarchy is right. The result is polish applied to the wrong composition — a familiar failure mode in SaaS UX.</p>
+
+    <p>The workflow that made this project scale was deliberately inverted. Every new screen started on ruled notebook paper: boxes, arrows, lists of questions the screen had to answer, candidate layouts. No type specimens, no colour, no grid. Just <b>composition, structure, functionality, and information relevance</b> — and whether what gets displayed actually answers what that role came to the screen for.</p>
+
+    <p>The sketches weren't artefacts for anyone else. They were a forcing function for the designer — a way to cut through <em>"this looks nice in Figma"</em> to <em>"this answers the question in the least number of eye movements."</em> Only once the sketch resolved did the mid-fi and high-fi work in Figma begin.</p>
+  </div>
+</section>
+
+<!-- DESIGN SYSTEM -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / Design System</div>
+        <h2 class="sec-title">Not a style guide — <em>a component library</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ the real deliverable</div>
+    </div>
+
+    <div class="wide-mock">
+      <img src="../assets/case-studies/edu-saas-dashboard/24.webp" alt="Design system — Figma component library, responsive variants, properties" loading="lazy">
+    </div>
+
+    <div class="prose" style="margin-top:28px">
+      <p class="lead">The design system was the project's highest-leverage artefact. With ten modules (dashboard, reports, academics, users, announcements, transport, inventory, accounting, admissions, settings) × five roles × three form factors, the number of unique screen states the product could present ran into the hundreds. Designing each individually was not an option.</p>
+
+      <p>The system was built as a <b>functional component library in Figma</b> — components with variants and properties, not decorative pattern illustrations. A "table" component carried variants for compact / comfortable density, sortable / non-sortable columns, empty / populated states, loading / error / success states. A "card" component carried variants for admin-density / student-friendly / parent-light layouts. A "chart" component carried Stephen-Few-compliant defaults: no 3D, no pie charts for more than two categories, small-multiples instead of stacked bars where possible.</p>
+
+      <p>The system also carried <b>responsive design</b> as a first-class concern — variants at desktop / tablet / mobile breakpoints, so every screen's responsive behaviour was designed, not discovered at hand-off. For a product that would live on a school admin's laptop, a teacher's tablet, and a parent's phone, this couldn't be an afterthought.</p>
+
+      <p>The outcome: new screens took an afternoon, not a week. Consistency across modules was structural, not cosmetic. When the sales team asked for a pitch-ready mockup of a feature that didn't exist yet, the system could produce it credibly in a day. That speed compounded — and is a non-trivial part of how "doubled asking price" became possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / Ten Modules</div>
+      <h2 class="sec-title">The full <em>surface area</em> of running an institute.</h2>
+    </div>
+    <div class="sec-kick">↳ everything a school does, operationalised</div>
+  </div>
+  <div class="prose">
+    <p>The product covered the full operational footprint of a K-12 institution. Each module was its own sub-product with its own users, its own flows, its own data model — all tied to the same design system:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Dashboard"><b>The admin's command centre.</b> Attendance rates, fee collection status, enrolment pipeline, staff utilisation, announcements queue. The single screen principals open first every morning.</li>
+      <li data-tag="Reports"><b>Data export layer.</b> Structured, filterable, printable. Where admins go when a board meeting is in 20 minutes.</li>
+      <li data-tag="Academics"><b>Curriculum &amp; gradebook.</b> Teachers live here. Low-friction grade entry, lesson planning, assessment tracking.</li>
+      <li data-tag="Users"><b>Identity &amp; role management.</b> The boring but critical layer. Permissions, onboarding, offboarding.</li>
+      <li data-tag="Announcements"><b>Social-feed style.</b> Institute-wide posts, class-level posts, parent broadcasts. The mobile newsfeed module that felt the most consumer-app of the entire product.</li>
+      <li data-tag="Transport"><b>Route &amp; schedule management.</b> Bus routes, driver assignments, parent-facing location updates.</li>
+      <li data-tag="Inventory"><b>Stock management.</b> Textbooks, uniforms, lab equipment. Inflow, outflow, low-stock alerts.</li>
+      <li data-tag="Accounting"><b>Fees &amp; payroll.</b> Fee structures, payment tracking, staff salary workflows.</li>
+      <li data-tag="Admissions"><b>Enrolment pipeline.</b> Application intake, interview scheduling, offer management.</li>
+      <li data-tag="Settings"><b>Institute configuration.</b> Academic calendar, grading schemes, org structure.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GALLERY OF SCREENS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 06 / Screens</div>
+      <h2 class="sec-title">Across <em>three surfaces</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ desktop · tablet · mobile</div>
+  </div>
+
+  <div class="gallery">
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/02.webp" alt="Dashboard overview" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/03.webp" alt="Academics module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/04.webp" alt="Admin dashboard" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/05.webp" alt="Reports module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/06.webp" alt="Users / role management" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/07.webp" alt="Announcements &amp; newsfeed" loading="lazy"></figure>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/edu-saas-dashboard/25.webp" alt="Institute Management App — full product composite" loading="lazy">
+  </div>
+
+  <div class="gallery">
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/11.webp" alt="Transport module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/14.webp" alt="Inventory module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/17.webp" alt="Accounting module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/19.webp" alt="Admissions module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/21.webp" alt="Settings module" loading="lazy"></figure>
+    <figure><img src="../assets/case-studies/edu-saas-dashboard/27.webp" alt="Mobile view — parent dashboard" loading="lazy"></figure>
+  </div>
+</section>
+
+<!-- SALES PITCH AS TEST -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 07 / The Sales Pitch as UX Test</div>
+        <h2 class="sec-title">The pricing room is a <em>usability lab</em> in disguise.</h2>
+      </div>
+      <div class="sec-kick">↳ where B2B UX actually gets graded</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Most UX work in B2B SaaS is tested against task-completion metrics, error rates, time-on-task. These are fine metrics. They are not the metrics that determine whether a product wins a buyer.</p>
+
+      <p>The real usability test in B2B is the sales pitch itself. A school principal, in the room, with the sales engineer clicking through the product — their body language, their questions, their half-spoken concerns are the most concentrated qualitative usability signal the product will ever get. When the principal leans forward at the dashboard; when they start narrating what they think they're seeing; when they ask about a feature that isn't on the spec sheet but is visible on the screen — the UX is <em>working</em>. When they say <em>"and how do I find [X]?"</em> and the answer takes more than ten seconds to demonstrate — the UX is <em>not</em>.</p>
+
+      <p>The revamp was tuned against this specific signal. Every design iteration was reviewed with the question <em>how will this screen behave in a pitch?</em> — not just <em>how does this screen behave in use?</em> The two questions overlap but are not identical. Pitch-optimised screens lead with the buyer's mental model, surface the most impressive data front-and-centre, and hide complexity behind progressive disclosure. Use-optimised screens trade drama for efficiency.</p>
+
+      <p>A product built to win the pitch, that also works under daily use, is a product that earns premium pricing. The 2× outcome wasn't magic — it was the predictable effect of designing for both sides of the buyer's attention simultaneously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 08 / Outcome</div>
+      <h2 class="sec-title">Design that <em>showed up on the invoice</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ commercial effect of a UX revamp</div>
+  </div>
+
+  <div class="outcome-row">
+    <div class="stat"><div class="n">2×</div><div class="l">Asking price lift</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">Modules designed</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Stakeholder roles</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Form factors</div></div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">The UX/UI revamp enabled Prathmic Education to credibly double the asking price in sales pitches — a <b>direct, measurable, revenue-shaped outcome</b> that most UX projects never get to claim. The design did what the feature list alone could not: made a saturated-category SaaS feel like a premium product.</p>
+
+    <p>The durable residue of the project, though, sits in two places. First, the <b>design system</b> — Figma component library with variants and responsive breakpoints — continued to produce new screens long after the initial revamp, because the system had been built to carry the product forward, not to decorate it for one pitch cycle. Second, the <b>pricing-as-UX-signal framing</b> — that enterprise design is ultimately evaluated in the sales room, and designing with that room in view produces different screens than designing against task-completion metrics alone.</p>
+
+    <p>Of all the projects in this portfolio, this one sits furthest from games. And yet the underlying move is the same one that runs through the match-3 work, the Collection System case, the Research Strategies toolkit: <em>be specific about who the user is, what they came for, and what the surface has to do for them — and design the rest as infrastructure, not decoration.</em></p>
+  </div>
+  <span class="note">↑ design showed up on the invoice.</span>
+</section>
+
+<nav class="nextprev">
+  <a href="ewaste-recycling.html">← prev: E-Waste Recycling</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="../index.html#work" style="text-align:right">all case studies →</a>
+</nav>
+
+</body>
+</html>

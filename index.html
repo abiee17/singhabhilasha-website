@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Abhilasha Singh — I design gamified experiences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ----------- Tokens ----------- */
+:root{
+  --ink: #141210;          /* warm near-black */
+  --paper: #f4ecd8;        /* aged paper */
+  --paper-2:#ece1c6;
+  --ochre:#c69214;         /* dark yellow primary */
+  --ochre-deep:#8a6310;
+  --highlight:#ffd84d;     /* punch */
+  --line: #1a1814;
+  --muted:#6b6354;
+  --red:#b53a2a;           /* stamp red */
+  --grid: rgba(20,18,16,.06);
+  --radius: 2px;
+  --shadow: 6px 6px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+body{
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(198,146,20,.08), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(181,58,42,.05), transparent 40%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: auto, auto, 28px 28px, 28px 28px;
+  cursor: none;
+}
+@media (hover: none){ body{cursor:auto} .cursor{display:none}}
+
+/* paper grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:
+    radial-gradient(circle at 30% 40%, rgba(138,99,16,.04) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 80%, rgba(20,18,16,.05) 0 1px, transparent 2px);
+  background-size: 7px 7px, 11px 11px;
+  mix-blend-mode: multiply;
+  opacity:.7;
+}
+
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:none}
+
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.hand{font-family:"Caveat",cursive; font-weight:700}
+
+/* ----------- Custom cursor ----------- */
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;mix-blend-mode:multiply;transition:transform .08s linear, width .18s, height .18s, background .18s}
+.cursor .dot{width:14px;height:14px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%)}
+.cursor .ring{position:absolute;left:50%;top:50%;width:38px;height:38px;border:1.5px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%);transition:width .2s, height .2s, background .2s}
+.cursor.hot .ring{width:60px;height:60px;background:var(--highlight)}
+.cursor.hot .dot{background:var(--red)}
+
+/* ----------- Nav ----------- */
+.nav{
+  position:fixed;top:18px;left:18px;right:18px;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border:1.5px solid var(--ink);background:var(--paper);
+  box-shadow: var(--shadow);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.brand .chip{width:28px;height:28px;background:var(--ochre);border:1.5px solid var(--ink);display:grid;place-items:center;font-family:"Space Grotesk";font-weight:700;transform:rotate(-6deg)}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.nav ul a{position:relative;padding:4px 2px}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:6px;background:var(--highlight);transform:scaleX(0);transform-origin:left;transition:transform .25s;z-index:-1;opacity:.7}
+.nav ul a:hover::after{transform:scaleX(1)}
+.nav .right{display:flex;align-items:center;gap:14px}
+.status{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.status .blip{width:8px;height:8px;border-radius:50%;background:#2e8a4a;box-shadow:0 0 0 0 rgba(46,138,74,.7);animation:blip 1.8s infinite}
+@keyframes blip{70%{box-shadow:0 0 0 10px rgba(46,138,74,0)} 100%{box-shadow:0 0 0 0 rgba(46,138,74,0)}}
+
+/* ----------- Hero ----------- */
+.hero{position:relative;padding:120px 36px 40px; min-height:100vh; display:flex; flex-direction:column; justify-content:center;}
+.hero-grid{display:grid;grid-template-columns: 1.1fr .9fr; gap:36px; align-items:end}
+.eyebrow{display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.eyebrow .tick{width:22px;height:1.5px;background:var(--ink)}
+.headline{
+  font-family:"Space Grotesk";
+  font-weight:700;
+  font-size: clamp(56px, 11vw, 180px);
+  line-height:.86;
+  letter-spacing:-.035em;
+  margin:0;
+}
+.headline .abby{display:inline-block;position:relative}
+.headline .abby em{font-style:normal;color:var(--ochre)}
+.headline .deco{
+  position:absolute;
+  left:10%;bottom:-.5em;
+  font-family:"Caveat",cursive;font-weight:700;color:var(--red);
+  font-size:.42em;
+  transform:rotate(-6deg);
+  letter-spacing:0;
+  white-space:nowrap;
+  line-height:1;
+}
+.headline .stamp{
+  display:inline-block;border:2.5px solid var(--red);color:var(--red);
+  padding:6px 14px; font-family:"JetBrains Mono"; font-size:18px; letter-spacing:.1em;
+  transform:rotate(-4deg); margin-left:16px; vertical-align:middle;
+  text-transform:uppercase;
+}
+.subhead{
+  margin-top:18px; max-width: 560px; font-size:18px; line-height:1.5;
+}
+.subhead .mark{background:var(--highlight); padding:0 6px;}
+.cta-row{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1.5px solid var(--ink); padding:12px 18px;
+  background:var(--ink);color:var(--paper);
+  box-shadow: 4px 4px 0 var(--ochre);
+  font-weight:600; letter-spacing:.02em;
+  transition:transform .15s, box-shadow .15s;
+}
+.btn:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ochre)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn.ghost:hover{box-shadow:6px 6px 0 var(--ink)}
+.btn .arrow{display:inline-block;transition:transform .2s}
+.btn:hover .arrow{transform:translateX(4px)}
+
+/* video card */
+.video-card{
+  position:relative;border:1.5px solid var(--ink); background:var(--ink);
+  aspect-ratio: 4/5;overflow:hidden; box-shadow:var(--shadow);
+  transform:rotate(1.5deg); transition:transform .3s;
+}
+.video-card:hover{transform:rotate(0deg) scale(1.01)}
+.video-card video, .video-card img{width:100%;height:100%;object-fit:cover;display:block}
+.video-card.banner{aspect-ratio:4/5; background:#c69214; border-color:var(--ink)}
+.video-card .banner-crop{position:absolute;inset:0;overflow:hidden}
+.video-card.banner img{width:100%;height:auto;display:block;transform:translateY(-18%);background:transparent}
+.video-card .ph{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(45deg, #1a1814 0 14px, #222018 14px 28px);
+  display:grid;place-items:center;
+}
+.video-card .ph .inner{
+  text-align:center;color:var(--paper);font-family:"JetBrains Mono";font-size:12px;letter-spacing:.18em;
+}
+.video-card .ph .inner .big{font-family:"Space Grotesk";font-size:56px;line-height:1;letter-spacing:-.03em;color:var(--ochre);margin-bottom:10px}
+.video-card .label{
+  position:absolute;left:12px;top:12px;z-index:2;
+  font-family:"JetBrains Mono";font-size:11px;color:var(--paper);
+  border:1px solid var(--paper);padding:4px 8px;letter-spacing:.15em;text-transform:uppercase;
+  background:rgba(20,18,16,.4);backdrop-filter:blur(4px);
+}
+.video-card .corner{position:absolute;right:10px;bottom:10px;color:var(--paper);font-family:"Caveat";font-size:22px;transform:rotate(-4deg)}
+.sticky-note{
+  position:absolute;right:-20px;bottom:-20px;
+  background:var(--highlight);border:1.5px solid var(--ink);
+  padding:10px 14px;font-family:"Caveat";font-weight:700;font-size:22px;
+  transform:rotate(6deg); box-shadow:3px 3px 0 var(--ink);
+  line-height:1.1; max-width:180px;
+}
+
+/* marquee ticker */
+.ticker{
+  margin-top:40px;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  overflow:hidden; background:var(--ink); color:var(--paper);
+}
+.ticker-track{display:flex;gap:48px;padding:14px 0;white-space:nowrap;animation:marq 38s linear infinite;font-family:"JetBrains Mono";font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.ticker-track span{display:inline-flex;align-items:center;gap:48px}
+.ticker-track .dot{width:6px;height:6px;background:var(--ochre);border-radius:50%}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ----------- Sections ----------- */
+section{padding:100px 36px;position:relative}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:36px;border-bottom:1.5px solid var(--ink);padding-bottom:14px}
+.sec-num{font-family:"JetBrains Mono";font-size:13px;letter-spacing:.2em;color:var(--muted)}
+.sec-title{font-size:clamp(40px, 6vw, 84px);line-height:.9;letter-spacing:-.03em;margin:0;font-weight:700}
+.sec-title em{font-style:normal;color:var(--ochre)}
+.sec-kicker{font-family:"Caveat";font-size:28px;color:var(--red);transform:rotate(-3deg);display:inline-block}
+
+/* About */
+.about-grid{display:grid;grid-template-columns: 1fr 1fr; gap:48px;align-items:start}
+.bio p{font-size:20px;line-height:1.55;margin:0 0 18px}
+.bio .highlight{background:var(--highlight);padding:2px 6px;}
+.bio .underline{text-decoration:underline;text-decoration-color:var(--ochre);text-decoration-thickness:3px;text-underline-offset:4px}
+.portrait{
+  position:relative; aspect-ratio:1/1.15; border:1.5px solid var(--ink);
+  background: var(--paper-2);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.portrait svg{width:100%;height:100%;display:block}
+.portrait .tag{position:absolute;left:12px;bottom:12px;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--paper);border:1px solid var(--ink);padding:4px 8px}
+.annotate{position:absolute;font-family:"Caveat";font-weight:700;color:var(--red);font-size:26px;display:flex;gap:6px;align-items:flex-start;line-height:1}
+.annotate svg{width:40px;height:30px;flex-shrink:0}
+
+.skills{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.skill{
+  border:1.5px solid var(--ink);padding:16px;background:var(--paper-2);
+  transition:transform .2s, background .2s;
+}
+.skill:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ochre);background:var(--paper)}
+.skill .k{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.skill .v{font-size:22px;font-weight:600;letter-spacing:-.01em;margin-top:6px}
+.skill .meter{margin-top:12px;height:6px;background:var(--paper);border:1px solid var(--ink);overflow:hidden}
+.skill .meter i{display:block;height:100%;background:var(--ochre)}
+
+/* ----------- Projects ----------- */
+.projects{background:var(--ink);color:var(--paper)}
+.projects .sec-head{border-bottom-color:var(--paper)}
+.projects .sec-num{color:#a8a08a}
+.projects .sec-title em{color:var(--highlight)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.proj{
+  position:relative;border:1.5px solid var(--paper);background:#1d1a15;
+  padding:0;overflow:hidden;
+  transition:transform .25s;
+}
+.proj:nth-child(odd){transform:rotate(-.6deg)}
+.proj:nth-child(even){transform:rotate(.5deg)}
+.proj:hover{transform:rotate(0) translateY(-6px)}
+.proj .art{
+  aspect-ratio:16/10; position:relative; overflow:hidden;
+  background:#0d0c0a;
+}
+.proj .art .bg{position:absolute;inset:0}
+.proj .art .bg svg{width:100%;height:100%}
+.proj .art .tag{
+  position:absolute;left:12px;top:12px;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid var(--paper);color:var(--paper);padding:4px 8px;background:rgba(0,0,0,.4);
+}
+.proj .art .yr{position:absolute;right:12px;top:12px;font-family:"JetBrains Mono";font-size:10px;letter-spacing:.15em;color:var(--highlight)}
+.proj .body{padding:22px;display:flex;flex-direction:column;gap:12px;border-top:1.5px solid var(--paper)}
+.proj .title{font-size:28px;letter-spacing:-.015em;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.proj .title .go{width:36px;height:36px;border:1.5px solid var(--paper);display:grid;place-items:center;border-radius:50%;transition:background .2s,color .2s}
+.proj:hover .title .go{background:var(--highlight);color:var(--ink);border-color:var(--highlight)}
+.proj .desc{color:#cfc6ae;line-height:1.5;font-size:15px;margin:0}
+.proj .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.proj .meta span{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;border:1px solid #4a4335;padding:3px 7px;color:#b8ae93}
+.proj.featured{grid-column:span 2}
+.proj.featured .art{aspect-ratio:16/6}
+.proj .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.proj .art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));pointer-events:none;z-index:1}
+.proj .art .tag,.proj .art .yr,.proj .art .sticker{z-index:2}
+
+/* decorative stickers */
+.sticker{
+  position:absolute;z-index:2;font-family:"Caveat";font-weight:700;
+  background:var(--ochre);color:var(--ink);padding:6px 10px;border:1.5px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);font-size:20px;transform:rotate(-6deg);
+}
+
+/* ----------- Process ----------- */
+.process .rail{display:flex;gap:18px;overflow-x:auto;padding-bottom:16px;scroll-snap-type:x mandatory}
+.process .card{
+  min-width:320px;flex:0 0 auto;scroll-snap-align:start;
+  border:1.5px solid var(--ink);background:var(--paper-2);padding:18px;
+  position:relative;
+}
+.process .card:nth-child(odd){transform:rotate(-1deg)}
+.process .card:nth-child(even){transform:rotate(1deg)}
+.process .card .idx{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}
+.process .card .sketch{aspect-ratio:4/3;background:var(--paper);border:1.5px solid var(--ink);margin-bottom:12px;overflow:hidden}
+.process .card h4{margin:0 0 6px;font-size:20px}
+.process .card p{margin:0;font-size:14px;color:var(--muted);line-height:1.5}
+.process .card .pin{position:absolute;top:-10px;right:18px;width:22px;height:22px;background:var(--red);border-radius:50%;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+
+/* ----------- Contact ----------- */
+.contact{text-align:center;padding:140px 36px}
+.contact h2{font-size:clamp(60px,10vw,180px);line-height:.88;margin:0;letter-spacing:-.035em;font-weight:700}
+.contact h2 em{font-style:italic;color:var(--ochre);font-family:"Space Grotesk"}
+.contact .underline-scribble{position:relative;display:inline-block}
+.contact .underline-scribble svg{position:absolute;left:0;right:0;bottom:-12px;width:100%;height:22px}
+.contact .sub{max-width:620px;margin:24px auto 32px;font-size:18px;line-height:1.5}
+.contact .links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.contact .links a{
+  border:1.5px solid var(--ink);padding:10px 16px;background:var(--paper);
+  box-shadow:3px 3px 0 var(--ink);font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .15s, background .15s;
+}
+.contact .links a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);background:var(--highlight)}
+
+/* ----------- Footer ----------- */
+footer{border-top:1.5px solid var(--ink);padding:22px 36px;display:flex;justify-content:space-between;gap:16px;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap}
+
+/* ----------- Reveal ----------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ----------- Tweaks ----------- */
+.tweaks{
+  position:fixed;right:18px;bottom:18px;z-index:50;
+  background:var(--paper);border:1.5px solid var(--ink);box-shadow:var(--shadow);
+  width:260px;padding:12px;display:none;font-family:"JetBrains Mono";font-size:12px;
+}
+.tweaks.open{display:block}
+.tweaks h4{margin:0 0 10px;font-family:"Space Grotesk";letter-spacing:-.01em;font-size:16px}
+.tweaks .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0}
+.tweaks .swatches{display:flex;gap:6px}
+.tweaks .sw{width:22px;height:22px;border:1.5px solid var(--ink);cursor:none}
+.tweaks input[type=range]{width:110px}
+.tweaks .seg{display:flex;border:1.5px solid var(--ink)}
+.tweaks .seg button{flex:1;padding:4px 6px;background:var(--paper);border:0;border-left:1.5px solid var(--ink)}
+.tweaks .seg button:first-child{border-left:0}
+.tweaks .seg button.on{background:var(--ink);color:var(--paper)}
+
+/* ----------- Dachshunds ----------- */
+.doggos{position:fixed;left:0;right:0;bottom:0;height:110px;pointer-events:none;z-index:8;overflow:visible}
+.doggo{position:absolute;bottom:4px;will-change:transform,left;transform-origin:50% 100%}
+.doggo svg{display:block;overflow:visible}
+.doggo .legA{transform-box:fill-box;transform-origin:50% 0%;animation:trot .36s ease-in-out infinite}
+.doggo .legB{transform-box:fill-box;transform-origin:50% 0%;animation:trot .36s ease-in-out infinite;animation-delay:-.18s}
+.doggo .tail{transform-box:fill-box;transform-origin:100% 50%;animation:wag .42s ease-in-out infinite}
+.doggo .ear{transform-box:fill-box;transform-origin:50% 10%;animation:flop .36s ease-in-out infinite}
+.doggo .bob{animation:bob .36s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.doggo.sniff .legA,.doggo.sniff .legB,.doggo.sniff .bob{animation:none}
+.doggo.sniff .head{animation:sniff .5s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.doggo .shadow{opacity:.22;transform-box:fill-box;transform-origin:center;animation:shad .36s ease-in-out infinite}
+@keyframes trot{0%{transform:translateY(0) rotate(20deg)}25%{transform:translateY(-2px) rotate(0)}50%{transform:translateY(0) rotate(-20deg)}75%{transform:translateY(-2px) rotate(0)}100%{transform:translateY(0) rotate(20deg)}}
+@keyframes wag{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(22deg)}}
+@keyframes flop{0%,100%{transform:rotate(-14deg) translateY(0)}50%{transform:rotate(12deg) translateY(-2px)}}
+@keyframes sniff{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(3px) rotate(-4deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.doggo.jump svg{animation:doggoJump .6s cubic-bezier(.3,.7,.4,1)}
+@keyframes doggoJump{0%{transform:translateY(0)}35%{transform:translateY(-32px) rotate(-4deg)}55%{transform:translateY(-32px) rotate(-4deg)}100%{transform:translateY(0)}}
+@keyframes shad{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.85)}}
+.doggo .sniffpuff{opacity:0;transform-box:fill-box;transform-origin:center}
+.doggo.sniff .sniffpuff{animation:puff 1.2s ease-out infinite}
+/* Heart farts */
+.doggo .heart-fart{position:absolute;left:-4px;bottom:28px;font-family:system-ui,-apple-system,sans-serif;font-size:16px;color:#b53a2a;pointer-events:none;filter:drop-shadow(0 1px 0 rgba(0,0,0,.08));animation:heartFart 1.8s cubic-bezier(.2,.7,.4,1) forwards;will-change:transform,opacity}
+@keyframes heartFart{
+  0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}
+  15%{opacity:.95;transform:translate(calc(var(--dx,0px)*.3),-10px) scale(1) rotate(var(--rot,0deg))}
+  100%{opacity:0;transform:translate(var(--dx,-12px),-62px) scale(1.3) rotate(calc(var(--rot,0deg)*2))}
+}
+/* Bark */
+.doggo .bark-bubble{position:absolute;bottom:72px;right:-4px;padding:2px 12px;font-family:"Caveat",cursive;font-weight:700;font-size:22px;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;box-shadow:2px 2px 0 var(--ink);opacity:0;pointer-events:none;white-space:nowrap;transform-origin:bottom right;line-height:1.1}
+.doggo .bark-bubble::after{content:"";position:absolute;right:16px;bottom:-8px;width:0;height:0;border:7px solid transparent;border-top-color:var(--ink);border-bottom:0}
+.doggo .bark-bubble::before{content:"";position:absolute;right:17px;bottom:-6px;width:0;height:0;border:6px solid transparent;border-top-color:var(--paper);border-bottom:0;z-index:1}
+.doggo.facing-left .bark-bubble span{display:inline-block;transform:scaleX(-1)}
+.doggo.bark .bark-bubble{animation:barkPop .75s ease-out forwards}
+@keyframes barkPop{
+  0%{opacity:0;transform:scale(.5) rotate(-10deg)}
+  25%{opacity:1;transform:scale(1.15) rotate(3deg)}
+  55%{transform:scale(.96) rotate(-2deg)}
+  80%{opacity:1;transform:scale(1.04) rotate(0)}
+  100%{opacity:0;transform:scale(.9)}
+}
+.doggo.bark .mouth{animation:mouthBark .22s ease-in-out 3;transform-box:fill-box;transform-origin:center}
+@keyframes mouthBark{0%,100%{transform:scaleY(1)}50%{transform:scaleY(3.2) translateY(1px)}}
+/* Pitch bubbles — random "hire my mom" comic pitches */
+.doggo .pitch-bubble{position:absolute;bottom:76px;right:-8px;padding:6px 12px;font-family:"Space Grotesk",system-ui,sans-serif;font-weight:600;font-size:13px;line-height:1.25;color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;box-shadow:2px 2px 0 var(--ink);opacity:0;pointer-events:none;max-width:180px;width:max-content;text-align:center;transform-origin:bottom right;letter-spacing:.01em}
+.doggo .pitch-bubble::after{content:"";position:absolute;right:20px;bottom:-8px;width:0;height:0;border:7px solid transparent;border-top-color:var(--ink);border-bottom:0}
+.doggo .pitch-bubble::before{content:"";position:absolute;right:21px;bottom:-6px;width:0;height:0;border:6px solid transparent;border-top-color:var(--paper);border-bottom:0;z-index:1}
+.doggo.facing-left .pitch-bubble span{display:inline-block;transform:scaleX(-1)}
+.doggo.pitching .pitch-bubble{animation:pitchPop 4s ease-out forwards}
+@keyframes pitchPop{
+  0%{opacity:0;transform:scale(.5) rotate(-6deg)}
+  8%{opacity:1;transform:scale(1.08) rotate(2deg)}
+  16%{transform:scale(1) rotate(0)}
+  88%{opacity:1;transform:scale(1) rotate(0)}
+  100%{opacity:0;transform:scale(.92) translateY(-6px)}
+}
+@media (prefers-reduced-motion: reduce){
+  .doggo .legA,.doggo .legB,.doggo .tail,.doggo .ear,.doggo .bob,.doggo .shadow{animation:none!important}
+  .doggo .heart-fart,.doggo.bark .bark-bubble,.doggo.bark .mouth,.doggo.pitching .pitch-bubble{animation:none!important;opacity:0!important}
+}
+@keyframes puff{0%{opacity:0;transform:translate(0,0) scale(.6)}30%{opacity:.8}100%{opacity:0;transform:translate(10px,-10px) scale(1.3)}}
+
+/* ----------- Easter egg ----------- */
+.egg{
+  position:fixed;inset:0;display:none;place-items:center;z-index:200;
+  background:radial-gradient(circle at 50% 50%, rgba(20,18,16,.92), rgba(20,18,16,.98));
+  color:var(--paper);text-align:center;
+}
+.egg.on{display:grid}
+.egg .box{border:1.5px solid var(--highlight);padding:40px;background:#0f0e0c;box-shadow:8px 8px 0 var(--ochre)}
+.egg h3{font-family:"Space Grotesk";font-size:48px;margin:0 0 10px;color:var(--highlight);letter-spacing:-.02em}
+.egg p{font-family:"JetBrains Mono";letter-spacing:.1em;margin:0 0 18px}
+.egg button{background:var(--highlight);color:var(--ink);border:1.5px solid var(--highlight);padding:10px 16px;font-weight:700}
+
+/* ----------- Responsive ----------- */
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .proj-grid{grid-template-columns:1fr}
+  .proj.featured{grid-column:auto}
+  .nav ul{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<div class="cursor" id="cursor"><div class="ring"></div><div class="dot"></div></div>
+
+<!-- nav -->
+<nav class="nav">
+  <div class="brand">
+    <div class="chip">A</div>
+    <div>Abhilasha Singh<span class="mono" style="color:var(--muted);margin-left:8px;font-size:12px">// abby</span></div>
+  </div>
+  <ul>
+    <li><a href="#work" data-hot>Work</a></li>
+    <li><a href="#about" data-hot>About</a></li>
+    <li><a href="#process" data-hot>Process</a></li>
+    <li><a href="#contact" data-hot>Contact</a></li>
+  </ul>
+  <div class="right">
+    <div class="status"><span class="blip"></span><span>Open for 2026</span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span class="tick"></span><span class="mono">Portfolio · v26 · Abhilasha Singh</span></div>
+      <h1 class="headline">
+        I design<br>
+        <span class="abby">g<em>a</em>mified <span class="deco">↷ experiences</span></span><br>
+        worth getting<br>
+        lost&nbsp;in.
+      </h1>
+      <p class="subhead">
+        Hi, I'm <b>Abby</b> — an engineer-turned-designer making
+        <span class="mark">systems, interfaces, levels & narratives</span>
+        that feel hand-made. Somewhere between a notebook and a debug console.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="#work" data-hot>See the work <span class="arrow">→</span></a>
+        <a class="btn ghost" href="#contact" data-hot>Say hi <span class="arrow">✱</span></a>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <div class="video-card banner" data-hot>
+        <!-- annotation inside banner -->
+        <div class="annotate" style="left:16px;top:14px;transform:rotate(-6deg);z-index:3;color:#f4ecd8;text-shadow:0 2px 6px rgba(0,0,0,.4)">
+          <span>my brain<br>lives here</span>
+          <svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transform:scaleY(-1)">
+            <path d="M2 4 C 10 22, 22 26, 38 26" />
+            <path d="M38 26 L 30 29 M38 26 L 34 18"/>
+          </svg>
+        </div>
+        <div class="banner-crop"><img src="assets/banner2.gif" alt="Abby & dachshund on a bike"/></div>
+        <div class="corner hand">pressing start is a feeling</div>
+      </div>
+      <div class="sticky-note">designed w/ coffee & cursed spreadsheets</div>
+    </div>
+  </div>
+
+  <!-- ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tick">
+      <span>
+        <b>System Design</b><i class="dot"></i>
+        <b>Level Design</b><i class="dot"></i>
+        <b>Narrative</b><i class="dot"></i>
+        <b>Prototyping</b><i class="dot"></i>
+        <b>Playtest Witchcraft</b><i class="dot"></i>
+        <b>UI for Games</b><i class="dot"></i>
+        <b>Economy Tuning</b><i class="dot"></i>
+        <b>Spreadsheet Sorcery</b><i class="dot"></i>
+      </span>
+      <span>
+        <b>System Design</b><i class="dot"></i>
+        <b>Level Design</b><i class="dot"></i>
+        <b>Narrative</b><i class="dot"></i>
+        <b>Prototyping</b><i class="dot"></i>
+        <b>Playtest Witchcraft</b><i class="dot"></i>
+        <b>UI for Games</b><i class="dot"></i>
+        <b>Economy Tuning</b><i class="dot"></i>
+        <b>Spreadsheet Sorcery</b><i class="dot"></i>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" data-screen-label="02 About">
+  <div class="sec-head reveal">
+    <div>
+      <div class="sec-num mono">§ 01 / ABOUT</div>
+      <h2 class="sec-title">Hi, I'm <em>Abby</em>.</h2>
+    </div>
+    <div class="sec-kicker">↳ the short version</div>
+  </div>
+
+  <div class="about-grid">
+    <div class="bio reveal">
+      <p>CS degree first. Then seven years in visual design. Then games — where <span class="underline">systems, UI, motion, and narrative</span> finally had to sit in one frame. <b>Ten years</b> designing; <b>four</b> of them full-time UX/UI for games.</p>
+      <p>Master's in Digital Game Design, <b>National Institute of Design, Bengaluru</b>. Sole user researcher on <b>Crossword Jam</b> at Playsimple. Shipped two match-3 titles at <b>Giga Fun Studios</b> — Mili Match in 10 months, Travel Match in 7. Designed XR interfaces for <b>Ping Pong Club</b> on Apple Vision Pro.</p>
+      <p>Three games in flight right now. A casual match-3 — <b>Baba on the Road</b> — at my own <b>Purple Square Studios</b>. Two at <b>The Verse</b>: a bio-feedback emotion-regulation game for diabetics, and a Buddhist-lore RPG about pro-social behavior. <span class="underline">Santa Clara, CA</span>.</p>
+      <div class="skills">
+        <div class="skill"><div class="k">FORTE</div><div class="v">Experience Design</div><div class="meter"><i style="width:94%"></i></div></div>
+        <div class="skill"><div class="k">FORTE</div><div class="v">Narration & Game Design</div><div class="meter"><i style="width:90%"></i></div></div>
+        <div class="skill"><div class="k">FORTE</div><div class="v">Visual Comm & Animation</div><div class="meter"><i style="width:82%"></i></div></div>
+        <div class="skill"><div class="k">FORTE</div><div class="v">Vibe Coding (GPT · Claude)</div><div class="meter"><i style="width:86%"></i></div></div>
+        <div class="skill"><div class="k">TOOLS</div><div class="v">Figma · XD · Photoshop</div><div class="meter"><i style="width:94%"></i></div></div>
+        <div class="skill"><div class="k">TOOLS</div><div class="v">Unity · Blender · Unreal</div><div class="meter"><i style="width:78%"></i></div></div>
+        <div class="skill"><div class="k">TOOLS</div><div class="v">After Effects · Photoshop · Illustrator</div><div class="meter"><i style="width:80%"></i></div></div>
+        <div class="skill"><div class="k">CODE</div><div class="v">Visual Scripting · Basic C++ · HTML</div><div class="meter"><i style="width:60%"></i></div></div>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:relative">
+      <div class="portrait">
+        <!-- hand-drawn-feel SVG placeholder scene -->
+        <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(35)">
+              <rect width="6" height="6" fill="#ece1c6"/>
+              <path d="M0,0 L0,6" stroke="#14121022" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="460" fill="url(#hatch)"/>
+          <!-- monitor -->
+          <rect x="60" y="220" width="280" height="180" fill="#141210" stroke="#141210" stroke-width="3"/>
+          <rect x="72" y="232" width="256" height="140" fill="#c69214"/>
+          <!-- screen doodles -->
+          <path d="M90 330 Q 140 280 200 300 T 310 300" stroke="#141210" stroke-width="3" fill="none"/>
+          <circle cx="110" cy="260" r="10" fill="#141210"/>
+          <rect x="220" y="250" width="70" height="14" fill="#141210"/>
+          <!-- desk -->
+          <rect x="30" y="398" width="340" height="14" fill="#141210"/>
+          <!-- mug -->
+          <rect x="100" y="180" width="42" height="40" fill="#f4ecd8" stroke="#141210" stroke-width="3"/>
+          <path d="M142 190 q 16 0 16 14 q 0 14 -16 14" fill="none" stroke="#141210" stroke-width="3"/>
+          <path d="M108 176 q 2 -12 8 -14 M120 176 q 2 -12 8 -14" stroke="#141210" stroke-width="2" fill="none"/>
+          <!-- notebook -->
+          <rect x="230" y="190" width="90" height="30" fill="#b53a2a" stroke="#141210" stroke-width="3"/>
+          <path d="M236 198 h 78 M236 206 h 60 M236 214 h 70" stroke="#141210" stroke-width="1.5"/>
+          <!-- controller -->
+          <g transform="translate(150 100)">
+            <rect x="0" y="0" width="120" height="50" rx="24" fill="#141210"/>
+            <circle cx="32" cy="25" r="6" fill="#c69214"/>
+            <circle cx="88" cy="18" r="4" fill="#f4ecd8"/>
+            <circle cx="88" cy="32" r="4" fill="#f4ecd8"/>
+            <circle cx="98" cy="25" r="4" fill="#f4ecd8"/>
+            <circle cx="78" cy="25" r="4" fill="#f4ecd8"/>
+          </g>
+          <!-- stars -->
+          <path d="M 48 60 l 4 -10 l 4 10 l 10 4 l -10 4 l -4 10 l -4 -10 l -10 -4 z" fill="#b53a2a"/>
+          <path d="M 340 110 l 3 -7 l 3 7 l 7 3 l -7 3 l -3 7 l -3 -7 l -7 -3 z" fill="#c69214"/>
+        </svg>
+        <div class="tag mono">Fig. 01 — desk @ 2 AM</div>
+      </div>
+
+      <div class="annotate" style="right:-50px;top:30px;transform:rotate(8deg);">
+        <span style="text-align:left">coffee<br>mandatory</span>
+        <svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M38 28 C 30 10, 18 4, 2 6" />
+          <path d="M2 6 L 10 3 M2 6 L 6 14"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="work" data-screen-label="03 Projects">
+  <div class="sec-head reveal">
+    <div>
+      <div class="sec-num mono">§ 02 / SELECTED WORK</div>
+      <h2 class="sec-title">Games I've <em>built</em>, broken & patched.</h2>
+    </div>
+    <div class="sec-kicker" style="color:var(--highlight)">↳ scroll / click</div>
+  </div>
+
+  <div class="proj-grid">
+    <!-- 01. Hum-Dial Bio-feedback (Notion) -->
+    <a class="proj" data-hot href="https://medium.com/@abhilasha1793/designing-the-hum-dial-turning-breath-into-a-game-mechanic-f2c16fb2423c" target="_blank" rel="noopener">
+      <div class="art">
+        <img src="assets/projects/01-humdial.webp" alt="Hum-Dial Bio-feedback for Action RPG" loading="lazy"/>
+        <div class="tag mono">BIO-FEEDBACK · ACTION RPG</div>
+        <div class="yr mono">2025</div>
+      </div>
+      <div class="body">
+        <div class="title">Hum-Dial Bio-feedback <span class="go">→</span></div>
+        <p class="desc">Turning breath into a game mechanic. UX/UI design for an action RPG where the player's hum steers a bio-feedback dial — breath becomes control input.</p>
+        <div class="meta"><span>UX / UI</span><span>Bio-sensors</span><span>Action RPG</span></div>
+      </div>
+    </a>
+
+    <!-- 02. Ping-Pong Club XR · Vision Pro (Notion) -->
+    <a class="proj" data-hot href="https://medium.com/@abhilasha1793/serving-strategy-style-my-design-journey-with-ping-pong-club-on-apple-vision-pro-9ff0c1da3688" target="_blank" rel="noopener">
+      <div class="art">
+        <img src="assets/projects/02-pingpong-xr.webp" alt="Ping-Pong Club XR for Apple Vision Pro" loading="lazy"/>
+        <div class="tag mono">XR · VISION PRO</div>
+        <div class="yr mono">2024</div>
+      </div>
+      <div class="body">
+        <div class="title">Ping-Pong Club XR <span class="go">→</span></div>
+        <p class="desc">Serving strategy &amp; style: UX/UI for a spatial-computing ping-pong experience on Apple Vision Pro. Hand presence, court framing, and play-style progression.</p>
+        <div class="meta"><span>Spatial UX</span><span>Apple Vision Pro</span><span>Sports XR</span></div>
+      </div>
+    </a>
+
+    <!-- 03. Pro-social RPG · The Karma Project -->
+    <a class="proj" data-hot href="case-studies/karma-rpg.html">
+      <div class="art">
+        <img src="assets/projects/03-karma-rpg.webp" alt="The Karma Project — emotional regulation through embodied gameplay" loading="lazy"/>
+        <div class="tag mono">NARRATIVE · PRO-SOCIAL RPG</div>
+        <div class="yr mono">2025–26</div>
+      </div>
+      <div class="body">
+        <div class="title">The Karma Project <span class="go">→</span></div>
+        <p class="desc">A 3D Unity RPG about emotional regulation, scaffolded on the Six Realms of Buddhist cosmology. Embodied giving, fail-soft compassionate systems, and a hum-dial whose win state is the player's own nervous system.</p>
+        <div class="meta"><span>Narrative</span><span>Game Design</span><span>Unity 6</span></div>
+      </div>
+    </a>
+
+    <!-- 04. Travel Match-3 -->
+    <a class="proj" data-hot href="case-studies/travel-match3.html">
+      <div class="art">
+        <img src="assets/projects/07-travel-match3.webp" alt="Match-3 game with travel theme" loading="lazy"/>
+        <div class="tag mono">MATCH-3 · TRAVEL THEME</div>
+        <div class="yr mono">2024</div>
+      </div>
+      <div class="body">
+        <div class="title">Travel Match-3 <span class="go">→</span></div>
+        <p class="desc">Travel as more than a theme. Experiments to find the right themed match-3 that actually appeals across genders and ages — not just window dressing.</p>
+        <div class="meta"><span>Theme Design</span><span>Match-3</span><span>Mobile</span></div>
+      </div>
+    </a>
+
+    <!-- 05. Indian Wedding Match-3 (Mili Match) -->
+    <a class="proj" data-hot href="case-studies/wedding-match3.html">
+      <div class="art">
+        <img src="assets/projects/08-wedding-match3.webp" alt="Indian wedding themed match-3 for young women" loading="lazy"/>
+        <div class="tag mono">MATCH-3 · LIGHT META</div>
+        <div class="yr mono">2023</div>
+      </div>
+      <div class="body">
+        <div class="title">Mili Match <span class="go">→</span></div>
+        <p class="desc">An Indian-wedding match-3 with light meta, designed for a young female audience. Setting tone early with the right protagonist and the right restraint.</p>
+        <div class="meta"><span>Character Design</span><span>Theme</span><span>Mobile</span></div>
+      </div>
+    </a>
+
+    <!-- 06. Collection System (F2P, 10M+) -->
+    <a class="proj" data-hot href="case-studies/collection-system.html">
+      <div class="art">
+        <img src="assets/projects/05-collection-system.webp" alt="Collection System for F2P word game with 10M+ downloads" loading="lazy"/>
+        <div class="tag mono">LIVE · 10M+ DOWNLOADS</div>
+        <div class="yr mono">2022</div>
+      </div>
+      <div class="body">
+        <div class="title">Collection System <span class="go">→</span></div>
+        <p class="desc">UX-heavy feature for an F2P casual word game with global audience — increasing ownership for the 45+ segment. Shipped live to millions.</p>
+        <div class="meta"><span>F2P Economy</span><span>Live Ops</span><span>Mobile</span></div>
+      </div>
+    </a>
+
+    <!-- 07. Gamified Emotions Journaling -->
+    <a class="proj" data-hot href="case-studies/emotions-journaling.html">
+      <div class="art">
+        <img src="assets/projects/04-emotions-journal.webp" alt="Gamified emotions journaling app with virtual pets" loading="lazy"/>
+        <div class="tag mono">CASE STUDY · WELLNESS</div>
+        <div class="yr mono">2023</div>
+      </div>
+      <div class="body">
+        <div class="title">Emotions Journaling <span class="go">→</span></div>
+        <p class="desc">A virtual-pets approach to emotional tracking — identifying what we didn't know we needed to track, and crafting a gamified loop that makes reflection sticky.</p>
+        <div class="meta"><span>UX Research</span><span>Gamification</span><span>Mobile</span></div>
+      </div>
+    </a>
+
+    <!-- 08. Research Strategies -->
+    <a class="proj" data-hot href="case-studies/research-strategies.html">
+      <div class="art">
+        <img src="assets/projects/06-research-strategies.webp" alt="Research strategies for casual word games" loading="lazy"/>
+        <div class="tag mono">RESEARCH · CASUAL</div>
+        <div class="yr mono">2022</div>
+      </div>
+      <div class="body">
+        <div class="title">Research Strategies <span class="go">→</span></div>
+        <p class="desc">Discovery and establishment of research methodologies purpose-built for casual mobile games — where "users" rarely show up in a panel on demand.</p>
+        <div class="meta"><span>UX Research</span><span>Strategy</span><span>Casual Games</span></div>
+      </div>
+    </a>
+
+    <!-- 09. E-Waste Recycling -->
+    <a class="proj" data-hot href="case-studies/ewaste-recycling.html">
+      <div class="art">
+        <img src="assets/projects/09-ewaste.webp" alt="Gamified e-waste recycling ecosystem" loading="lazy"/>
+        <div class="tag mono">PRODUCT · SUSTAINABILITY</div>
+        <div class="yr mono">2021</div>
+      </div>
+      <div class="body">
+        <div class="title">E-Waste Recycling <span class="go">→</span></div>
+        <p class="desc">A rewards-based gamified concept that makes e-waste recycling feel fun — not civic homework. Full ecosystem design from drop-off to reward redemption.</p>
+        <div class="meta"><span>Product</span><span>Gamification</span><span>Ecosystem</span></div>
+      </div>
+    </a>
+
+    <!-- 10. Educational SaaS Dashboard -->
+    <a class="proj" data-hot href="case-studies/edu-saas-dashboard.html">
+      <div class="art">
+        <img src="assets/projects/10-saas-dashboard.webp" alt="Educational SaaS dashboard system" loading="lazy"/>
+        <div class="tag mono">B2B · EDU SaaS</div>
+        <div class="yr mono">2021</div>
+      </div>
+      <div class="body">
+        <div class="title">Educational SaaS Dashboard <span class="go">→</span></div>
+        <p class="desc">Centralized management system for multiple stakeholders in education. How a comprehensive UX/UI revamp doubled the asking price in the sales pitch.</p>
+        <div class="meta"><span>UX / UI</span><span>Dashboard</span><span>B2B SaaS</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process" data-screen-label="04 Process">
+  <div class="sec-head reveal">
+    <div>
+      <div class="sec-num mono">§ 03 / PROCESS</div>
+      <h2 class="sec-title">From <em>napkin</em> to playable.</h2>
+    </div>
+    <div class="sec-kicker">↳ messy on purpose</div>
+  </div>
+
+  <div class="rail">
+    <div class="card reveal"><div class="pin"></div>
+      <div class="idx mono">STEP 01</div>
+      <div class="sketch"><svg viewBox="0 0 200 150" width="100%" height="100%">
+        <g stroke="#141210" stroke-width="2" fill="none" stroke-linecap="round">
+          <circle cx="60" cy="60" r="28"/>
+          <circle cx="130" cy="60" r="28"/>
+          <circle cx="95" cy="100" r="28"/>
+          <text x="48" y="66" font-family="Caveat" font-size="18" fill="#141210" stroke="none">verbs</text>
+          <text x="108" y="66" font-family="Caveat" font-size="18" fill="#141210" stroke="none">loop</text>
+          <text x="78" y="106" font-family="Caveat" font-size="18" fill="#141210" stroke="none">feels</text>
+        </g>
+      </svg></div>
+      <h4>Find the verb</h4>
+      <p>Every game I start begins with one verb. <em>Light. Drift. Haggle.</em> If the verb isn't fun to say, the game won't be fun to play.</p>
+    </div>
+
+    <div class="card reveal"><div class="pin"></div>
+      <div class="idx mono">STEP 02</div>
+      <div class="sketch"><svg viewBox="0 0 200 150" width="100%" height="100%">
+        <g stroke="#141210" stroke-width="2" fill="none">
+          <rect x="20" y="30" width="50" height="30"/><rect x="90" y="30" width="50" height="30"/><rect x="20" y="90" width="50" height="30"/><rect x="90" y="90" width="50" height="30"/>
+          <path d="M70 45 h 20 M140 45 Q 160 70 140 105 M90 105 h -20 M70 105 Q 50 70 70 45"/>
+        </g>
+        <g fill="#c69214"><circle cx="160" cy="30" r="8"/><circle cx="160" cy="120" r="8"/></g>
+      </svg></div>
+      <h4>Paper, then pixels</h4>
+      <p>Two weeks of pen-and-dice before a single asset. If a loop isn't fun with paper tokens, no amount of particles will save it.</p>
+    </div>
+
+    <div class="card reveal"><div class="pin"></div>
+      <div class="idx mono">STEP 03</div>
+      <div class="sketch"><svg viewBox="0 0 200 150" width="100%" height="100%">
+        <g stroke="#141210" stroke-width="2" fill="none">
+          <polyline points="20,130 40,120 60,90 80,100 100,70 120,80 140,40 160,60 180,30"/>
+        </g>
+        <g stroke="#c69214" stroke-width="2" fill="none" stroke-dasharray="4 4">
+          <polyline points="20,110 40,100 60,80 80,70 100,60 120,55 140,45 160,40 180,35"/>
+        </g>
+        <text x="20" y="25" font-family="JetBrains Mono" font-size="9" fill="#141210">difficulty vs. retention</text>
+      </svg></div>
+      <h4>Tune until it hums</h4>
+      <p>Spreadsheets. Histograms. Arguing with my past self in the margins. The good numbers are the ones that surprise me.</p>
+    </div>
+
+    <div class="card reveal"><div class="pin"></div>
+      <div class="idx mono">STEP 04</div>
+      <div class="sketch"><svg viewBox="0 0 200 150" width="100%" height="100%">
+        <g stroke="#141210" stroke-width="2" fill="none">
+          <rect x="20" y="40" width="160" height="70"/>
+          <path d="M40 70 L 70 90 L 100 55 L 140 95 L 170 60"/>
+        </g>
+        <text x="30" y="30" font-family="Caveat" font-size="20" fill="#b53a2a">playtest #17</text>
+        <text x="30" y="128" font-family="JetBrains Mono" font-size="9" fill="#141210">"the goose was too fast" — Ria</text>
+      </svg></div>
+      <h4>Watch someone else play</h4>
+      <p>The most useful tool I own is a silent mouth. Nothing teaches pacing like watching a stranger put the controller down.</p>
+    </div>
+
+    <div class="card reveal"><div class="pin"></div>
+      <div class="idx mono">STEP 05</div>
+      <div class="sketch"><svg viewBox="0 0 200 150" width="100%" height="100%">
+        <g fill="#c69214" stroke="#141210" stroke-width="2">
+          <rect x="30" y="50" width="140" height="60"/>
+        </g>
+        <text x="60" y="88" font-family="Space Grotesk" font-weight="700" font-size="26" fill="#141210">SHIP IT</text>
+        <g stroke="#b53a2a" stroke-width="2" fill="none"><path d="M20 30 L 40 50 M180 30 L 160 50 M20 130 L 40 110 M180 130 L 160 110"/></g>
+      </svg></div>
+      <h4>Ship, then listen</h4>
+      <p>Launch day is the beginning of the conversation, not the end. Patch notes are love letters.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" data-screen-label="05 Contact">
+  <div class="sec-num mono reveal">§ 04 / CONTACT</div>
+  <h2 class="reveal">
+    Let's make<br>
+    <span class="underline-scribble">
+      something <em>weird</em>
+      <svg viewBox="0 0 300 22" preserveAspectRatio="none"><path d="M4 16 C 60 4, 160 24, 296 8" stroke="#c69214" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+    </span>
+    together.
+  </h2>
+  <p class="sub reveal">Santa Clara, CA · <b>+1 408-401-9624</b> · reply window <b>48h</b>, or coffee's on me. Currently open to full-time roles & thoughtfully-weird contracts.</p>
+  <div class="links reveal">
+    <a href="mailto:abhilasha1793@gmail.com" data-hot>✉ abhilasha1793@gmail.com</a>
+    <a href="https://www.purplesquarestudios.com" target="_blank" rel="noopener" data-hot>◆ Purple Square Studios</a>
+    <a href="https://www.linkedin.com/in/abhilasha-singh1793" target="_blank" rel="noopener" data-hot>✦ LinkedIn</a>
+    <a href="https://www.artstation.com/abiee17" target="_blank" rel="noopener" data-hot>✦ ArtStation</a>
+    <a href="https://www.behance.net/abhilasahsingh" target="_blank" rel="noopener" data-hot>✦ Behance</a>
+    <a href="https://www.purplesquaredesigns.com" target="_blank" rel="noopener" data-hot>↗ Purple Square Designs</a>
+  </div>
+  <div class="hand" style="margin-top:30px;color:var(--red);font-size:26px;transform:rotate(-2deg);display:inline-block">psst — try the konami code ↑↑↓↓←→←→ba</div>
+</section>
+
+<footer>
+  <div>© 2026 Abhilasha Singh — Handcrafted in Santa Clara, CA.</div>
+  <div>No cookies. No trackers. Just pixels.</div>
+  <div>v26.04 / Player 1 ready</div>
+</footer>
+
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks">
+  <h4>Tweaks</h4>
+  <div class="row">
+    <span>Accent</span>
+    <div class="swatches">
+      <div class="sw" data-accent="#c69214" style="background:#c69214"></div>
+      <div class="sw" data-accent="#e3a91b" style="background:#e3a91b"></div>
+      <div class="sw" data-accent="#8a6310" style="background:#8a6310"></div>
+      <div class="sw" data-accent="#b53a2a" style="background:#b53a2a"></div>
+    </div>
+  </div>
+  <div class="row">
+    <span>Paper</span>
+    <div class="seg" id="seg-paper">
+      <button data-paper="paper" class="on">paper</button>
+      <button data-paper="bone">bone</button>
+      <button data-paper="ink">ink</button>
+    </div>
+  </div>
+  <div class="row">
+    <span>Cursor</span>
+    <div class="seg" id="seg-cursor">
+      <button data-cursor="on" class="on">on</button>
+      <button data-cursor="off">off</button>
+    </div>
+  </div>
+  <div class="row">
+    <span>Ticker speed</span>
+    <input type="range" id="tickSpeed" min="10" max="80" value="38">
+  </div>
+</div>
+
+<!-- Dachshunds -->
+<div class="doggos" aria-hidden="true">
+  <!-- SMALL BLACK & TAN DACHSHUND (facing right) -->
+  <div class="doggo" id="dog1" style="left:-160px">
+    <svg width="154" height="96" viewBox="0 0 154 96">
+      <ellipse class="shadow" cx="74" cy="88" rx="54" ry="3.5" fill="#000"/>
+      <g class="bob">
+        <!-- BACK legs -->
+        <g class="legB">
+          <rect x="26" y="44" width="9" height="26" rx="4" fill="#1a1510"/>
+          <ellipse cx="30.5" cy="70" rx="6" ry="3.5" fill="#a26a1f"/>
+          <rect x="92" y="44" width="9" height="26" rx="4" fill="#1a1510"/>
+          <ellipse cx="96.5" cy="70" rx="6" ry="3.5" fill="#a26a1f"/>
+        </g>
+        <!-- FRONT legs -->
+        <g class="legA">
+          <rect x="40" y="44" width="9" height="26" rx="4" fill="#1a1510"/>
+          <ellipse cx="44.5" cy="70" rx="6" ry="3.5" fill="#a26a1f"/>
+          <rect x="78" y="44" width="9" height="26" rx="4" fill="#1a1510"/>
+          <ellipse cx="82.5" cy="70" rx="6" ry="3.5" fill="#a26a1f"/>
+        </g>
+        <!-- Long chunky body -->
+        <ellipse cx="64" cy="40" rx="50" ry="13" fill="#1a1510"/>
+        <!-- Tan belly underside -->
+        <ellipse cx="64" cy="50" rx="38" ry="4" fill="#a26a1f"/>
+        <!-- Curved upright tail -->
+        <path class="tail" d="M16 36 Q 4 26 -2 14" stroke="#1a1510" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- Red collar with gold tag -->
+        <rect x="98" y="36" width="6" height="16" fill="#b53a2a"/>
+        <circle cx="101" cy="52" r="2.5" fill="#ffd84d" stroke="#8a6310" stroke-width=".5"/>
+        <!-- Head group -->
+        <g class="head">
+          <!-- Round cranium -->
+          <ellipse cx="116" cy="28" rx="16" ry="14" fill="#1a1510"/>
+          <!-- Big floppy ear (rounded, hangs down past cheek) -->
+          <path class="ear" d="M104 20 Q 95 22 94 34 Q 94 46 104 46 Q 114 46 114 34 Q 114 22 104 20 Z" fill="#0a0806"/>
+          <!-- Tan eyebrow dot -->
+          <ellipse cx="112" cy="22" rx="2.5" ry="1.3" fill="#a26a1f"/>
+          <!-- Medium-length rounded snout -->
+          <path d="M124 30 Q 142 28 150 34 Q 144 44 124 42 Z" fill="#1a1510"/>
+          <!-- Tan muzzle underside -->
+          <path d="M128 40 Q 142 42 148 38 Q 142 42 128 41 Z" fill="#a26a1f"/>
+          <!-- Black nose -->
+          <ellipse cx="150" cy="33.5" rx="2.8" ry="2.2" fill="#0a0806"/>
+          <circle cx="149.2" cy="32.7" r=".7" fill="#f4ecd8"/>
+          <!-- Mouth (happy smile) -->
+          <path class="mouth" d="M134 40 Q 138 43 142 40" stroke="#a26a1f" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <!-- Big sparkly eye -->
+          <circle cx="118" cy="28" r="3" fill="#f4ecd8"/>
+          <circle cx="118.5" cy="28" r="2.1" fill="#1a1510"/>
+          <circle cx="119.3" cy="27.2" r=".9" fill="#f4ecd8"/>
+          <!-- Blush -->
+          <ellipse cx="122" cy="36" rx="2.6" ry="1.3" fill="#b53a2a" opacity=".45"/>
+          <!-- Sniff puff (appears during sniff) -->
+          <circle class="sniffpuff" cx="156" cy="32" r="2" fill="#c69214"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- MEDIUM BROWN DACHSHUND (facing right) -->
+  <div class="doggo" id="dog2" style="left:-300px">
+    <svg width="188" height="108" viewBox="0 0 188 108">
+      <ellipse class="shadow" cx="88" cy="98" rx="64" ry="3.8" fill="#000"/>
+      <g class="bob">
+        <!-- BACK legs -->
+        <g class="legB">
+          <rect x="30" y="52" width="10" height="28" rx="4" fill="#8a5618"/>
+          <ellipse cx="35" cy="80" rx="7" ry="4" fill="#d9a26a"/>
+          <rect x="118" y="52" width="10" height="28" rx="4" fill="#8a5618"/>
+          <ellipse cx="123" cy="80" rx="7" ry="4" fill="#d9a26a"/>
+        </g>
+        <!-- FRONT legs -->
+        <g class="legA">
+          <rect x="46" y="52" width="10" height="28" rx="4" fill="#8a5618"/>
+          <ellipse cx="51" cy="80" rx="7" ry="4" fill="#d9a26a"/>
+          <rect x="102" y="52" width="10" height="28" rx="4" fill="#8a5618"/>
+          <ellipse cx="107" cy="80" rx="7" ry="4" fill="#d9a26a"/>
+        </g>
+        <!-- Chunky long body -->
+        <ellipse cx="80" cy="46" rx="58" ry="14" fill="#b06e26"/>
+        <!-- Tan belly -->
+        <ellipse cx="80" cy="56" rx="44" ry="4.5" fill="#d9a26a" opacity=".65"/>
+        <!-- Cream heart spot on side -->
+        <path d="M62 44 c -2.5 -3.5 -7 -1 -7 2.5 c 0 3 7 7 7 7 c 0 0 7 -4 7 -7 c 0 -3.5 -4.5 -6 -7 -2.5 z" fill="#e8c089" opacity=".7"/>
+        <!-- Curled-up tail -->
+        <path class="tail" d="M20 40 Q 6 28 0 14" stroke="#b06e26" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Red bandana (instead of collar) -->
+        <path d="M122 42 L 136 42 L 140 54 L 128 56 L 118 54 Z" fill="#b53a2a"/>
+        <path d="M122 42 L 124 46 L 128 46 L 126 42 Z" fill="#8a2a1e"/>
+        <!-- Head -->
+        <g class="head">
+          <!-- Rounded cranium -->
+          <ellipse cx="142" cy="32" rx="18" ry="15" fill="#b06e26"/>
+          <!-- Cheek highlight -->
+          <ellipse cx="134" cy="42" rx="10" ry="4.5" fill="#d9a26a" opacity=".55"/>
+          <!-- Big floppy ear (darker brown, rounded) -->
+          <path class="ear" d="M128 22 Q 118 24 117 38 Q 117 52 128 52 Q 139 52 139 38 Q 139 24 128 22 Z" fill="#8a5618"/>
+          <!-- Medium-length rounded snout -->
+          <path d="M150 36 Q 170 34 180 40 Q 172 50 150 48 Z" fill="#b06e26"/>
+          <!-- Lighter muzzle underside -->
+          <path d="M156 46 Q 170 49 178 43 Q 170 48 156 47 Z" fill="#d9a26a" opacity=".7"/>
+          <!-- Nose -->
+          <ellipse cx="180" cy="39" rx="3" ry="2.4" fill="#1a1510"/>
+          <circle cx="179.2" cy="38.2" r=".8" fill="#f4ecd8"/>
+          <!-- Mouth (default happy) -->
+          <path class="mouth" d="M164 44 Q 168 48 172 44" stroke="#6b4212" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <!-- Sleepy happy eye -->
+          <path d="M140 32 Q 144 29 148 32" stroke="#1a1510" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Lash flick -->
+          <path d="M148 32 L 150.5 30" stroke="#1a1510" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Blush -->
+          <ellipse cx="154" cy="45" rx="3" ry="1.6" fill="#b53a2a" opacity=".4"/>
+          <circle class="sniffpuff" cx="188" cy="39" r="2.5" fill="#c69214"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- Easter egg -->
+<div class="egg" id="egg">
+  <div class="box">
+    <h3>✦ YOU FOUND IT ✦</h3>
+    <p>+100 DESIGN POINTS · ACHIEVEMENT UNLOCKED</p>
+    <button id="eggClose">CLOSE</button>
+  </div>
+</div>
+
+<script>
+/* ---- Tweaks defaults (persisted) ---- */
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "accent": "#b53a2a",
+  "paper": "bone",
+  "cursor": "on",
+  "tickerSpeed": 71
+}/*EDITMODE-END*/;
+
+/* ---- Cursor ---- */
+const cursor = document.getElementById('cursor');
+let mx=window.innerWidth/2, my=window.innerHeight/2, cx=mx, cy=my;
+addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+(function raf(){
+  cx += (mx-cx)*0.25; cy += (my-cy)*0.25;
+  cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+  requestAnimationFrame(raf);
+})();
+document.addEventListener('mouseover', e=>{
+  if(e.target.closest('[data-hot], a, button, .sw')) cursor.classList.add('hot');
+});
+document.addEventListener('mouseout', e=>{
+  if(e.target.closest('[data-hot], a, button, .sw')) cursor.classList.remove('hot');
+});
+
+/* ---- Reveal on scroll ---- */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+}, {rootMargin:'0px 0px -10% 0px', threshold:.05});
+document.querySelectorAll('.reveal').forEach(el=>{
+  const r = el.getBoundingClientRect();
+  // if already in view or above the fold (scrolled past), show immediately
+  if(r.top < window.innerHeight * 0.95){ el.classList.add('in'); }
+  else io.observe(el);
+});
+// safety net: force-reveal anything still hidden after 2s
+setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+  const r = el.getBoundingClientRect();
+  if(r.top < window.innerHeight) el.classList.add('in');
+}), 2000);
+
+/* ---- Dachshunds ---- */
+(function dachshunds(){
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dogs = [
+    {el: document.getElementById('dog1'), w: 127, scale: 0.82, speed: 95, facing: 1, x: -160, nextSniff: 6 + Math.random()*6, nextJump: 5 + Math.random()*6, nextFart: 4 + Math.random()*5, nextBark: 9 + Math.random()*7, nextPitch: 9 + Math.random()*10, pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0},
+    {el: document.getElementById('dog2'), w: 188, scale: 1, speed: 70, facing: 1, x: -300, nextSniff: 10 + Math.random()*8, nextJump: 8 + Math.random()*8, nextFart: 6 + Math.random()*6, nextBark: 12 + Math.random()*8, nextPitch: 14 + Math.random()*12, pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0}
+  ];
+  const woofs = ['woof!', 'arf!', 'bork!', 'yip!', 'wuff!'];
+  const pitches = [
+    "mom loves games",
+    "mom is a designer",
+    "mom can animate",
+    "mom has great taste"
+  ];
+
+  // Inject bark + pitch bubbles once
+  dogs.forEach(d => {
+    if (!d.el) return;
+    const bark = document.createElement('div');
+    bark.className = 'bark-bubble';
+    bark.innerHTML = '<span>woof!</span>';
+    d.el.appendChild(bark);
+    d.bubble = bark;
+
+    const pitch = document.createElement('div');
+    pitch.className = 'pitch-bubble';
+    pitch.innerHTML = '<span>mom loves games</span>';
+    d.el.appendChild(pitch);
+    d.pitchBubble = pitch;
+  });
+
+  function isBusy(d){
+    return d.el.classList.contains('bark') || d.el.classList.contains('pitching');
+  }
+
+  function fartBurst(d){
+    if (reduceMotion) return;
+    const count = 3 + Math.floor(Math.random()*3);
+    for (let i = 0; i < count; i++){
+      setTimeout(() => {
+        const h = document.createElement('div');
+        h.className = 'heart-fart';
+        h.textContent = '♥';
+        h.style.setProperty('--dx', (Math.random()*30 - 8).toFixed(1) + 'px');
+        h.style.setProperty('--rot', (Math.random()*40 - 20).toFixed(1) + 'deg');
+        d.el.appendChild(h);
+        setTimeout(() => h.remove(), 1850);
+      }, i * 110);
+    }
+  }
+  function barkBurst(d){
+    if (reduceMotion || isBusy(d)) return;
+    d.bubble.querySelector('span').textContent = woofs[Math.floor(Math.random()*woofs.length)];
+    d.el.classList.add('bark');
+    setTimeout(() => d.el.classList.remove('bark'), 760);
+  }
+  function pitchBurst(d){
+    if (reduceMotion || isBusy(d)) return;
+    // Avoid repeating own last line AND colliding with the other dog's current line.
+    const other = dogs.find(x => x !== d);
+    const forbidden = new Set([d.pitchIdx]);
+    if (other && other.el && other.el.classList.contains('pitching')) {
+      forbidden.add(other.pitchIdx);
+    }
+    let next = d.pitchIdx, tries = 0;
+    do {
+      next = Math.floor(Math.random() * pitches.length);
+      tries++;
+    } while (forbidden.has(next) && tries < 10);
+    d.pitchIdx = next;
+    d.pitchBubble.querySelector('span').textContent = pitches[d.pitchIdx];
+    d.el.classList.add('pitching');
+    setTimeout(() => d.el.classList.remove('pitching'), 4000);
+  }
+
+  let last = performance.now();
+  function step(t){
+    const dt = Math.min(.05, (t-last)/1000); last = t;
+    const vw = window.innerWidth;
+
+    // Overlap avoidance — if both dogs walk same direction and are close,
+    // the one behind speeds up, the one ahead slows down, so they pass cleanly.
+    {
+      const [d1, d2] = dogs;
+      if (d1.el && d2.el && d1.facing === d2.facing && !d1.sniffing && !d2.sniffing) {
+        const gap = d2.x - d1.x;
+        const minGap = (d1.w + d2.w) * 0.6;
+        if (Math.abs(gap) < minGap) {
+          const d1Behind = (gap * d1.facing > 0);
+          d1._boost = d1Behind ? 1.7 : 0.55;
+          d2._boost = d1Behind ? 0.55 : 1.7;
+        } else {
+          d1._boost = 1; d2._boost = 1;
+        }
+      } else if (d1.el && d2.el) {
+        d1._boost = 1; d2._boost = 1;
+      }
+    }
+
+    dogs.forEach(d=>{
+      if (!d.el) return;
+      if(d.sniffing){
+        if(t/1000 > d.sniffUntil){
+          d.sniffing = false;
+          d.el.classList.remove('sniff');
+          d.nextSniff = 8 + Math.random()*8;
+        }
+      } else {
+        d.x += d.speed * (d._boost || 1) * d.facing * dt;
+        d.nextSniff -= dt;
+        d.nextJump -= dt;
+        d.nextFart -= dt;
+        d.nextBark -= dt;
+        d.nextPitch -= dt;
+        // occasional sniff stop (not at edges)
+        if(d.nextSniff <= 0 && d.x > 40 && d.x < vw - d.w - 40){
+          d.sniffing = true;
+          d.el.classList.add('sniff');
+          d.sniffUntil = t/1000 + 2 + Math.random()*2;
+        }
+        // occasional jump while trotting
+        if(!d.jumping && d.nextJump <= 0 && d.x > 40 && d.x < vw - d.w - 40){
+          d.jumping = true;
+          d.el.classList.add('jump');
+          setTimeout(()=>{ d.el.classList.remove('jump'); d.jumping=false; }, 600);
+          d.nextJump = 7 + Math.random()*9;
+        }
+        // random heart-cloud farts
+        if(d.nextFart <= 0 && d.x > 20 && d.x < vw - 40){
+          fartBurst(d);
+          d.nextFart = 6 + Math.random()*9;
+        }
+        // random bark with speech bubble
+        if(d.nextBark <= 0 && d.x > 40 && d.x < vw - d.w - 40){
+          barkBurst(d);
+          d.nextBark = 12 + Math.random()*12;
+        }
+        // random comic pitch bubble (larger, readable, 4s)
+        if(d.nextPitch <= 0 && d.x > 60 && d.x < vw - d.w - 60){
+          pitchBurst(d);
+          d.nextPitch = 16 + Math.random()*14;
+        }
+        // turn around at edges
+        if(d.facing > 0 && d.x > vw + 20){ d.facing = -1; }
+        else if(d.facing < 0 && d.x < -d.w - 20){ d.facing = 1; }
+      }
+      d.el.style.left = d.x + 'px';
+      const s = d.scale || 1;
+      d.el.style.transform = `scale(${d.facing > 0 ? s : -s}, ${s})`;
+      d.el.classList.toggle('facing-left', d.facing < 0);
+    });
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+
+/* ---- Easter egg ---- */
+const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let idx=0;
+addEventListener('keydown', e=>{
+  const k = e.key.length===1 ? e.key.toLowerCase() : e.key;
+  if(k === seq[idx]){ idx++; if(idx===seq.length){ document.getElementById('egg').classList.add('on'); idx=0; } }
+  else idx = (k===seq[0]?1:0);
+});
+document.getElementById('eggClose').onclick = ()=>document.getElementById('egg').classList.remove('on');
+document.getElementById('egg').addEventListener('click', e=>{ if(e.target.id==='egg') e.currentTarget.classList.remove('on'); });
+
+/* ---- Tweaks ---- */
+function applyTweaks(t){
+  document.documentElement.style.setProperty('--ochre', t.accent);
+  const paperMap = {
+    paper: {paper:'#f4ecd8', paper2:'#ece1c6', ink:'#141210'},
+    bone:  {paper:'#eee4cc', paper2:'#e2d6b6', ink:'#18140e'},
+    ink:   {paper:'#141210', paper2:'#1c1914', ink:'#f4ecd8'}
+  };
+  const m = paperMap[t.paper] || paperMap.paper;
+  document.documentElement.style.setProperty('--paper', m.paper);
+  document.documentElement.style.setProperty('--paper-2', m.paper2);
+  document.documentElement.style.setProperty('--ink', m.ink);
+  cursor.style.display = t.cursor==='off' ? 'none' : '';
+  document.body.style.cursor = t.cursor==='off' ? 'auto' : 'none';
+  document.getElementById('tick').style.animationDuration = (100 - t.tickerSpeed) + 's';
+}
+applyTweaks(TWEAKS);
+
+/* Edit-mode host protocol */
+addEventListener('message', (e)=>{
+  const d = e.data || {};
+  if(d.type==='__activate_edit_mode') document.getElementById('tweaks').classList.add('open');
+  if(d.type==='__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('open');
+});
+try{ parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+function persist(edits){
+  Object.assign(TWEAKS, edits); applyTweaks(TWEAKS);
+  try{ parent.postMessage({type:'__edit_mode_set_keys', edits}, '*'); }catch(e){}
+}
+
+/* wire controls */
+document.querySelectorAll('.sw').forEach(s=>s.onclick = ()=> persist({accent: s.dataset.accent}));
+document.querySelectorAll('#seg-paper button').forEach(b=>b.onclick = ()=>{
+  document.querySelectorAll('#seg-paper button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); persist({paper: b.dataset.paper});
+});
+document.querySelectorAll('#seg-cursor button').forEach(b=>b.onclick = ()=>{
+  document.querySelectorAll('#seg-cursor button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); persist({cursor: b.dataset.cursor});
+});
+document.getElementById('tickSpeed').oninput = (e)=> persist({tickerSpeed: +e.target.value});
+
+/* reflect initial tweak state into seg controls */
+(function syncSegs(){
+  document.querySelectorAll('#seg-paper button').forEach(b=>b.classList.toggle('on', b.dataset.paper===TWEAKS.paper));
+  document.querySelectorAll('#seg-cursor button').forEach(b=>b.classList.toggle('on', b.dataset.cursor===TWEAKS.cursor));
+  document.getElementById('tickSpeed').value = TWEAKS.tickerSpeed;
+})();
+</script>
+</body>
+</html>

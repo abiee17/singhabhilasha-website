@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Research Strategies for Casual Word Games — Crossword Jam · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 08 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Playsimple · 6 months · solo</span></div>
+  <h1>How do you <em>research</em> a game nobody will take a user interview for?</h1>
+  <p class="sub">Six months, solo, inside <b>Crossword Jam</b> at Playsimple — building a research toolkit for a product class that conventional UX methods quietly don't fit: <b>casual F2P mobile games</b>.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>UX Research · Methodology</dd></div>
+    <div><dt>Duration</dt><dd>6 months</dd></div>
+    <div><dt>Team</dt><dd>Solo researcher</dd></div>
+    <div><dt>Product</dt><dd>Crossword Jam (Playsimple)</dd></div>
+    <div><dt>Output</dt><dd>Three reusable research frameworks</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/research-strategies/01.webp" alt="Research Strategies — cover card">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">The casual-games <em>research gap</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ why the textbooks don't help</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Standard UX research methods — lab studies, moderated usability tests, contextual inquiry, think-aloud protocols — were built for enterprise software and consumer web apps. Casual F2P mobile games break several of their assumptions at once.</p>
+
+    <p>The primary player is 45+, global, playing in 3-minute snatches between other things. They are exactly the demographic least likely to accept a Zoom interview about a word puzzle. Even if they did, the Hawthorne effect would distort what you measured — being <em>observed</em> playing a casual game reshapes the play. The whole point of a casual game is that no one is watching.</p>
+
+    <p>You have, instead, two kinds of data. <b>Hard quantitative signals</b> — retention curves, session length, conversion funnels, A/B test deltas — tell you what is happening but not why. And <b>the game's own surface</b> — every competitor's build, every screen, every loop, every monetisation hook, observable to anyone with the App Store and patience. The research strategy has to do most of its work in that second register: the games themselves as the research substrate.</p>
+
+    <p>Over six months, the work became a small library of repeatable frameworks — three in particular did most of the heavy lifting. This case study is about those three.</p>
+
+    <div class="pull-quote">The players won't show up in a research panel. The games will.</div>
+  </div>
+</section>
+
+<!-- THE TOOLKIT OVERVIEW -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / The Toolkit</div>
+        <h2 class="sec-title">Three frameworks. <em>One playbook.</em></h2>
+      </div>
+      <div class="sec-kick">↳ three ways to read a game</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Each framework answers a different question. Together they form a playbook that a single researcher can run against dozens of competitors in a week, and produce arguments a product team can actually argue <em>with</em>.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Onion Peel"><b>Competitor teardown.</b> Unpack any casual game into seven concentric layers — from core mechanic outward to the social surface. Answers: <em>where does this game invest? where is it hollow?</em></li>
+        <li data-tag="System Map"><b>Feature relationship mapping.</b> A node-link diagram of every feature in the product, with the loops they belong to. Answers: <em>which features actually reinforce each other? which are load-bearing? which are orphans?</em></li>
+        <li data-tag="Octalysis"><b>Motivational audit.</b> Yu-Kai Chou's 8-drive framework, applied as a structural lens. Answers: <em>why do players play — and which drives is this game paying for and which is it getting for free?</em></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ONION PEEL -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Onion Peel</div>
+      <h2 class="sec-title">A casual game, <em>unpeeled</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ seven concentric layers</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">The Onion Peel method treats a game as a set of nested systems. At the centre sits the <b>core mechanic</b> — the single action a player repeats that defines the product. Every other layer orbits it, adding complexity and meaning the further out you go.</p>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/research-strategies/05.webp" alt="Onion Peel competitor analysis — concentric ring diagram with games compared across layers" loading="lazy">
+  </div>
+
+  <div class="prose" style="margin-top:36px">
+    <p>The seven rings, from inside out:</p>
+
+    <ul class="principle-list">
+      <li data-tag="01 · Centre"><b>Core mechanic</b> — the repeated action that makes the game a game. In Crossword Jam, it's "swipe letters to form a word." Strip this out and nothing works.</li>
+      <li data-tag="02"><b>Core loop</b> — the immediate features that wrap the mechanic: puzzle → reward → next puzzle. Everything that directly touches the core action every session.</li>
+      <li data-tag="03"><b>Secondary loop</b> — features that <em>support</em> the core loop without being part of it. Hints, undo, difficulty ramping, lives/energy.</li>
+      <li data-tag="04"><b>Progression system</b> — the circular progression of play; level maps, world unlocks, the sense that the player is moving somewhere.</li>
+      <li data-tag="05"><b>Meta layer</b> — systems that reward the core loop and give the player reasons to return between sessions. Collections. Daily missions. Event calendars. (The same layer where the Collection System case study lives.)</li>
+      <li data-tag="06"><b>Economy / monetisation</b> — the shop, the coins, the ad placements, the IAP surfaces. Interacts with every inner layer but deserves its own frame because it has its own logic.</li>
+      <li data-tag="07 · Outer"><b>Social</b> — anything that makes the game social: friends, leaderboards, tournaments, clubs, gifting. For many casual games this ring is thin; for some it's the whole product.</li>
+    </ul>
+
+    <p style="margin-top:24px">Placed side by side — Crossword Jam and its direct competitors across the same seven layers — the Onion Peel surfaces a <b>shape of investment</b>. Two games may look similar at the core and differ sharply at ring 5 or 6. One game may be hollow in the middle but heavily social on the outside. Those shapes are arguments: <em>we are under-investing in meta compared to peer A; we are over-investing in social compared to peer B; our economy ring does twice the work it should because layer 5 is empty</em>.</p>
+
+    <p>The framework also composes with others. The <b>meta layer</b> at ring 5 is exactly where the Collection System proposal eventually landed — that case study is a direct downstream artifact of a competitor teardown that showed meta-hollowness across peers.</p>
+  </div>
+</section>
+
+<!-- SYSTEM MAP -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 04 / System Maps</div>
+      <h2 class="sec-title">The game as a <em>graph</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ features, and what they touch</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">Where Onion Peel answers "what layer is this feature on?", the System Map answers "what does this feature <em>connect to</em>?". It's systems thinking in the lineage of Donella Meadows — nodes and edges instead of rings.</p>
+
+    <p>Each feature is a node. Each feature also belongs to one or more loops (core / meta / social). Edges connect features that reinforce each other: shared state, shared rewards, shared player motivation. The map is colour-coded by loop — a blue node sits in the core loop, yellow in meta, green in social.</p>
+
+    <p>The insights come not from the nodes but from the <b>edge density</b>. A feature with five strong edges is load-bearing; tearing it out breaks four other features. A feature with one edge is an orphan; it may be live in production but it's floating. A loop whose internal edges are all thin is a loop that looks like a loop but isn't actually closing on itself — the player isn't getting pulled back by anything.</p>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/research-strategies/03.webp" alt="System map and Octalysis overview" loading="lazy">
+  </div>
+
+  <div class="prose" style="margin-top:28px">
+    <p>Two structural patterns recur, once you start drawing these maps:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Feature bloat">Many casual games ship dozens of features that have no edges into the main loop. Each was someone's pet project, correct in isolation, disconnected in aggregate. The map makes this visible in a way a feature list doesn't.</li>
+      <li data-tag="Silent reinforcement">The opposite pattern — two features nobody thought of as linked, turning out to share a reward currency or a progression trigger, accidentally propping each other up. Rippling out this kind of link into a <em>design intent</em> tends to produce the biggest quick wins.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- OCTALYSIS -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 05 / Octalysis</div>
+        <h2 class="sec-title">Motivation as <em>eight drives</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ why the player is here</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Yu-Kai Chou's <b>Octalysis framework</b> — an 8-edge octagon mapping the eight core motivational drives a game can pull on — does the third job in the toolkit. Onion Peel tells you <em>what the game has</em>. The System Map tells you <em>how the pieces fit</em>. Octalysis tells you <em>why anyone is playing</em>.</p>
+
+      <div class="drives-grid">
+        <div class="drive"><span class="n">Drive 1</span><div class="d">Epic Meaning</div>Serving something larger than the self.</div>
+        <div class="drive"><span class="n">Drive 2</span><div class="d">Accomplishment</div>Progress, mastery, status.</div>
+        <div class="drive"><span class="n">Drive 3</span><div class="d">Empowerment</div>Creativity &amp; expressive feedback.</div>
+        <div class="drive"><span class="n">Drive 4</span><div class="d">Ownership</div>The stuff you've earned and now keep.</div>
+        <div class="drive"><span class="n">Drive 5</span><div class="d">Social Influence</div>Peer validation and comparison.</div>
+        <div class="drive"><span class="n">Drive 6</span><div class="d">Scarcity</div>Rarity, exclusivity, time-gates.</div>
+        <div class="drive"><span class="n">Drive 7</span><div class="d">Unpredictability</div>Variable rewards and surprise.</div>
+        <div class="drive"><span class="n">Drive 8</span><div class="d">Avoidance</div>Not losing what you already have.</div>
+      </div>
+
+      <p style="margin-top:24px">Two perpendicular axes cut through the octagon. Vertical: <b>White Hat / Black Hat</b> — whether the drive is motivating through growth and meaning, or through loss aversion and compulsion. Horizontal: <b>Left Brain / Right Brain</b> — whether the drive is calculative/extrinsic, or creative/intrinsic. A healthy game uses both hemispheres and both hats, in deliberate balance. An unhealthy one over-indexes on one quadrant — usually Black-Hat-Left-Brain, the "addictive extrinsic loop" quadrant that produces spectacular short-term engagement and spectacular long-term churn.</p>
+
+      <p>Applied as a teardown tool across peers, Octalysis surfaces the <b>motivational profile</b> of a competitive set. Two word games can have nearly identical core mechanics and radically different motivational shapes. One might lean on Scarcity (Drive 6) and Unpredictability (Drive 7) to keep players returning; another on Ownership (Drive 4) and Social Influence (Drive 5). Those are different products, even when they look the same at ring 1 of the Onion Peel.</p>
+
+      <div class="pull-quote">Octalysis turns "is this fun?" into "fun how, for whom, at what cost?"</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTPUT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 06 / Applied Output</div>
+      <h2 class="sec-title">What the toolkit <em>produces</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ eight games, same lens</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">Ran across a set of peer and adjacent casual word games, the three frameworks produce a single comparative artefact — a long-form teardown that places each competitor next to the others along the same axes. Below: a composite of that work.</p>
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/research-strategies/06.webp" alt="Research strategies overview and output" loading="lazy">
+  </div>
+
+  <div class="wide-mock">
+    <img src="../assets/case-studies/research-strategies/04.webp" alt="Multi-game competitive teardown across all seven onion peel layers" loading="lazy">
+  </div>
+
+  <div class="prose" style="margin-top:36px">
+    <p>Running the same three frameworks across ~8 competitors stops being a research exercise and starts being an <b>argument-generator</b>. Every feature pitch at the subsequent product-planning session could be anchored to: <em>"peer A invests here, peer B doesn't, we're between them; based on the System Map this change would reinforce the meta layer without destabilising the core loop; Octalysis says we'd be paying Drive 4 and borrowing from Drive 6, which is fine because we're currently over-indexed on 6."</em></p>
+
+    <p>That kind of argument is only available to a team that has done the teardown work. The whole point of the toolkit is that the work, once done, is durable. The Onion Peel diagrams age well — the layers themselves don't shift even as specific games update. The System Maps take a week to refresh. Octalysis audits take a day. This is why the frameworks were the deliverable, not the individual reports.</p>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 07 / Outcome</div>
+        <h2 class="sec-title">Research as <em>shared vocabulary</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ what the work left behind</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="stat"><div class="n">3</div><div class="l">Frameworks adopted</div></div>
+      <div class="stat"><div class="n">7</div><div class="l">Onion Peel layers</div></div>
+      <div class="stat"><div class="n">8</div><div class="l">Octalysis drives</div></div>
+      <div class="stat"><div class="n">6 mo</div><div class="l">Solo engagement</div></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">The durable output of this engagement wasn't any single research report. It was a small, repeatable playbook a single researcher could run against any casual game — competitor, partner, or the company's own product — and produce the same kind of argument, in the same shape, every time.</p>
+
+      <p>The effect on product conversations was the most visible thing. Once a team shares vocabulary — <em>"we're hollow at ring 5"</em>, <em>"that feature is an orphan node"</em>, <em>"we're over-indexed on Drive 6"</em> — the conversations themselves become shorter and more structural. Nobody is arguing from taste. Nobody is arguing from authority. Both parties are pointing at the same diagram.</p>
+
+      <p>The frameworks travelled downstream too. The <b>Collection System</b> proposal that eventually shipped was a direct application of the toolkit — Onion Peel flagged meta-layer hollowness, Octalysis flagged Drive 4 weakness, System Map showed that ownership rewards weren't reinforcing any loop. All three tools, pointing at the same gap, made the case for a new feature before a single wireframe existed.</p>
+
+      <p>Systems thinking, teardown rigour, and a motivational audit: together they turn a casual F2P game into something a single researcher can argue about with the specificity that more heavyweight UX environments take for granted.</p>
+    </div>
+    <span class="note">↑ the players don't show up, but the games always do.</span>
+  </div>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="emotions-journaling.html">← prev: Emotions Journaling</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="ewaste-recycling.html" style="text-align:right">next: E-Waste Recycling →</a>
+</nav>
+
+</body>
+</html>

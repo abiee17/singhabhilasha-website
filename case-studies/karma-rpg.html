@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Karma Project — when the mechanic is the meditation · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 03 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Verse · 2025–26 · in development</span></div>
+  <h1>The Karma Project — when the <em>mechanic</em> is the meditation.</h1>
+  <p class="sub">A single-player 3D RPG about emotional regulation, scaffolded on Buddhist cosmology — the <b>Six Realms of Samsara</b>. Built in Unity 6 with a small team. Two iterations in: a choice-driven open world that failed for specific reasons, then a rebuild around embodied interaction, compassionate systems, and a hum-dial whose win state is the player's own nervous system. My hats: narrative design, game design, 3D art, engineering, and pair-development with Claude Code.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Narrative + Game Designer · 3D Art · Engineer</dd></div>
+    <div><dt>Team</dt><dd>Verse · Ben (founder, Buddhist content) · UI artist · me</dd></div>
+    <div><dt>Engine</dt><dd>Unity 6000.0.62f1 (URP)</dd></div>
+    <div><dt>Genre</dt><dd>6-Realms Karma RPG · Single Player</dd></div>
+    <div><dt>MVP</dt><dd>Chapter 1 — Serna and the Empty Cup</dd></div>
+    <div><dt>Lineage</dt><dd>It Takes Two · Little Nightmares · Spiritfarer</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/projects/03-karma-rpg.webp" alt="The Karma Project — Sammy meets Serna in the Hungry Ghost realm">
+  </div>
+</header>
+
+<!-- PREMISE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Premise</div>
+      <h2 class="sec-title">Most <em>wellness games</em> are meditation apps in skeuomorphic clothing.</h2>
+    </div>
+    <div class="sec-kick">↳ the category is thin</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Most titles in the space either gamify meditation — streaks, XP for breathing, lotus flowers that bloom on completion — or decorate a meditation app with game aesthetics. Both approaches preserve a split between the <em>game part</em> and the <em>therapy part</em>. The player experiences them as sequential: <b>first I play, then I feel.</b></p>
+
+    <p>The Karma Project began by asking a different question: <b>what if the game itself was the meditation — not an app wrapped around one?</b> The scaffolding is Buddhist cosmology — the Six Realms of Samsara (God, Demi-god, Human, Animal, Hungry Ghost, Hell). Each realm encodes an emotional pattern — craving, rage, pride, fear — and each chapter asks the player (Sammy) to untie that pattern not by choosing a compassionate answer from a menu, but by <em>enacting</em> compassion through how the game is played.</p>
+
+    <p>Chapter 1, the MVP, is called <b>"Serna and the Empty Cup"</b> and stages the Hungry Ghost realm. The player meets Serna — a child whose visual design pins Buddhist <cite>preta</cite> iconography (distended glowing belly, dress of food wrappers, eyes that never quite land) onto the silhouette of a normal, sad little girl. A small black cat shadows the player as a silent companion. The teaching: <em>generosity is the cure to emptiness.</em> The mechanic: <b>embodied giving, under adversarial timing, resolved by a hum that actually down-regulates the player's nervous system.</b></p>
+
+    <div class="pull-quote">The win state of the game and the calm state of the player are the same event.</div>
+  </div>
+</section>
+
+<!-- HUNGRY GHOST REALM (dark) -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / Art Direction</div>
+        <h2 class="sec-title">A pleasant-looking village where the suffering is <em>invisible</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ the aesthetic is the diagnosis</div>
+    </div>
+    <div class="prose">
+      <p class="lead">The art direction carries the thesis before the gameplay does. The Hungry Ghost realm is not hell. It is a warm-coloured, painterly, low-poly cartoon village — closer in visual grammar to <em>Animal Crossing</em> or <em>A Short Hike</em> than to <em>Dark Souls</em>. Trees are lollipop-green. The sky is a pink-violet sunset that never quite breaks. It is the <b>"abundance" side of preta mythology</b> — a world that looks like it has everything, filled with residents who cannot eat.</p>
+
+      <p>The signals of suffering are embedded, not announced:</p>
+
+      <ul class="principle-list">
+        <li data-tag="Food Rain"><b>FoodRainManager</b> drops food from a featureless sky. It bounces and rolls. Nobody picks it up.</li>
+        <li data-tag="Serna's Dress"><b>Costume as symptom.</b> Serna's dress is made of what she has tried to consume — wrappers, stickers, a glowing belly-orb that never empties.</li>
+        <li data-tag="Benches"><b>Decoration, not food.</b> Cupcakes and cake slices sit permanently on benches beside her. The world is full of sweets no one eats.</li>
+        <li data-tag="Ghost NPCs"><b>White-masked translucent spirits.</b> Designed from a master visual prompt drawing on Japanese <cite>yūrei</cite> folklore and early Miyazaki spirit-world aesthetics: humanoid but less human, slightly elongated neck, softened anatomy, a rounded heavy belly shaped by unseen craving. Each ghost is specialised — <b>The Listener, The Performer, The Commuter</b> — rendered with a soft internal glowing orb at the chest, ankle, or ear that locates where their unmet craving lives in the body.</li>
+      </ul>
+
+      <p style="margin-top:24px">The world smiles. The design does the talking.</p>
+
+      <div class="pull-quote">Environmental characterization before any NPC has opened their mouth.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR MOVES -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Design Language</div>
+      <h2 class="sec-title">Four moves that define <em>iteration 2</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ each one fixed a specific failure</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">Iteration 1 was a choice-driven open-world RPG in the <em>Disco Elysium</em> / <em>Undertale</em> tradition. It failed in playtesting for two reasons — choice fatigue and freeroam erosion, both covered below. The rebuild introduced four design moves, each a direct response to a specific failure mode. Together they define how the game now works.</p>
+  </div>
+
+  <h3 style="font-size:26px;margin:40px 0 12px;letter-spacing:-.01em">1. Embodiment before exposition</h3>
+  <div class="prose">
+    <p>In exploration, the camera is behind Sammy's shoulder; the player sees her body. In mini-games, the camera drops into her head and her hands appear — there is weight to what she carries, a lerp to how she lets go. The <code>PlayerStateMachine</code> contains six first-class states — <b>Grounded, Airborne, Crouch, Carry, PushPull, Climb</b> — each a teaching surface. Crouch is humility. Carry is the feel of holding something that matters. PushPull is the cost of moving the world. Climb is choosing difficulty. Borrowing directly from <em>Little Nightmares</em>' vocabulary, interaction is physical, not menu-based. When Sammy offers bread to a ghost, she walks up to them and holds it out. <b>The body is the verb.</b></p>
+    <p>This is embodied cognition (Lakoff &amp; Johnson; Barsalou) as literal implementation. Meaning held in the sensorimotor loop persists in a way that dialogue-box meaning does not.</p>
+  </div>
+
+  <h3 style="font-size:26px;margin:40px 0 12px;letter-spacing:-.01em">2. Silent companions</h3>
+  <div class="prose">
+    <p>The emotional architecture is built around three relationships, none of them loud:</p>
+    <ul class="principle-list">
+      <li data-tag="The Cat"><b>The black cat.</b> No dialogue. Watches. Follows. The regulating anchor, the steady observer from which the player borrows composure. <cite>Design lineage: Stray's cat-as-protagonist; Ico and The Last Guardian; the</cite> yorishiro <cite>concept in Shinto — the object or being in which a spirit temporarily dwells.</cite></li>
+      <li data-tag="Ananda"><b>The child-monk teacher</b>, sworn not to open his eyes until he has seen the whole truth. His closed-eyed calm is the target state Sammy will reach at the end of the chapter. The teacher is young on purpose — Buddhist pedagogy frames clarity as returning to something younger, not acquiring something older.</li>
+      <li data-tag="Serna"><b>The chapter's centre.</b> Her visual design (glowing belly, candy-dress, sentence that cuts off mid-word — <em>"I'm tired of eating endlessly, can you help me break free from th…"</em>) characterises her before she speaks. Her quest is not "deliver bread" — it is "sit with her, offer, and accept whatever she does."</li>
+    </ul>
+  </div>
+
+  <h3 style="font-size:26px;margin:40px 0 12px;letter-spacing:-.01em">3. Compassionate systems — fail-soft as design philosophy</h3>
+  <div class="prose">
+    <p>Every objective in the quest system declares <code>canFail</code> and <code>retryAllowed</code>, and <code>QuestManager.FailObjective()</code> runs a multi-level cascade when the player stumbles:</p>
+    <ul class="gaps">
+      <li data-n="01"><b><code>canFail = false</code></b> → Failure is ignored. The objective stays open. No scolding, no reset.</li>
+      <li data-n="02"><b><code>canFail + retryAllowed</code></b> → Progress resets. A gentle "Try Again" toast appears.</li>
+      <li data-n="03"><b><code>canFail + !retryAllowed + isOptional</code></b> → Objective is skipped. Quest continues gracefully.</li>
+      <li data-n="04"><b><code>canFail + !retryAllowed + required + fallbackDialogueId</code></b> → A flag is set. NPCs respond with <b>compassionate fallback dialogue</b> — a new branch authored for the version of the story where the player did not succeed.</li>
+    </ul>
+    <p style="margin-top:24px">This is not a difficulty slider. It is a <b>design stance</b>: the game's response to the player's mistake is authored with the same care as its response to the player's success. In a game whose core teaching is that suffering arises from grasping, it would be incoherent for the game itself to grasp at its own fail states. <em>The architecture enacts the thesis.</em></p>
+    <p>A side-effect: writing a chapter now means writing two threads — the version where Sammy gets it right, and the version where she doesn't. The second thread is often the more moving one.</p>
+  </div>
+
+  <h3 style="font-size:26px;margin:40px 0 12px;letter-spacing:-.01em">4. Environmental narration — the visibility spectrum</h3>
+  <div class="prose">
+    <p>Iteration 1 marked every objective with a quest marker. Iteration 2 introduces four visibility tiers on every objective — an engineered grammar for how loudly the game speaks:</p>
+    <ul class="principle-list">
+      <li data-tag="Hidden"><b>No UI, no journal entry.</b> Silent beat. Environmental discoveries the player notices or doesn't. <em>Little Nightmares</em> territory.</li>
+      <li data-tag="SoftHint"><b>Journal line only</b>, no counter, no marker. NPC mentions something vaguely.</li>
+      <li data-tag="JournalVisible"><b>Appears in quest log</b> with progress counter. Standard objective.</li>
+      <li data-tag="MapMarkerVisible"><b>Waypoint + journal + counter.</b> Key beats where clarity serves the player.</li>
+    </ul>
+    <p style="margin-top:24px">This is the lever that cured iteration 1's freeroam problem. The world still has room to wander — but the <em>information architecture</em> of the wandering is now authored. A chapter about the Hungry Ghost realm can have Hidden beats — a dried-up bowl, a tree stripped of fruit, a ghost muttering the same phrase on loop — that register as <b>tone</b> rather than tasks.</p>
+  </div>
+</section>
+
+<!-- FIRST-PERSON BEATS (dark) -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / The Mini-Games</div>
+        <h2 class="sec-title">Three mini-games, <em>three</em> nervous systems.</h2>
+      </div>
+      <div class="sec-kick">↳ first-person inside chapter arcs</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Inside chapter arcs, the camera switches to first-person for mechanical set-pieces where the teaching is enacted. Three beats carry Chapter 1's argument.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Bird Feeding"><b>Craving as rhythm.</b> The player tosses bread to birds arriving in three escalating patterns — Dive Feed, Circle &amp; Snatch, Swarm Panic. Some birds are <em>never satisfied</em>. The player gets better at the skill and still feels they are losing. The mini-game teaches the pattern of endlessness <b>procedurally</b>, not by telling.</li>
+        <li data-tag="Fish Feeding"><b>The futility of forced giving.</b> A whack-a-mole / <em>Angry Birds</em> hybrid. Mouths open and close with rhythm, fakes, greed. By Phase 4, overfed fish <em>spit the bread back</em>. The player learns, under pressure, the futility of forcing generosity on the unwilling. The weather darkens. The lesson is in the thumb.</li>
+        <li data-tag="Hum-dial"><b>Down-regulation as win state.</b> The chapter resolves with humming into the microphone. The chakra-coloured pitch-dial visualises the player's actual voice matching target tones — a design that pairs the fiction (a character finding peace after generosity) with the physiology: <em>Bhramari pranayama</em>, the humming-bee breath documented in clinical literature (Kuppusamy et al., 2016; Trivedi et al., 2023) to lower heart rate and improve HRV.</li>
+      </ul>
+
+      <p style="margin-top:24px">Mechanically, Bird and Fish share engineering (throw arc, projectile, hit detection, timing windows). Emotionally, they are <em>different nervous systems</em> — compulsive, then anxious. Clean reuse, deliberate contrast.</p>
+
+      <div class="pull-quote">The fiction says the character is finding peace. The player's actual parasympathetic nervous system, matched pitch by pitch, agrees.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE GOT HERE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / The Pivot</div>
+      <h2 class="sec-title">Iteration 1 was a story with <em>games bolted on</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ two playtest failures, two inspirations</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The first prototype was a choice-driven open-world RPG in the <em>Disco Elysium</em> / <em>Undertale</em> tradition. Sammy spawned in the Hungry Ghost realm. A quest line moved her from NPC to NPC to the Temple of Ananda to Serna to a mini-game resolution and finally to an Artifact + Reflection Card + IRL Card. Karma was a ledger. Every NPC offered 2–3 dialogue choices.</p>
+
+    <p>Playtesting surfaced two specific failures:</p>
+
+    <ul class="gaps">
+      <li data-n="01"><b>Choice fatigue without consequence weight.</b> Picking A, B, or C from a menu is a low-resolution expression of a deep emotional state. Players reported dialogue choices felt <em>like forms</em>. The karma meter was too abstract, too distant from the body of play. The lesson was <b>told, not felt</b> — the same critique that has dogged BioWare-era morality meters for a decade.</li>
+      <li data-n="02"><b>Freeroam eroded intention.</b> The open map, meant to create discovery, instead diluted focus. An emotional arc can't survive 40 seconds of running past trees. What works for <em>Breath of the Wild</em> works <em>against</em> a chapter whose thesis is "stop craving, start noticing."</li>
+    </ul>
+
+    <p style="margin-top:28px">The break came from replaying <em>It Takes Two</em> and <em>Split Fiction</em> (Hazelight Studios). These are couples-therapy co-op games in premise, but what matters is that the <b>emotional arc of each chapter is enforced by the gameplay itself</b> — when characters are at odds, the mechanics demand coordination anyway; when they misunderstand each other, the puzzles require perspective-swapping. The game teaches through asymmetric friction. <em>Little Nightmares</em> (Tarsier Studios) became the second anchor for its opposite move — entire arcs told through environment and silent objectives, never shouting instructions.</p>
+
+    <p>Together, these two references supplied the vocabulary the rebuild needed.</p>
+
+    <div class="pull-quote">Iteration 2 is a game whose systems <em>are</em> the story.</div>
+
+    <p style="margin-top:28px">This is procedural rhetoric (Bogost, <cite>Persuasive Games</cite>, 2007) applied: games make claims through the rules they enforce, not the words they deliver. The axes shifted as follows:</p>
+  </div>
+
+  <div class="scope" style="margin-top:32px">
+    <div class="scope-card">
+      <span class="tag">Iteration 1</span>
+      <h4>Story with games bolted on</h4>
+      <ul>
+        <li><b>Lesson lands</b> via dialogue choice</li>
+        <li><b>World narrates</b> via quest markers + NPC exposition</li>
+        <li><b>Failure</b> is binary pass/fail, replay required</li>
+        <li><b>Camera</b> is third-person open world</li>
+        <li><b>Dialogue</b> is the primary verb</li>
+      </ul>
+    </div>
+    <div class="scope-card">
+      <span class="tag">Iteration 2</span>
+      <h4>Game whose systems are the story</h4>
+      <ul>
+        <li><b>Lesson lands</b> via mechanical friction + embodied interaction</li>
+        <li><b>World narrates</b> via environmental beats, silent objectives, ambient ghosts</li>
+        <li><b>Failure</b> runs through a compassionate fail-soft cascade</li>
+        <li><b>Camera</b> is third-person explore + first-person for mini-game set-pieces</li>
+        <li><b>Dialogue</b> is one tool among several — re-scoped, retained at hinge beats</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER WALKTHROUGH (dark) -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 06 / Chapter 1</div>
+        <h2 class="sec-title">Serna and the <em>Empty Cup</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ how a session actually plays</div>
+    </div>
+    <div class="prose">
+      <ul class="principle-list">
+        <li data-tag="Arrival"><b>Sammy wakes</b> in a pink-violet sunset. FoodRainManager drops food from a featureless sky — a pleasant anomaly she'll only register as suffering later. The cat appears. She follows.</li>
+        <li data-tag="NPCs"><b>Three ghost villagers</b> (GhostNPC with NavMesh roaming, karma-responsive behaviour: Roaming / Paused / Reacting). The Listener, The Performer, The Commuter. Each exhibits a different symptom of hungry-ghost suffering. Visibility is SoftHint. The world tells you something is wrong.</li>
+        <li data-tag="Ananda"><b>The closed-eyed child-monk</b> at the lotus-pond temple. Dialogue beat. Teaches tonglen (Tibetan giving/taking meditation — Chödrön, 1994) and the humming breath. Player leaves with bread as a reward.</li>
+        <li data-tag="Serna"><b>The emotional anchor.</b> World-space speech bubble, typewriter, billboarded. Her quest is not "deliver bread" — it is "sit with her, offer, and accept whatever she does."</li>
+        <li data-tag="Mini-games"><b>Bird Feeding + Fish Feeding</b>, staged as chapter beats, not the whole game. Shared engineering, contrasting nervous systems.</li>
+        <li data-tag="Hum-dial"><b>Microphone-driven pitch-matching</b> visualised through the seven-chakra rainbow ring. The player's parasympathetic nervous system is the actual win condition.</li>
+        <li data-tag="Reflection"><b>Card + IRL card.</b> "Today, share your meal with one person who isn't expecting it." On next launch the game asks; karma credits if it happened.</li>
+      </ul>
+
+      <p style="margin-top:28px">The IRL card is an explicit gesture toward <b>transfer</b> (Perkins &amp; Salomon, 1992) — the pedagogy principle that a lesson only counts when it crosses a context boundary. Without the IRL card, the game is therapy-theater. With it, the game is a bridge.</p>
+
+      <p>The karma meter survived from Iteration 1, but its inputs changed. It no longer responds to menu picks. It responds to mechanical choices under pressure: <b>Good</b> (karma + coins) for behaviors aligned with the chapter's practice; <b>Neutral</b> (coins) for survival play; <b>Bad</b> (karma penalty) for acting in alignment with the unhealed pattern when the game has offered an alternative. This shifts the moral signal from <em>statement</em> to <em>habit</em> — closer to BJ Fogg's Behavior Model, where preferences form through repeated motivation-ability-trigger loops, not declared intent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 07 / Systems</div>
+      <h2 class="sec-title">Layered, <em>event-driven</em>, boring-on-purpose.</h2>
+    </div>
+    <div class="sec-kick">↳ the architecture that makes the design possible</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The project runs on a layered, event-driven architecture. Zero <code>Update()</code> polling for cross-system communication. Every manager fires C# Action events; every UI element listens. Nine singletons under <code>DontDestroyOnLoad</code>. Chapter 1 runs at ~160 fps on desktop with the HUD, food-rain pool, NavMesh ghosts, and dialogue system live.</p>
+
+    <ul class="principle-list">
+      <li data-tag="Data"><b>DialogueSO, QuestSO, KarmaConfig, ItemSO, VariableStore</b> — ScriptableObject (immutable at runtime). Asset-based, Inspector-editable.</li>
+      <li data-tag="Managers"><b>KarmaManager, WalletManager, DialogueManager, QuestManager, HUDManager, BackgroundMusicManager, SparkleVFXManager, GhostAtmosphere, FoodRainManager</b> — singletons firing Action events.</li>
+      <li data-tag="State Machines"><b>Player</b> (6 states: Grounded, Airborne, Crouch, Carry, PushPull, Climb). <b>Quest</b> (6 states: Locked, Available, Active, Completed, Done, Failed). <b>Ghost NPC</b> (3 states: Roaming, Paused, Reacting).</li>
+      <li data-tag="Dialogue"><b><code>[SerializeReference]</code> polymorphism.</b> Any new action or condition is a single C# class that auto-appears in the Dialogue Editor via reflection. Adding a new verb to the game's moral vocabulary — <em>ShowReflectionCard</em>, <em>OfferAlms</em>, <em>SitWithGhost</em> — takes one file, zero core changes.</li>
+      <li data-tag="Editor Toolkit"><b>Dialogue Editor</b> (3-panel visual graph), <b>Quest Debug Console</b> (Play Mode introspection with Progression Blocker Finder + event history), <b>Variable Store Browser</b> (live flag/counter inspection), <b>Setup Game Systems</b> (2-click singleton bootstrap). Designers never leave Unity.</li>
+    </ul>
+
+    <p style="margin-top:24px">Narrative designers write meaning; engineers don't bottleneck.</p>
+  </div>
+</section>
+
+<!-- PIPELINE (dark) -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 08 / Pipeline</div>
+        <h2 class="sec-title">Small team. <em>Unity 6</em>. Claude Code.</h2>
+      </div>
+      <div class="sec-kick">↳ how the scope became tractable</div>
+    </div>
+    <div class="prose">
+      <p class="lead">The project was built by a small team in a short window. The pipeline that made the scope tractable was as much about <b>how intention became execution</b> as it was about headcount.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Source of truth"><b>Design docs in markdown.</b> Every chapter arc, system, and mechanic drafted in markdown. Claude read those directly and generated Unity C# scaffolding matching spec — no manual translation layer. The repo's ~27k-word systems documentation is itself co-authored this way.</li>
+        <li data-tag="Hybrid character pipeline"><b>GenAI → Meshy → Unity.</b> Narrative brief → Sora video concept passes (motion language) → Midjourney / ChatGPT image sheets (the NPC Cheatbook and Ghost Bible) → Meshy 3D generation → Unity polish. The five ghost archetypes (Listener, Performer, Commuter, &amp;c.) and Serna's before/after studies were built this way.</li>
+        <li data-tag="Editor-first"><b>Tools alongside systems.</b> The editor toolkit was built in the same sprints as the runtime systems. Debug Console, Dialogue Editor, Variable Store Browser — all present from sprint 1, not bolted on.</li>
+        <li data-tag="Extensibility-by-reflection"><b>Open vocabulary.</b> <code>[SerializeReference]</code> + reflection means the game's moral verbs are open-ended by architecture, not by committee.</li>
+        <li data-tag="Event-driven decoupling"><b>Zero cross-system polling.</b> Every manager fires Actions. Every UI element listens. Nine singletons that never talk over each other.</li>
+        <li data-tag="Agentic verification"><b>Sub-agents cross-reference.</b> Before writing new utilities, a research sub-agent scans existing scripts — preventing the classic LLM failure of re-inventing solved problems.</li>
+        <li data-tag="Performance-aware"><b>Senior-engineer reflexes on tap.</b> <code>HashSet&lt;int&gt;</code> for animator param validation; manual backward loops to avoid <code>RemoveAll</code> allocation; 0.15s-coroutine with 2s cache instead of per-frame scans.</li>
+        <li data-tag="Playtest loop"><b>Notes → design → code in a day.</b> The Iteration 1 → 2 pivot happened in weeks, not months.</li>
+      </ul>
+
+      <p style="margin-top:28px">This is not "AI wrote the game." It's that the <b>ratio of intention to execution inverted</b>. The human job became sharper — decide what Serna's silence should feel like; decide whether the fail-soft cascade should produce compassion or suspicion; decide which objectives should be Hidden — and the translation from decision to working build compressed to hours.</p>
+
+      <div class="pull-quote">The human decides what to make. The tooling holds the line between decision and build.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARGUMENT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 09 / Argument</div>
+      <h2 class="sec-title">The mechanic is the <em>therapy</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ what the project argues about wellness games</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The category of "wellness games" is crowded and thin. Most titles either gamify meditation or decorate a meditation app with game aesthetics. Both approaches preserve the split between the game part and the therapy part. The Karma Project's argument is that this split is the bug.</p>
+
+    <p><b>The mechanic is the therapy. The system is the ethics. The aesthetic is the diagnosis.</b></p>
+
+    <p>When the player sustains a hum to close a chapter, the physiological down-regulation is not a side-effect — it <em>is</em> the win state. When Sammy carries a loaf of bread across a level and places it at the feet of a suffering ghost, the meaning is in the thumb holding the pickup button, not in the dialogue box that follows. When the Hungry Ghost realm is rendered as a pleasant-looking village full of lonely spirits eating uneatable food, the environment is teaching the chapter's thesis before any NPC has opened their mouth. When the player fails an objective and the game responds with a compassionate fallback instead of a reset, the architecture itself is rehearsing the lesson.</p>
+
+    <p>The pivot from Iteration 1 to Iteration 2 is, in the end, a pivot from <em>games as carriers</em> to <em>games as the thing itself</em>. Iteration 1 carried the lesson in dialogue; the game was the vehicle. In Iteration 2, the game is the lesson. Every layer — the state machine, the visibility tiers, the fail-soft cascade, the event architecture, the hum-dial, the silent cat, the uneaten cake on the bench — is an expression of the same thesis.</p>
+
+    <p>And that is, as it happens, a deeply Buddhist answer to a design problem.</p>
+
+    <span class="note">↑ the win state of the game and the calm state of the player are the same event.</span>
+  </div>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="../index.html#work">← all case studies</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="travel-match3.html" style="text-align:right">next: Travel Match-3 →</a>
+</nav>
+
+</body>
+</html>
