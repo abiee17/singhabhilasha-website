@@ -1113,22 +1113,57 @@ setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
     const dt = Math.min(.05, (t-last)/1000); last = t;
     const vw = window.innerWidth;
 
-    // Overlap avoidance — if both dogs walk same direction and are close,
-    // the one behind speeds up, the one ahead slows down, so they pass cleanly.
+    // Overlap avoidance.
+    // (a) Same-direction soft pacing: trailing dog speeds up, leader slows down.
+    // (b) Hard-clear: if dogs actually touch for > 1 second (regardless of facing
+    //     or sniff state), wake any sniffer and boost them apart aggressively.
+    //     Lets brief crossings look natural while killing any pile-up.
     {
       const [d1, d2] = dogs;
-      if (d1.el && d2.el && d1.facing === d2.facing && !d1.sniffing && !d2.sniffing) {
-        const gap = d2.x - d1.x;
-        const minGap = (d1.w + d2.w) * 0.6;
-        if (Math.abs(gap) < minGap) {
-          const d1Behind = (gap * d1.facing > 0);
-          d1._boost = d1Behind ? 1.7 : 0.55;
-          d2._boost = d1Behind ? 0.55 : 1.7;
+      if (d1.el && d2.el) {
+        const cx1 = d1.x + d1.w / 2;
+        const cx2 = d2.x + d2.w / 2;
+        const dist = Math.abs(cx2 - cx1);
+        const touching = dist < (d1.w + d2.w) * 0.5;
+
+        if (d1.facing === d2.facing && !d1.sniffing && !d2.sniffing) {
+          const gap = d2.x - d1.x;
+          const minGap = (d1.w + d2.w) * 0.6;
+          if (Math.abs(gap) < minGap) {
+            const d1Behind = (gap * d1.facing > 0);
+            d1._boost = d1Behind ? 1.7 : 0.55;
+            d2._boost = d1Behind ? 0.55 : 1.7;
+          } else {
+            d1._boost = 1; d2._boost = 1;
+          }
         } else {
           d1._boost = 1; d2._boost = 1;
         }
-      } else if (d1.el && d2.el) {
-        d1._boost = 1; d2._boost = 1;
+
+        if (touching) {
+          if (!d1._overlapStart) d1._overlapStart = t;
+          if ((t - d1._overlapStart) > 1000) {
+            // Wake either sniffer so it can move out of the way
+            [d1, d2].forEach(d => {
+              if (d.sniffing) {
+                d.sniffing = false;
+                d.el.classList.remove('sniff');
+                d.nextSniff = 6 + Math.random() * 4;
+              }
+            });
+            // Force aggressive separation
+            if (d1.facing === d2.facing) {
+              const d1Behind = ((d2.x - d1.x) * d1.facing > 0);
+              d1._boost = d1Behind ? 2.5 : 0.35;
+              d2._boost = d1Behind ? 0.35 : 2.5;
+            } else {
+              d1._boost = 2.2;
+              d2._boost = 2.2;
+            }
+          }
+        } else {
+          d1._overlapStart = 0;
+        }
       }
     }
 
