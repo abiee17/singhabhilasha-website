@@ -1036,9 +1036,13 @@ setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
 /* ---- Dachshunds ---- */
 (function dachshunds(){
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Spawn dogs from opposite sides so they enter the strip independently,
+  // cross paths once in the middle (~1s overlap rule keeps it brief), and
+  // then walk apart. Dog2 also gets a small startDelay so its first appearance
+  // is staggered from dog1's even on slower screens.
   const dogs = [
-    {el: document.getElementById('dog1'), w: 127, scale: 0.82, speed: 95, facing: 1, x: -160, nextSniff: 6 + Math.random()*6, nextJump: 5 + Math.random()*6, nextFart: 4 + Math.random()*5, nextBark: 9 + Math.random()*7, nextPitch: 9 + Math.random()*10, pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0},
-    {el: document.getElementById('dog2'), w: 188, scale: 1, speed: 70, facing: 1, x: -300, nextSniff: 10 + Math.random()*8, nextJump: 8 + Math.random()*8, nextFart: 6 + Math.random()*6, nextBark: 12 + Math.random()*8, nextPitch: 14 + Math.random()*12, pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0}
+    {el: document.getElementById('dog1'), w: 127, scale: 0.82, speed: 95, facing: 1,  x: -160,                          startDelay: 0,   nextSniff: 6 + Math.random()*6,  nextJump: 5 + Math.random()*6, nextFart: 4 + Math.random()*5, nextBark: 9 + Math.random()*7,  nextPitch: 9 + Math.random()*10,  pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0},
+    {el: document.getElementById('dog2'), w: 188, scale: 1,    speed: 70, facing: -1, x: window.innerWidth + 200,        startDelay: 4,   nextSniff: 10 + Math.random()*8, nextJump: 8 + Math.random()*8, nextFart: 6 + Math.random()*6, nextBark: 12 + Math.random()*8, nextPitch: 14 + Math.random()*12, pitchIdx: Math.floor(Math.random()*4), sniffing: false, jumping: false, sniffUntil: 0}
   ];
   const woofs = ['woof!', 'arf!', 'bork!', 'yip!', 'wuff!'];
   const pitches = [
@@ -1169,6 +1173,15 @@ setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
 
     dogs.forEach(d=>{
       if (!d.el) return;
+      // Honor startDelay (dog stays put off-screen until its turn)
+      if (d.startDelay > 0) {
+        d.startDelay -= dt;
+        d.el.style.left = d.x + 'px';
+        const s0 = d.scale || 1;
+        d.el.style.transform = `scale(${d.facing > 0 ? s0 : -s0}, ${s0})`;
+        d.el.classList.toggle('facing-left', d.facing < 0);
+        return;
+      }
       if(d.sniffing){
         if(t/1000 > d.sniffUntil){
           d.sniffing = false;
