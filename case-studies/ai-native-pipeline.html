@@ -14,7 +14,7 @@
 <!-- Top bar -->
 <div class="topbar">
   <a class="back" href="../index.html">← back to portfolio</a>
-  <div class="crumb">Case Study · 00 / 10</div>
+  <div class="crumb">Case Study · 00 / 11</div>
 </div>
 
 <!-- Hero -->
@@ -86,11 +86,75 @@
   </div>
 </section>
 
+<!-- MESHY → BLENDER DEEP DIVE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Deep dive · 3D</div>
+      <h2 class="sec-title">Meshy gives a <em>mesh</em>. Blender + Claude give an <em>asset</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ how a one-minute generation becomes a rigged, animatable game-ready prop or character</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">The most non-obvious combination in the pipeline is Meshy + Blender + Claude. <b>Meshy</b> produces a textured base mesh from text or an image in about a minute — fast, but never ship-ready. <b>Blender</b>, driven by <b>Claude</b> through the <code>bpy</code> Python API (via the Blender MCP server), does the surgery that turns the raw output into a game-ready asset: slicing, adding, retopologizing, rigging, animating.</p>
+
+    <p>The trap most teams fall into is treating Meshy output as final. The geometry is dense and triangulated, the topology has no edge loops at deformation joints, the mesh is a single shell with no rig points. Drop it into Unity directly and you get a static prop that can't move. The pipeline below is what gets you the rest of the way.</p>
+
+    <div class="wide-mock">
+      <!-- TODO: Meshy interface screenshot — Hum Tunnel Neon Candy Arch (showing Meshy workspace + variants) -->
+      <img src="../assets/case-studies/ai-pipeline/03-meshy-hum-tunnel.webp" alt="Meshy generating the Hum Tunnel Neon Candy Arch — base mesh + texture variants in the Meshy workspace">
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:32px">
+    <h3 style="font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0 0 12px">The five surgical moves</h3>
+    <ul class="principle-list">
+      <li data-tag="01 · Slice"><b>Boolean cuts at deformation joints.</b> A Meshy character arrives as one shell. Claude scripts <code>bpy.ops.mesh.bisect</code> at wrist / ankle / neck planes to separate the limbs into clean parts with their own edge loops. For Karma's hungry-ghost villagers, the mask separates from the body so it can rotate independently — the spirit's gaze drifts off-center while the body holds still.</li>
+      <li data-tag="02 · Add"><b>Extrude new geometry.</b> Capes, weapons, wheels, glow rings, accessories, attach-points. Claude generates new mesh parametrically — <code>bpy.ops.mesh.extrude_region_move</code>, <code>primitive_cylinder_add</code>, vertex welding — wherever Meshy comes back without something. Riley's mine-cart got its <em>wheels</em> rebuilt this way; Meshy returned a clean cart body, Claude added the four wheel cylinders + axle constraints.</li>
+      <li data-tag="03 · Modify"><b>Retopo + decimate + reUV.</b> Meshy outputs are triangle-dense (3,000–5,000 tris on a small prop). Claude runs a Decimate modifier chain to bring counts to mobile-friendly numbers without losing silhouette, then auto-unwraps via <code>smart_project</code>. Texture is rebaked from the Meshy original onto the cleaner UVs.</li>
+      <li data-tag="04 · Rig"><b>Programmatic armature + heat-diffuse weights.</b> Claude builds the bone hierarchy bone-by-bone via <code>bpy.ops.armature.bone_primitive_add</code>, parents the slices to bones, then applies <code>parent_set(type='ARMATURE_AUTO')</code> for heat-diffusion weighting. Vertex group cleanup respects the slice boundaries so weights don't bleed across joints.</li>
+      <li data-tag="05 · Animate"><b>Keyframes via bpy, F-curve cycle modifiers, FBX bake.</b> Idle bobs, breathing, looping fidgets — Claude sets rotation/scale/location keyframes at frames 0/30/60, applies a Cycles F-curve modifier so the action loops cleanly, exports FBX with the action baked. Drops into Unity, Animator picks it up, played from the same state machine the rest of the project uses.</li>
+    </ul>
+  </div>
+
+  <div class="callout" style="margin-top:32px">
+    <div class="num">1 + 8</div>
+    <div>
+      <div class="label">Average pipeline time per asset</div>
+      <div class="txt">~<b>1 minute</b> in Meshy for the base mesh + texture; ~<b>8 minutes</b> in Blender (driven by Claude over MCP) for slicing, geometry-add, retopo, rig, and an idle animation. Versus 4–8 hours for a 3D artist starting from scratch.</div>
+    </div>
+  </div>
+
+  <div class="gallery" style="margin-top:32px">
+    <figure>
+      <!-- TODO: Meshy screenshot — King character with green cape (textured generation result) -->
+      <img src="../assets/case-studies/ai-pipeline/03-meshy-king.webp" alt="Meshy textured generation — caped king character with crown and 'M' belt">
+    </figure>
+    <figure>
+      <!-- TODO: Meshy screenshot — pink/purple mine cart (Riley) -->
+      <img src="../assets/case-studies/ai-pipeline/03-meshy-minecart.webp" alt="Meshy textured generation — Riley's pink-and-purple mine cart with control panel">
+    </figure>
+    <figure>
+      <!-- TODO: in-engine screenshot — Riley's mine cart in the lava world (post-Blender + Unity) -->
+      <img src="../assets/case-studies/ai-pipeline/03-riley-lava-cart.webp" alt="In-game — Riley's mine cart riding through the lava world after Blender post-processing">
+    </figure>
+  </div>
+
+  <div class="prose" style="margin-top:32px">
+    <p>Three frames of the same asset's life: <b>generated in Meshy</b> (left), <b>textured in Meshy</b> (middle), <b>rigged + animated + composited in Unity</b> (right). The middle column ships nothing. The right column is what the player sees — and it only exists because of the surgical work in between.</p>
+
+    <p>The same workflow built Karma's hungry-ghost villagers (the masked spirits with internal craving orbs), Sammy's wardrobe variants, the temple geometry around Ananda, the Hum Tunnel's neon arch in Riley, and most of Riley's overworld props. Meshy is the input. Blender + Claude is what makes it ship.</p>
+
+    <div class="pull-quote">Generation gets you to the starting line. The surgery after is the actual game-art job.</div>
+  </div>
+</section>
+
 <!-- THREE GAMES -->
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 03 / Three Games</div>
+      <div class="sec-num">§ 04 / Three Games</div>
       <h2 class="sec-title">Same pipeline, <em>three</em> wildly different projects.</h2>
     </div>
     <div class="sec-kick">↳ where each tool earned its keep</div>
@@ -154,7 +218,7 @@
   <div class="inner">
     <div class="sec-head" style="border-bottom-color:var(--paper)">
       <div>
-        <div class="sec-num">§ 04 / Discipline</div>
+        <div class="sec-num">§ 05 / Discipline</div>
         <h2 class="sec-title">Five rules that keep <em>slop</em> out.</h2>
       </div>
       <div class="sec-kick">↳ what makes this a pipeline, not a vibe</div>
@@ -179,7 +243,7 @@
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 05 / Ship Stack</div>
+      <div class="sec-num">§ 06 / Ship Stack</div>
       <h2 class="sec-title">From editor to <em>play store</em>.</h2>
     </div>
     <div class="sec-kick">↳ telemetry, monetization, launch</div>
@@ -198,12 +262,38 @@
   </div>
 </section>
 
+<!-- THIS SITE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 07 / This Site</div>
+      <h2 class="sec-title">You're reading the <em>output</em> of the pipeline.</h2>
+    </div>
+    <div class="sec-kick">↳ singhabhilasha.com, end-to-end with Claude Code</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The portfolio you're on right now is itself an artefact of this pipeline. <b>singhabhilasha.com</b> was built end-to-end with Claude Code — HTML, CSS, JavaScript, case-study writing, deployment, and DNS migration. No CMS, no build step, no framework.</p>
+
+    <ul class="principle-list">
+      <li data-tag="Stack"><b>Pure HTML / CSS / vanilla JS.</b> No React, no static-site generator, no Node toolchain. A shared <code>case-study.css</code> design system; one HTML file per case study; custom interactions (animated dachshunds in the footer, cursor follower, ticker, konami-code easter egg) hand-written.</li>
+      <li data-tag="Hosting"><b>GitHub Pages, free.</b> Source = <code>master</code> branch root of <code>abiee17/singhabhilasha-website</code>. Custom domain wired via a <code>CNAME</code> file in the repo. Let's Encrypt cert auto-provisioned and auto-renewed by GitHub. Deploy = <code>git push</code>. Static HTML cached at GitHub's CDN edge for sub-second TTFB globally.</li>
+      <li data-tag="Migration"><b>Wix → GitHub Pages, driven from the IDE.</b> Claude Code, working through the <code>gh</code> CLI, created the public repo, pushed 168 files in a single commit, enabled Pages via <code>gh api</code>, and set the custom CNAME. We walked through DNS cutover at GoDaddy together — moving authority off Wix's nameservers, pointing A records at GitHub's <code>185.199.108–111.153</code> block, setting CNAME <code>www → abiee17.github.io</code>, and finally tracking down a stray apex "Parked" record that was silently blocking Let's Encrypt's HTTP-01 validation. Once it was deleted, the cert issued; HTTPS came up; site went live.</li>
+      <li data-tag="Design system"><b>Pattern-held by Claude across all 11 case studies.</b> Same section grammar (numbered, alternating light/dark), same component library (<code>principle-list</code>, <code>scope-card</code>, <code>outcome-row</code>, <code>pull-quote</code>, <code>callout</code>), same typographic scale. Visual consistency without per-page hand-tuning, because the pattern lives in Claude's working context as a kept invariant.</li>
+      <li data-tag="Cost"><b>$0/year recurring</b>, vs. the prior Wix subscription. Domain stays at GoDaddy; everything else is free hosting plus a couple of CLI commands.</li>
+    </ul>
+
+    <p style="margin-top:24px">There's a small recursion to enjoy here. The case-study format you're reading <em>is</em> the case-study format I co-designed with Claude. Sections, callouts, the dark-stripe rhythm, the way the eyebrow lines anchor each block — all part of the system. When the system is the artefact, every new case study slots in for free.</p>
+
+    <div class="pull-quote">The whole site is one Git repo and a CNAME file. Push, done.</div>
+  </div>
+</section>
+
 <!-- OUTCOME -->
 <section class="block dark">
   <div class="inner">
     <div class="sec-head" style="border-bottom-color:var(--paper)">
       <div>
-        <div class="sec-num">§ 06 / Outcome</div>
+        <div class="sec-num">§ 08 / Outcome</div>
         <h2 class="sec-title">Three games. <em>One pipeline.</em></h2>
       </div>
       <div class="sec-kick">↳ what the pipeline actually produced</div>
