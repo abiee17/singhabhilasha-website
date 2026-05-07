@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>An AI-Native Game Dev Pipeline · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · 00 / 10</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · AI-Native Pipeline · 2024–26 · Three games shipped</span></div>
+  <h1>An <em>AI-native</em> game-dev pipeline.</h1>
+  <p class="sub">A production pipeline I assembled from <b>ChatGPT, Claude, Claude Code, Meshy, Blender, Flow (labs.google), Suno, ElevenLabs, and Firebase</b> — used to ship three games across mobile, desktop, and VR with a one-to-three-person team. Not "AI did it." AI in specific roles, with the human owning the decisions that matter.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Designer-Developer-Engineer</dd></div>
+    <div><dt>Span</dt><dd>2024 → 2026</dd></div>
+    <div><dt>Stack</dt><dd>ChatGPT · Claude · Claude Code · Meshy · Suno · Flow · ElevenLabs · Blender · Firebase</dd></div>
+    <div><dt>Platforms</dt><dd>Mobile · Desktop · VR</dd></div>
+    <div><dt>Games</dt><dd>The Karma Project · My Friend Riley · Baba on the Go</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <!-- TODO: replace with hero image — e.g. side-by-side of Karma's Serna scene, Baba's chapter map, and Riley -->
+    <img src="../assets/case-studies/ai-pipeline/01.webp" alt="Pipeline hero — three games built with an AI-augmented pipeline">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">Indie game-dev is a <em>bandwidth</em> problem.</h2>
+    </div>
+    <div class="sec-kick">↳ what AI actually changes</div>
+  </div>
+  <div class="prose">
+    <p class="lead">A modern game needs concept art, 3D models, animation, music, voice acting, narrative, dialogue trees, level design, UI/UX, gameplay code, telemetry, monetization, store-page assets — each historically a specialist's full-time job. A solo developer or two-person team has to drop scope, hire fractionally, or burn out.</p>
+
+    <p>The 2024–25 generation of AI tools doesn't replace specialists. What it does is collapse a specific bottleneck: <b>the time between thought and prototype</b>. Done well, this lets a small team operate at studio scope without studio headcount. Done badly — and most attempts are done badly — it produces generic slop and a graveyard of half-built features.</p>
+
+    <p>The difference is the <em>discipline</em>: what you delegate, what you keep, and how the tools compose as a pipeline rather than a heap of browser tabs. This case study walks through the pipeline I built — and the rules I follow to keep it from devolving.</p>
+
+    <div class="pull-quote">AI tools amplify intent. They do not generate intent.</div>
+  </div>
+</section>
+
+<!-- THE PIPELINE -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / The Pipeline</div>
+        <h2 class="sec-title">Eight stages. <em>One human</em> in every loop.</h2>
+      </div>
+      <div class="sec-kick">↳ what each tool actually does</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Every project moves through these stages. Most tools serve exactly one stage; a couple (Claude, ChatGPT) sit across multiple. The point isn't tool count — it's that each stage has a primary tool with a known failure mode, so I know what to verify.</p>
+
+      <ul class="principle-list">
+        <li data-tag="01 · Ideation"><b>ChatGPT &amp; Claude (chat).</b> Thought-partner work. Brainstorming chapter arcs, mechanic concepts, narrative beats, competitive research. Claude leads when the question needs structural reasoning across long context; ChatGPT is faster for quick lookups and content tagging.</li>
+        <li data-tag="02 · Design &amp; UX"><b>Claude (vision) + ChatGPT.</b> Design critique with vision input — paste a screen, get specific feedback on hierarchy, contrast, motion grammar. Used as a second opinion before in-engine commits.</li>
+        <li data-tag="03 · 3D modeling"><b>Meshy → Blender (with Claude).</b> Meshy generates text-to-3D and image-to-3D base meshes from concept sheets. Output is never ship-ready — Blender does cleanup, retopology, UVs, materials. Claude helps via Blender's <code>bpy</code> Python API for batch operations and parametric edits.</li>
+        <li data-tag="04 · Prototyping"><b>Flow (labs.google) + Figma.</b> Flow generates short motion-video previews of UX concepts before any in-engine prototype is built. Saves Unity-side throwaway work; you see what an interaction <em>feels</em> like before you commit to building it.</li>
+        <li data-tag="05 · Music"><b>Suno.</b> Original tracks for chapter themes, ambient loops, level music. Drafts come fast; the keepers go through a DAW pass for mastering and length-cutting.</li>
+        <li data-tag="06 · Voice / dialogue"><b>ElevenLabs.</b> Character voices for narration, dialogue, and bubble lines. Consistent character voices across hours of authored content. Multilingual support folds into localization.</li>
+        <li data-tag="07 · Engineering"><b>Claude Code (Opus 4.7, 1M context) inside Unity.</b> Senior engineering pair. Reads markdown design docs, generates C# matching spec, validates against existing code via sub-agents, runs the editor toolchain. The engineering bottleneck compresses from days to hours.</li>
+        <li data-tag="08 · Ship"><b>Firebase + GameAnalytics + LevelPlay.</b> Telemetry (Firebase Analytics + Crashlytics), live game-design analytics (GameAnalytics with progression / resource / design events), monetization (LevelPlay SDK fronting Unity Ads + AdMob + Vungle), remote config for difficulty tuning, store-listing flow.</li>
+      </ul>
+
+      <p style="margin-top:28px">The asymmetry that matters: each tool has a job specific enough that I can <em>verify</em> its output. Voice is right or wrong; mesh topology is clean or it isn't; code compiles and runs or it doesn't. The pipeline isn't "AI agent goes brrr" — it's a chain of human-checkable artefacts produced faster than I could produce them alone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THREE GAMES -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / Three Games</div>
+      <h2 class="sec-title">Same pipeline, <em>three</em> wildly different projects.</h2>
+    </div>
+    <div class="sec-kick">↳ where each tool earned its keep</div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">The pipeline isn't a template — each game pulls a different combination of tools. Below: which tool did what on each project, and why that combination.</p>
+  </div>
+
+  <div class="scope">
+    <div class="scope-card">
+      <span class="tag">Mobile · Match-3 · Unity 6 URP</span>
+      <h4>Baba on the Go</h4>
+      <ul>
+        <li><b>Claude Code</b> — ~16k LOC across ~100 scripts. Blocker subsystem (Grass / Crate / Honey / Ice / Chains), event-driven manager singletons, performance defaults (HashSet animator-param validation, pooled VFX, lazy caching).</li>
+        <li><b>Custom Unity editors</b> — Level Designer, Chapter Designer, Cutscene Designer. Built alongside the systems they edit so designers never leave Unity.</li>
+        <li><b>Suno</b> — chapter themes (Varanasi ghats, Hungry Ghost realm).</li>
+        <li><b>ElevenLabs</b> — character bubble lines and home-screen narration.</li>
+        <li><b>Firebase + LevelPlay + GameAnalytics</b> — full F2P shipping stack. ~160 fps with HUD + food-rain pool + NavMesh ghosts + dialogue live.</li>
+      </ul>
+    </div>
+
+    <div class="scope-card">
+      <span class="tag">3D RPG · Multi-platform · Unity 6 URP</span>
+      <h4>The Karma Project</h4>
+      <ul>
+        <li><b>Meshy + Blender (Claude)</b> — full character pipeline: narrative brief → Sora concept → Midjourney sheet → Meshy base mesh → Blender cleanup. Five Ghost archetypes (The Listener, The Performer, The Commuter, etc.) generated this way.</li>
+        <li><b>Claude Code</b> — full RPG systems: 6-state player FSM, 6-state quest FSM with <em>compassionate fail-soft cascade</em>, [SerializeReference] dialogue polymorphism, motion-comic cutscene engine, ~27k-word systems doc co-authored.</li>
+        <li><b>ChatGPT &amp; Claude (chat)</b> — Buddhist source research (Lotus Sutra, Pema Chödrön on tonglen, hungry ghost <em>preta</em> literature) distilled into chapter arcs.</li>
+        <li><b>Suno</b> — chapter scores tuned to emotional arc (compassion → awe → release).</li>
+        <li><b>ElevenLabs</b> — Sammy, Serna, Ananda voicing.</li>
+      </ul>
+    </div>
+
+    <div class="scope-card">
+      <span class="tag">Companion mechanic · Unity</span>
+      <h4>My Friend Riley</h4>
+      <ul>
+        <li><b>Claude Code</b> — companion-mechanic systems and behavior orchestration.</li>
+        <li><b>ElevenLabs</b> — character voice for sustained dialogue.</li>
+        <li><b>Suno</b> — ambient and emotional cue tracks.</li>
+        <li><b>Firebase</b> — telemetry on companion-state interactions to tune affective response over time.</li>
+        <li class="tag">↳ details to follow once Riley ships beta</li>
+      </ul>
+    </div>
+
+    <div class="scope-card">
+      <span class="tag">Cross-cutting · across all three</span>
+      <h4>What Claude Code carries</h4>
+      <ul>
+        <li><b>Design docs as source of truth</b> — every chapter, system, mechanic drafted in markdown. Claude reads it, generates Unity C# matching spec, no manual translation layer.</li>
+        <li><b>Long-context engineering</b> — 1M-token window holds an entire chapter's design + code + playtest notes simultaneously, so edits respect invariants without drift.</li>
+        <li><b>Sub-agent verification</b> — code changes are cross-referenced against existing scripts before generating new ones. Prevents reinventing solved utilities.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DISCIPLINE -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / Discipline</div>
+        <h2 class="sec-title">Five rules that keep <em>slop</em> out.</h2>
+      </div>
+      <div class="sec-kick">↳ what makes this a pipeline, not a vibe</div>
+    </div>
+    <div class="prose">
+      <p class="lead">The reason most "AI-augmented" workflows produce mush is that they skip the boring part — the discipline that keeps the human in the loop where it matters and out of the loop where it doesn't. Five rules I keep:</p>
+
+      <ul class="gaps">
+        <li data-n="01"><b>Design docs are the source of truth.</b> Every system, chapter, and mechanic is drafted in markdown <em>before</em> code or art. Claude reads those directly. The doc and the code stay in sync because the doc <em>generates</em> the code, not the other way around.</li>
+        <li data-n="02"><b>Editors first. Content second.</b> Custom Unity editor windows (Level Designer, Chapter Designer, Cutscene Designer, Dialogue Editor) get built <em>before</em> the content they author. Saves hours per asset; also forces clarity on data shape early.</li>
+        <li data-n="03"><b>Long context beats clever prompting.</b> A 1M-token Claude session holds an entire chapter's design, code, and playtest notes at once. Edits respect invariants across the whole arc without drift. Short-context "ChatGPT-as-search" is a different tool for a different job.</li>
+        <li data-n="04"><b>Verify, don't vibe.</b> Every AI artefact has a check: code compiles + runs, mesh topology is inspected in Blender, voice line is auditioned against character bible, mock is critiqued against the design system. Nothing ships on confidence alone.</li>
+        <li data-n="05"><b>Taste stays human.</b> Narrative direction, emotional arc, what makes a beat <em>land</em> — these are not delegable. AI executes faster; the human still decides what's good. The moment that flips, the work goes generic.</li>
+      </ul>
+
+      <p style="margin-top:28px">The combined effect of those five rules is that the <b>ratio of intention to execution inverts</b>. The decisions that used to take weeks — "what should this chapter feel like?" "what's the right cutscene rhythm?" "is this fail-soft or just soft?" — get the time they deserve. The translation from decision to working build compresses to hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHIP -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / Ship Stack</div>
+      <h2 class="sec-title">From editor to <em>play store</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ telemetry, monetization, launch</div>
+  </div>
+  <div class="prose">
+    <p class="lead">A game that doesn't ship is a hobby. The ship-stack handles the boring infra so the design can stay sharp:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Firebase Analytics"><b>Event telemetry.</b> 15+ core events streaming live (level_start / complete / fail / retry, currency_earn / spend, booster_select, ad_impression, tutorial_step, cutscene_start / skip / complete). Free tier handles unlimited volume.</li>
+      <li data-tag="Firebase Crashlytics"><b>Crash + ANR reporting.</b> Stack traces, device segmentation, regression alerts.</li>
+      <li data-tag="GameAnalytics"><b>Progression / Resource / Design events.</b> Match-3 retention benchmarks, level difficulty heatmaps, economy flow analysis. The "gold event" — <code>level_attempt_summary</code> — answers ~60% of design questions on its own.</li>
+      <li data-tag="LevelPlay (IronSource)"><b>Ad mediation.</b> Unity Ads + AdMob + Vungle behind one SDK. Rewarded video, banners, interstitials. Live ad-unit configuration without app updates.</li>
+      <li data-tag="Firebase Remote Config"><b>Live A/B + difficulty tuning.</b> Adjust difficulty curves, drop rates, copy without shipping a build.</li>
+      <li data-tag="Play Console / TestFlight"><b>Launch pipeline.</b> Phased rollouts, store-listing experiments, internal-testing channels for playtester cohorts.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 06 / Outcome</div>
+        <h2 class="sec-title">Three games. <em>One pipeline.</em></h2>
+      </div>
+      <div class="sec-kick">↳ what the pipeline actually produced</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="stat"><div class="n">3</div><div class="l">Games · 3 genres · 3 platforms</div></div>
+      <div class="stat"><div class="n">9+</div><div class="l">AI tools in production</div></div>
+      <div class="stat"><div class="n">~16k</div><div class="l">LOC in Baba alone (Claude-paired)</div></div>
+      <div class="stat"><div class="n">27k</div><div class="l">Words of systems doc, co-authored</div></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">Three projects in different genres on different platforms — Match-3 on mobile, narrative RPG on desktop, companion mechanic exploring AR/VR — all carried by a stack of nine specialized AI tools, with one designer-developer-engineer at the centre.</p>
+
+      <p>The lesson generalizes: you don't need an AI agent that does everything. You need a <em>pipeline</em> where each stage has a tool with a verifiable output, a human in the loop where taste matters, and a clear rule for when to ship vs. when to redo. The work that used to require six full-time specialists now runs on one human plus nine specialized assistants — each doing the job a senior in that craft would do, faster than the human alone.</p>
+
+      <div class="pull-quote">The ratio of intention to execution flipped. Decisions that used to take weeks become decisions in afternoons.</div>
+
+      <p style="margin-top:24px">The frontier from here is the games where AI isn't just <em>in</em> the pipeline but <em>in the gameplay</em> — where the player interacts with a model at runtime, not just with content the model produced offline. <b>My Friend Riley</b> sits on that line. The same discipline applies: design docs first, verifiable output, taste stays human.</p>
+    </div>
+    <span class="note">↑ AI doesn't make games. people who know what they want do.</span>
+  </div>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="../index.html#work">← all case studies</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="karma-rpg.html" style="text-align:right">next: The Karma Project →</a>
+</nav>
+
+</body>
+</html>
