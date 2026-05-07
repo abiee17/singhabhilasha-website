@@ -100,8 +100,8 @@
 
     <p>The trap most teams fall into is treating Meshy output as final. The geometry is dense and triangulated, the topology has no edge loops at deformation joints, the mesh is a single shell with no rig points. Drop it into Unity directly and you get a static prop that can't move. The pipeline below is what gets you the rest of the way.</p>
 
-    <div class="wide-mock" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;padding:24px">
-      ↓ Meshy workspace — Hum Tunnel · drop at <br>assets/case-studies/ai-pipeline/03-meshy-hum-tunnel.webp
+    <div class="wide-mock">
+      <img src="../assets/case-studies/ai-pipeline/03-blender-rig.png" alt="Blender — a Meshy-generated character mid-rig in a Conductor + Blender session: armature visible, the model parented and ready for weight-paint cleanup. The 'surgery' that turns a Meshy gen into a riggable game asset.">
     </div>
   </div>
 
@@ -125,21 +125,21 @@
   </div>
 
   <div class="gallery" style="margin-top:32px">
-    <figure style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;padding:18px">
-      ↓ Meshy · King<br>03-meshy-king.webp
+    <figure>
+      <img src="../assets/case-studies/ai-pipeline/03-meshy-ananda.png" alt="Meshy texture editor — Ananda the child-monk character in orange robes, T-pose, 2,991 faces. Generated in ~1 minute from a concept brief.">
     </figure>
-    <figure style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;padding:18px">
-      ↓ Meshy · Minecart<br>03-meshy-minecart.webp
+    <figure>
+      <img src="../assets/case-studies/ai-pipeline/03-meshy-minecart.png" alt="Meshy texture editor — Riley's pink-and-purple mine cart with control panel and gem accents, 2,987 faces.">
     </figure>
-    <figure style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;padding:18px">
-      ↓ Riley · Lava cart in-engine<br>03-riley-lava-cart.webp
+    <figure>
+      <img src="../assets/case-studies/ai-pipeline/03-riley-lava-cart.png" alt="My Friend Riley in-engine — the same mine cart riding through the molten lava world after Blender post-processing and Unity composite.">
     </figure>
   </div>
 
   <div class="prose" style="margin-top:32px">
-    <p>Three frames of the same asset's life: <b>generated in Meshy</b> (left), <b>textured in Meshy</b> (middle), <b>rigged + animated + composited in Unity</b> (right). The middle column ships nothing. The right column is what the player sees — and it only exists because of the surgical work in between.</p>
+    <p>Three pulls from the pipeline: a <b>character</b> (Ananda the child-monk from Karma) and a <b>prop</b> (Riley's mine cart) — both fresh out of Meshy — alongside the same prop after Blender + Unity finished with it: in-engine, riding through Riley's lava world. The Meshy step gets you a clean base. The Blender step (the wide-mock above — the rig surgery happening) is what makes it move. The in-engine result is what the player ends up with.</p>
 
-    <p>The same workflow built Karma's hungry-ghost villagers (the masked spirits with internal craving orbs), Sammy's wardrobe variants, the temple geometry around Ananda, the Hum Tunnel's neon arch in Riley, and most of Riley's overworld props. Meshy is the input. Blender + Claude is what makes it ship.</p>
+    <p>The same workflow built Karma's hungry-ghost villagers (the masked spirits with internal craving orbs), Sammy's wardrobe variants, Ananda's temple geometry, the Hum Tunnel's neon arch in Riley, and most of Riley's overworld props. Meshy is the input. Blender + Claude is what makes it ship.</p>
 
     <div class="pull-quote">Generation gets you to the starting line. The surgery after is the actual game-art job.</div>
   </div>
