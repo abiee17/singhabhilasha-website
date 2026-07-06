@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Baba On The Go: India — Shipping with an AI Co-Developer · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · Purple Square Studios</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Purple Square Studios · Feb–Jul 2026 · 5 months, one human</span></div>
+  <h1>Baba On The Go: India — shipping a whole match-3 <em>alone, with an AI co-developer</em>.</h1>
+  <p class="sub">After designing match-3 games inside studios, I founded <b>Purple Square Studios</b> and built one end-to-end: design, code, art direction, cutscenes, analytics, ads, store ops, marketing site — everything. The team was me, Claude Code wired into Unity, and ChatGPT as a second opinion. Ninety hand-authored levels, three chapters across India, ~16k lines of C#, and a five-month paper trail of everything that broke — including the collaboration itself, which had to be debugged like any other system.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Founder · Designer · Developer</dd></div>
+    <div><dt>Duration</dt><dd>5 months (Feb–Jul 2026)</dd></div>
+    <div><dt>Studio</dt><dd>Purple Square Studios</dd></div>
+    <div><dt>Genre</dt><dd>Story Match-3 · F2P Mobile</dd></div>
+    <div><dt>Stack</dt><dd>Unity 6 · Claude Code · Unity MCP</dd></div>
+    <div><dt>Status</dt><dd>Closed testing · Google Play + TestFlight</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/baba-on-the-go/site/baba-page-hero.webp" alt="Baba On The Go: India game page on purplesquarestudios.com — logo, pitch, feature chips, waitlist CTA, and the trailer playing in a phone mockup">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">I'd designed match-3s for studios. This time I <em>owned the whole ship</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ from experience designer to one-person studio</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The Travel Match and Mili Match case studies in this portfolio were studio projects — I owned the experience design, other people owned the code, the build pipeline, the store account, the consequences. Baba On The Go was the other kind of bet: found a studio, pick the genre I know best, and find out what one designer can actually ship when the rest of the team is an AI pipeline.</p>
+
+    <p>The premise carried over from those earlier games: match-3 is genre-solved, <b>theme is where the work is</b>, and Indian players deserve a casual game with authentic cultural texture rather than a western game wearing an Indian skin. But this time the theme thesis had to survive contact with everything a studio normally absorbs for you — Unity build settings, keystore signing, GDPR consent flows, Play Console questionnaires, crash-log forensics, app-ads.txt.</p>
+
+    <p>The game that came out the other side: <b>Baba</b>, a wise sadhu who has spent his whole life on the ghats of Varanasi, until one conversation with a young traveller over chai sends him onto the road. The player travels India with him — <b>Varanasi → Jaipur → Shillong</b>, with Rajasthan, Kerala and Ladakh on the roadmap — solving puzzles to earn <b>herbs</b>, restoring each city's scene piece by piece, unlocking chapter posters and motion-comic cutscenes as the journey unfolds. The collectible that drops out of the board is a <b>laddu</b>. The rescue tools are a gulel, a paper plane, a patang, a lattu. The theme goes all the way down.</p>
+
+    <div class="pull-quote">One human, one AI pair, five months — and no one else to hand the hard parts to.</div>
+  </div>
+</section>
+
+<!-- THE GAME -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 02 / The Game</div>
+        <h2 class="sec-title">A journey <em>across India</em>, one board at a time.</h2>
+      </div>
+      <div class="sec-kick">↳ what actually shipped</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Ninety hand-authored levels — no procedural filler — across three chapters, each a real Indian place with its own painterly backdrop, soundscape and story beats. Royal Match-class mechanics underneath: five blocker types (grass that spreads, crates, honey, layered ice, chains) governed by a formal damage-rules matrix, four board powerups plus combo pairs, a Lock &amp; Key mechanic, void-cell board shapes, exit columns for the laddus.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Meta loop"><b>Play. Earn. Explore.</b> Levels pay out herbs; herbs restore the chapter diorama piece by piece; a completed scene unlocks the chapter poster and the cutscene that carries Baba to the next city. Progression <em>is</em> the journey — the same theme-as-structure thesis from my studio work, now fully under my control.</li>
+        <li data-tag="Cutscene engine"><b>Motion comics, built from scratch.</b> A 2.5D cutscene engine with parallax layers, Ken Burns cameras, typewriter dialogue, speech bubbles, narration ducking the music, letterboxing, and sequence chaining — so the three-part intro plays through black with no level geometry ever visible. Eight sequences tell Baba's story.</li>
+        <li data-tag="Sound"><b>Regional soundscapes.</b> Temple bells in Varanasi, folk textures for Jaipur — chapter themes generated in Suno, character lines and narration voiced with ElevenLabs.</li>
+        <li data-tag="Juice"><b>The invisible 20%.</b> Tile breathing and landing bounces, blocker-break debris pools, unlock sparkles, and a five-phase Royal Match-style post-win map animation — star fill, level-node swap, smooth scroll, sparkle, tap-invite — tuned to ~3.3 seconds.</li>
+      </ul>
+    </div>
+
+    <div class="gallery">
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/scene-hero.webp" style="aspect-ratio:3/4" alt="Baba On The Go — Varanasi ghats scene restored by the player, painterly dawn light on the Ganges">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/cutscene-meeting.webp" style="aspect-ratio:3/4" alt="Motion-comic cutscene — Baba meets the young traveller over chai on the ghats, the conversation that starts the journey">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/baba-character.webp" style="aspect-ratio:3/4;object-fit:contain;background:#2a1f3d" alt="Baba character art — full body, orange robes, walking stick, camera slung over one shoulder">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- THE BUILD -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 03 / The Build</div>
+      <h2 class="sec-title">Claude in the engine, ChatGPT in the <em>war room</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ how a one-person team gets studio throughput</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The development setup was genuinely AI-native, not AI-assisted. Claude Code ran with an <b>MCP server wired directly into the Unity editor</b> — ~65 generated tool-skills for editing assets, driving scenes, taking game-view screenshots, running tests. Parallel Claude worktrees worked separate features and merged back to main like teammates. The project's <b>CLAUDE.md grew to 1,800 lines</b> — architecture, damage matrices, PlayerPrefs references, coding conventions written as standing instructions to the AI.</p>
+
+    <ul class="principle-list">
+      <li data-tag="Two-AI loop"><b>ChatGPT spec'd, Claude built, playtests re-spec'd.</b> The Lock &amp; Key mechanic arrived as a full ChatGPT-written spec — edge cases and all — that Claude implemented. Then play-feel took over: key-matching felt wrong, so the key became a drop collectible; then the goal itself. When it finally clicked, the loop closed the other way: <em>"it's working beautifully — can you give me a small writeup spec of this mechanic to use with chatgpt."</em></li>
+      <li data-tag="Custom tooling"><b>Editors built beside the systems they edit.</b> A Level Designer (grid canvas, nine brushes, validation, one-click playtest), a Chapter Designer, a Chapter Setup Wizard, and a Cutscene Designer with a draggable keyframe timeline — so authoring 90 levels and 8 cutscenes never meant leaving Unity or hand-editing YAML.</li>
+      <li data-tag="Research on demand"><b>Competitor teardowns as design input.</b> Before building the tutorial, the AI dissected Royal Match's forced first swap (pre-seeded board, hand-swipe loop timed to tenths of a second), Candy Crush's feathered spotlight, and Homescapes' no-dimmer home-screen pattern — then encoded them as rules. Same method for interstitial ad placement: research how the category leaders do "least interruption," then copy the natural-pause pattern.</li>
+      <li data-tag="Data by design"><b>Analytics designed before code.</b> A 30-event Firebase schema built around one gold event — <code>level_attempt_summary</code> — plus a stuck-score formula for detecting miserable levels, rage-quit detection, and a dashboard build order. Designed jointly by Claude and ChatGPT, then hooked across eight systems.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- THE PROBLEMS -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 04 / The Problems</div>
+        <h2 class="sec-title">Five months of things <em>breaking</em> — and the paper trail to prove it.</h2>
+      </div>
+      <div class="sec-kick">↳ war stories, all documented</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Every project claims it was hard. This one kept receipts: a BUG_GRAVEYARD.md, seventeen numbered post-mortems in the project bible, and the full session history. A selection of the ones that taught the most:</p>
+
+      <ul class="principle-list">
+        <li data-tag="The booster saga"><b>Fifteen commits chasing one bug.</b> Pre-level boosters kept vanishing. Two days of plausible-but-wrong theories — settle waits, frame delays, re-assertion guards — before the real causes surfaced: a duplicate apply call, and a button-wiring race that loaded the main scene <em>twice</em>, the second load silently destroying every tile of the first. A textbook lesson in symptom-chasing versus root-causing, and the origin story of the protocol in § 05.</li>
+        <li data-tag="Invisible everything"><b>Unity fails silently.</b> All tiles invisible — code referenced a sorting layer that didn't exist, and Unity fell back to Default without a whisper. Swapped enum orders put green gems in blue goal slots. An outline shader computed sub-pixel widths on large sprites and rendered nothing. Each one became a documented gotcha so it could never be re-litigated.</li>
+        <li data-tag="The size war"><b>1.1 GB of source vs. a mobile download.</b> A staged campaign: 219 audio import settings bulk-edited (music to streaming, SFX to compressed mono), cutscene PNGs deduped, texture compression applied conservatively — and one experiment (ASTC overrides) honestly reverted the next day when it made things worse. When the build later crept 397 → 644 MB during unrelated fixes, that too got called out and hunted down.</li>
+        <li data-tag="The save wipe"><b>The launch-blocker, found in minutes.</b> Testers updated the app and lost all progress. Root cause: the version check compared against Unity's <code>buildGUID</code> — which changes every build — so every update triggered <code>PlayerPrefs.DeleteAll()</code>. The fix was ten surgical lines. The honest part came after, when I asked if we could restore testers' progress: <em>"No — and I want to be straight with you about this: the fix cannot restore already-lost progress."</em></li>
+        <li data-tag="0x8BADF00D"><b>iOS crash-log forensics.</b> The TestFlight build froze on launch. The .ips file said watchdog kill, not exception — main thread hung in the render loop. The final chain: the ad config fell back to the <em>Android</em> ad key on iOS, firing the ATT permission prompt (backgrounding the app) mid-cutscene while ironSource initialized with the wrong key — GPU present deadlock, watchdog kill. Fixed with a ten-line platform-aware accessor.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DEBUGGING THE COLLABORATION -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / The Real Lesson</div>
+      <h2 class="sec-title">The collaboration itself was a system — so I <em>debugged it</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ process as the most reusable artefact</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The most transferable thing this project produced isn't in the game. Working daily with an AI co-developer, the failure modes were real: it overwrote uncommitted work, deleted archived levels during a cleanup without asking, guessed at bug causes and shipped fixes that fixed nothing. My messages from those weeks are not polite. <em>"Why does ChatGPT find errors better than you"</em> was a low point. <em>"Don't ever delete anything without asking me first"</em> was another.</p>
+
+    <p>The turn came when I stopped treating those as bad days and started treating them as <b>defects in a process I owned</b>. Each blow-up got converted into written, persistent protocol — memory files the AI loads every session:</p>
+
+    <ul class="principle-list">
+      <li data-tag="Rule 01"><b>No code until the cause is proven.</b> "Restate the bug. List the exact scripts involved. State the root cause — and if unsure, say so and propose debug logs first. Wait for my approval of the diagnosis. Then the smallest possible fix." Confidence percentages required. After this rule landed, the sessions read completely differently — and the fixes started sticking.</li>
+      <li data-tag="Rule 02"><b>Nothing gets deleted, ever, without asking.</b> Plus commit-and-push before risky changes, and a staged-deletions check before every commit. Written in blood — well, in lost level files.</li>
+      <li data-tag="Rule 03"><b>Give me clicks, not concepts.</b> For Unity editor work, the hard part is knowing <em>which</em> thing to drag onto <em>which</em> field. Instructions had to become click-by-click.</li>
+      <li data-tag="Rule 04"><b>Every bug gets a grave.</b> BUG_GRAVEYARD.md: bug, root cause, file changed, verified-on-device — and nothing is "fixed" until a real phone says so.</li>
+    </ul>
+
+    <p style="margin-top:24px">Then I asked for the protocol to be propagated to <b>every project on my machine</b> — and it has governed all of them since. Managing an AI turns out to be a design discipline like any other: observe the failure, name the pattern, encode the rule, verify the behavior changed. It's the same loop I'd use on a tutorial or an economy. The team member just happens to be a model.</p>
+
+    <div class="pull-quote">Every blow-up became a written rule. The rules became the studio.</div>
+  </div>
+</section>
+
+<!-- MARKETING & LAUNCH -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 06 / Marketing &amp; Launch</div>
+        <h2 class="sec-title">A studio site, a trailer, a store listing — <em>same pipeline</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ purplesquarestudios.com, built in-house</div>
+    </div>
+    <div class="prose">
+      <p class="lead">The marketing surface got the same AI-native treatment as the game. <a href="https://www.purplesquarestudios.com" target="_blank" rel="noopener" style="color:var(--highlight)">purplesquarestudios.com</a> — designed and shipped as a static site on GitHub Pages — carries the studio positioning ("cozy, colorful games rooted in Indian culture… no grinding, no pay-to-win"), a full game page with story, feature pillars and a waitlist funnel, and the launch plumbing nobody sees: privacy policy, app-ads.txt, data-safety language matching the exact SDK stack.</p>
+
+      <p>The trailer was AI-generated video — multiple takes of Baba walking the Varanasi ghats, iterated over two evenings in April — cut with Suno's chapter themes and published to YouTube, embedded in a phone mockup on the game page. Cutscene narration and character lines came from ElevenLabs. The chapter-poster art direction lived in its own generated art bible.</p>
+
+      <p>Launch ops was its own education: release keystore created via Unity's bundled JDK when macOS had no Java; signed AABs; Play App Signing; the discovery that a post-2023 personal Play account must run a <b>closed test with 12+ testers for 14 continuous days</b> before production unlocks. And one near-disaster caught mid-upload — renaming the game to "Baba On The Go India" silently changed the Unity package name, which would have broken Firebase and collided with Play's locked ID. <em>"Stop — revert the package name. This is the exact ripple effect I flagged."</em> Product name changed; package ID pinned; crisis averted.</p>
+
+      <p>When real testers came back saying levels felt tight, the rebalance was one scripted pass over all 90 level files: <b>original move budgets +25%</b>, curve preserved — followed by an 18-question tester survey (device, stuck levels, unfair-moves check, NPS, cutscene skip rates) to catch what analytics can't.</p>
+    </div>
+
+    <div class="gallery">
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/site/home-hero.webp" alt="purplesquarestudios.com home — purple hero, studio logo, 'We make cozy, colorful games that feel like a weekend well spent. No stress, just fun.'">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/site/games-hero.webp" alt="purplesquarestudios.com games page — Baba On The Go: India hero with logo, pitch, feature chips and trailer phone mockup">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/site/about-hero.webp" alt="purplesquarestudios.com about page — 'Four and a Half Humans': founder, three consultants, and two dogs as Chief Happiness Officers">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/ai-pipeline/05-baba-bicycle.png" alt="In-game motion-comic cutscene — a cyclist collides with the young traveller on a Varanasi street; speech bubbles mid-crash">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/ai-pipeline/05-baba-levelselect.png" alt="In-game Varanasi level-select map — painterly ghats, UNLOCK and LEVEL 2 buttons, Journal and Map navigation">
+      </figure>
+      <figure>
+        <img src="../assets/case-studies/baba-on-the-go/cutscene-varanasi-bg.webp" alt="Cutscene backdrop — Varanasi at dawn, diyas floating downstream on the Ganges">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 07 / Outcome</div>
+      <h2 class="sec-title">A full F2P game, <em>five months</em>, one human.</h2>
+    </div>
+    <div class="sec-kick">↳ concept → closed testing on two stores</div>
+  </div>
+
+  <div class="outcome-row">
+    <div class="stat"><div class="n">90</div><div class="l">Hand-authored levels</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Chapters · Varanasi → Jaipur → Shillong</div></div>
+    <div class="stat"><div class="n">~16k</div><div class="l">Lines of C# · 210 scripts</div></div>
+    <div class="stat"><div class="n">4</div><div class="l">Custom Unity editor tools</div></div>
+    <div class="stat"><div class="n">30</div><div class="l">Analytics events · Firebase</div></div>
+    <div class="stat"><div class="n">5 mo</div><div class="l">First commit → closed testing</div></div>
+  </div>
+
+  <div class="prose">
+    <p class="lead">As of July 2026, Baba On The Go: India is in closed testing on Google Play (running down its 14-day tester clock at v1.7) and on TestFlight for iOS, with the full shipping stack live — LevelPlay ads, Firebase analytics, GDPR consent, signed release pipeline, studio site, waitlist. Everything a studio ships, shipped by one person directing an AI pipeline.</p>
+
+    <p>The earlier match-3 case studies argued that <b>theme deserves the rigour of the core loop</b>. This project extends the claim: so does the <em>process</em>. The highest-leverage artefacts here weren't screens or systems — they were the written protocols that turned an erratic AI collaborator into a reliable one, the documentation that let every hard-won fix stay fixed, and the habit of treating each failure (a bug, a build, a blow-up at the AI) as raw material for a rule. That's the studio I actually founded: not the games — the operating system that makes them shippable.</p>
+  </div>
+  <span class="note">↑ the game is the artefact. the process is the asset.</span>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="../index.html#work">← all case studies</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="ai-native-pipeline.html" style="text-align:right">next: AI-Native Pipeline →</a>
+</nav>
+
+</body>
+</html>
