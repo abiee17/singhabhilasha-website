@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>My Friend Riley — A Friend You Can Hum To · Abhilasha Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+<style>
+/* ── Riley page: purple joins the palette ─────────────────────────────
+   One accent family, used sparingly where ochre usually sits.          */
+:root{
+  --plum:#6b46d6;          /* deep violet — holds its own on paper */
+  --plum-deep:#4a2fa0;
+  --lilac:#b69cff;         /* for dark sections */
+  --lilac-soft:#e9e2ff;
+  --lilac-ghost:#f3efff;
+}
+.hero h1 em{color:var(--plum)}
+.sec-title em{color:var(--plum)}
+section.block.dark .sec-title em{color:var(--lilac)}
+.eyebrow .tick{background:var(--lilac)}
+.pull-quote{border-left-color:var(--plum)}
+section.block.dark .pull-quote{border-left-color:var(--lilac)}
+.principle-list li::before{color:var(--plum)}
+section.block.dark .principle-list li::before{color:var(--lilac)}
+.callout .num{color:var(--plum)}
+section.block.dark .callout .num{color:var(--lilac)}
+.outcome-row .stat .n{color:var(--plum)}
+section.block.dark .outcome-row .stat .n{color:var(--lilac)}
+.hero .sub b{background:linear-gradient(transparent 62%,rgba(182,156,255,.45) 62%,rgba(182,156,255,.45) 92%,transparent 92%)}
+
+/* ── interactive Riley demo (ported from the Verse page, re-skinned) ── */
+.mfr-demo{
+  border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(182,156,255,.28), transparent 60%),
+    var(--lilac-ghost);
+  padding:clamp(24px,4vw,48px);margin:36px 0 10px;
+  display:grid;justify-items:center;gap:16px;
+}
+.mfr-demo .riley-wrap{position:relative;width:min(100%,380px);aspect-ratio:1}
+.mfr-demo .gate{position:absolute;left:50%;bottom:2%;width:128%;translate:-50% 0;aspect-ratio:900/550;pointer-events:none}
+.mfr-demo .gate img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.mfr-demo .gate .gate-light{opacity:0;transition:opacity .6s ease .15s}
+.mfr-demo .gate .door{transition:transform 1.1s cubic-bezier(.5,0,.2,1);will-change:transform}
+.mfr-demo .gate .doors{position:absolute;inset:0;
+  -webkit-mask:url(../assets/case-studies/my-friend-riley/gate-arch-mask.webp) center / 100% 100% no-repeat;
+  mask:url(../assets/case-studies/my-friend-riley/gate-arch-mask.webp) center / 100% 100% no-repeat}
+.mfr-demo .gate.open .door-l{transform:translateX(-18%)}
+.mfr-demo .gate.open .door-r{transform:translateX(18%)}
+.mfr-demo .gate.open .gate-light{opacity:1}
+.mfr-demo .riley-glow{position:absolute;inset:6%;border-radius:50%;
+  background:radial-gradient(circle at 50% 55%, rgba(182,156,255,.55), transparent 68%)}
+.mfr-demo .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none}
+.mfr-demo .ring circle{fill:none;stroke-width:10;stroke-linecap:round}
+.mfr-demo .ring .track{stroke:rgba(20,18,16,.15)}
+.mfr-demo .ring .fill{stroke:var(--plum);stroke-dasharray:var(--len,1100);stroke-dashoffset:var(--len,1100)}
+.mfr-demo .riley-btn{position:absolute;inset:22% 18% 0 18%;border:0;padding:0;background:none;cursor:pointer;border-radius:50%;touch-action:manipulation}
+.mfr-demo .riley-float{width:100%;height:100%;animation:mfr-float 4.6s ease-in-out infinite;will-change:transform}
+.mfr-demo .riley{width:100%;height:100%;object-fit:contain;
+  transform:rotate(var(--tilt,0deg)) translate(var(--tx,0px),var(--ty,0px));
+  transition:transform .45s cubic-bezier(.2,.8,.2,1);user-select:none;-webkit-user-drag:none}
+.mfr-demo .riley-btn.pop .riley{animation:mfr-pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes mfr-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes mfr-pop{0%{scale:1}40%{scale:1.12}100%{scale:1}}
+.mfr-demo .bubble{position:absolute;left:50%;top:-6px;translate:-50% -100%;z-index:2;
+  background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+  font:600 15px/1.35 "Space Grotesk";padding:.75em 1.1em;width:max-content;max-width:min(300px,84vw);
+  text-align:center;transition:opacity .25s ease,transform .25s ease}
+.mfr-demo .bubble::after{content:"";position:absolute;left:50%;bottom:-8px;width:14px;height:14px;
+  background:var(--paper);border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  transform:translateX(-50%) rotate(45deg)}
+.mfr-demo .bubble.swap{opacity:0;transform:translateY(6px)}
+.mfr-demo .hum-console{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px}
+.mfr-demo .hum-btn{font:700 16px/1 "Space Grotesk";padding:.9em 1.5em;cursor:pointer;
+  border:1.5px solid var(--ink);background:var(--highlight);color:var(--ink);
+  box-shadow:4px 4px 0 var(--ink);user-select:none;touch-action:none;-webkit-user-select:none;
+  transition:transform .12s ease,box-shadow .12s ease}
+.mfr-demo .hum-btn[aria-pressed="true"]{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink);background:var(--lilac-soft)}
+.mfr-demo .readout{font:500 12px/1.3 "JetBrains Mono",monospace;color:var(--muted);min-width:16ch;text-align:center;font-variant-numeric:tabular-nums}
+.mfr-demo .gates-count{font:500 12px/1 "JetBrains Mono",monospace;color:var(--muted)}
+.mfr-demo .gates-count b{color:var(--plum);font-weight:700}
+.mfr-demo .spark{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;pointer-events:none;
+  background:var(--c,var(--ochre));clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  animation:mfr-spark .9s cubic-bezier(.15,.7,.3,1) forwards;z-index:3}
+@keyframes mfr-spark{0%{transform:translate(0,0) scale(.4) rotate(0);opacity:1}
+  100%{transform:translate(var(--dx),var(--dy)) scale(1.1) rotate(220deg);opacity:0}}
+
+/* feelings picker */
+.mfr-feel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:28px;align-items:center;
+  border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:var(--lilac-ghost);
+  padding:clamp(18px,3vw,32px);margin:32px 0 8px}
+.mfr-feel .pets{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
+.mfr-feel .pet{display:grid;justify-items:center;gap:4px;padding:10px 6px 8px;cursor:pointer;
+  border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);
+  font:500 11px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;
+  transition:transform .18s ease,background-color .18s ease;box-shadow:2px 2px 0 var(--ink)}
+.mfr-feel .pet img{width:62px;height:62px;object-fit:contain}
+.mfr-feel .pet:hover{transform:translate(-2px,-2px)}
+.mfr-feel .pet[aria-pressed="true"]{background:var(--lilac-soft);border-color:var(--plum-deep)}
+.mfr-feel .pet[aria-pressed="true"] img{animation:mfr-pop .5s cubic-bezier(.3,1.6,.5,1)}
+.mfr-feel .reply{display:grid;justify-items:center;gap:12px;text-align:center}
+.mfr-feel .reply img{width:140px;height:140px;object-fit:contain}
+.mfr-feel .reply p{font:600 17px/1.4 "Space Grotesk";max-width:30ch;margin:0}
+.mfr-feel .reply small{font:500 11px/1.3 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+.demo-cap{font-family:"Caveat",cursive;font-weight:700;color:var(--plum);font-size:22px;text-align:center;display:block;margin-bottom:28px}
+.trailer-box{border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);margin:32px 0;overflow:hidden;background:#000;aspect-ratio:16/9}
+.trailer-box video{width:100%;height:100%;display:block}
+.sci{font-size:13.5px;color:var(--muted);line-height:1.5;border-top:1px dashed currentColor;margin-top:28px;padding-top:14px;max-width:820px}
+.sci b{color:inherit}
+@media (max-width:800px){
+  .mfr-feel{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  .mfr-demo .riley-float,.mfr-demo .riley-btn.pop .riley,.mfr-feel .pet[aria-pressed="true"] img{animation:none}
+  .mfr-demo .riley,.mfr-demo .gate .door,.mfr-demo .gate .gate-light{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · The Verse</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · The Verse · 2026 · in development</span></div>
+  <h1>My Friend Riley — a friend you can <em>hum to</em>.</h1>
+  <p class="sub">A cozy self-care garden game for children — built first for kids managing <b>Type 1 Diabetes</b> — where a magical garden and nine emotion pets carry the weight of daily self-tracking, and the core mechanic is a <b>hum</b>: a voice-powered biofeedback dial that opens gates on a magical rollercoaster. Designed at <b>The Verse</b>; engineered down to the autocorrelation window; backed by actual peer-reviewed breathing science.</p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Game &amp; Experience Designer</dd></div>
+    <div><dt>Studio</dt><dd>The Verse</dd></div>
+    <div><dt>Timeline</dt><dd>Mar 2026 → present</dd></div>
+    <div><dt>Engine</dt><dd>Unity 6 · URP · Mobile</dd></div>
+    <div><dt>Audience</dt><dd>Kids 6–12 + their grownups</dd></div>
+    <div><dt>Core input</dt><dd>The child's own voice</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/my-friend-riley/garden-banner-1600.webp" alt="Riley's garden at home: emotion pets around the heart tree, with Riley greeting the player — 'Your garden is glowing from all your care today!'">
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Context</div>
+      <h2 class="sec-title">Self-tracking feels like <em>homework</em>. So we made it a garden.</h2>
+    </div>
+    <div class="sec-kick">↳ why a wellbeing app had to be a game</div>
+  </div>
+  <div class="prose">
+    <p class="lead">A child managing Type 1 Diabetes carries a quiet, permanent workload: log this, measure that, notice how you feel, report it to adults. The tools we hand them are usually trackers — and trackers come with an emotional bill. Numbers can read as grades. Missed days can read as failure. The data piles up on the child.</p>
+
+    <p>And the brutal truth about wellness apps generally: people stop opening them. In the largest objective study of real-world mental-health app usage, the median app kept just <b>3.9% of its users opening it daily by day 15</b> <cite>(Baumel et al., 2019, Journal of Medical Internet Research)</cite>. Fifteen days. The category's retention problem isn't a UX detail — it's the whole ballgame, and it's why Riley is a <em>game first</em>, with the therapeutic machinery hidden inside things a kid would choose to do anyway.</p>
+
+    <p>Riley's design answer is <b>externalization</b>: the garden and its creatures carry the data so the child doesn't have to. Water you drank becomes a lotus blooming in a pond. Sleep becomes a moon cactus earning its star crown. Feelings become nine pets who live in the garden whether you log them or not. The child isn't filling out a form; they're caring for someone. The self-care is smuggled in through <em>pro-social</em> motivation — kids who find it hard to do things for themselves will reliably show up for a creature that needs them.</p>
+
+    <div class="pull-quote">The garden carries the data, so the child doesn't have to.</div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DEMO -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 02 / Meet Riley</div>
+      <h2 class="sec-title">Don't read about the mechanic. <em>Hold the button.</em></h2>
+    </div>
+    <div class="sec-kick">↳ a real, working slice of the game's core loop</div>
+  </div>
+  <div class="prose">
+    <p class="lead">This is the interactive hero I built for the game's page on the Verse site, running live right here. Hold the button (mouse, touch, or Space/Enter) and the dial fills exactly like the in-game HumDial. Fill it, and Riley's Starflower gate — rendered from the game's actual 3D gate model into frame and door layers — slides open. Let go early, and the dial drains. Riley also appreciates being tapped.</p>
+  </div>
+
+  <div class="mfr-demo" aria-label="Interactive Riley demo">
+    <div class="riley-wrap" id="mfr-riley-wrap">
+      <div class="gate" id="mfr-gate" aria-hidden="true">
+        <img class="gate-beyond" src="../assets/case-studies/my-friend-riley/gate-beyond.webp" alt="" width="900" height="550">
+        <img class="gate-light" src="../assets/case-studies/my-friend-riley/gate-light.webp" alt="" width="900" height="550">
+        <div class="doors">
+          <img class="door door-l" src="../assets/case-studies/my-friend-riley/gate-door-l.webp" alt="" width="900" height="550">
+          <img class="door door-r" src="../assets/case-studies/my-friend-riley/gate-door-r.webp" alt="" width="900" height="550">
+        </div>
+        <img class="frame" src="../assets/case-studies/my-friend-riley/gate-frame.webp" alt="" width="900" height="550">
+      </div>
+      <div class="riley-glow"></div>
+      <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+        <circle class="track" cx="200" cy="200" r="182"></circle>
+        <circle class="fill" id="mfr-ring" cx="200" cy="200" r="182"></circle>
+      </svg>
+      <button class="riley-btn" id="mfr-riley" type="button" aria-label="Say hi to Riley">
+        <div class="riley-float">
+          <img class="riley" id="mfr-riley-img" src="../assets/case-studies/my-friend-riley/mascot-idle-01.webp" alt="Riley, a glowing purple jelly friend" width="560" height="560">
+        </div>
+      </button>
+      <div class="bubble" id="mfr-bubble" role="status" aria-live="polite">Hi friend! Tap me, or hold the button and hum with me.</div>
+    </div>
+    <div class="hum-console">
+      <button class="hum-btn" id="mfr-hum" type="button" aria-pressed="false">Hold to hum</button>
+      <span class="readout" id="mfr-readout">dial ready</span>
+      <span class="gates-count" id="mfr-gates">gates opened <b>0</b></span>
+    </div>
+  </div>
+  <span class="demo-cap">↑ in the real game, your voice does this. here, your thumb stands in.</span>
+
+  <div class="prose">
+    <p>Everything in this demo mirrors a real system decision: the dial's fill-and-drain envelope, the gate's door choreography, the sparkle burst on completion, even the ~Hz readout flutter — a nod to the pitch tracker you'll meet in the next section. On the Verse page this whole stage runs on <code style="font-family:'JetBrains Mono',monospace;font-size:.85em">transform</code> and <code style="font-family:'JetBrains Mono',monospace;font-size:.85em">opacity</code> only, honors <code style="font-family:'JetBrains Mono',monospace;font-size:.85em">prefers-reduced-motion</code>, and weighs about 2&nbsp;MB.</p>
+  </div>
+</section>
+
+<!-- HUMDIAL SCIENCE + TECH -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 03 / The HumDial</div>
+        <h2 class="sec-title">Why humming? Because a hum is a <em>long, slow exhale</em> with a soundtrack.</h2>
+      </div>
+      <div class="sec-kick">↳ the science, then the signal processing</div>
+    </div>
+    <div class="prose">
+      <p class="lead">You cannot hum while inhaling. (Go ahead, try — I'll wait.) That one piece of physiology is the whole trick: asking a child to hum is asking them to produce a long, controlled exhalation without ever saying the words "breathing exercise." Slow exhale-weighted breathing shifts the autonomic nervous system toward its parasympathetic, rest-and-digest mode, and at around six breaths per minute it hits the cardiovascular system's resonance frequency — the pace at which heart-rate variability swings widest and the baroreflex gets its best workout <cite>(Lehrer &amp; Gevirtz, 2014; Zaccaro et al., 2018)</cite>.</p>
+
+      <p>Singing research backs the vocal route specifically: structured song measurably organizes singers' heart-rate variability, with slow exhalation phases driving vagally-mediated heart deceleration <cite>(Vickhoff et al., 2013, Frontiers in Psychology)</cite>. And for the trivia drawer: humming increases nasal nitric oxide roughly <b>15-fold</b> over quiet exhalation — 189 to 2,818 nl/min in the classic measurement <cite>(Weitzberg &amp; Lundberg, 2002, Am. J. Respir. Crit. Care Med.)</cite>. That one's a respiratory curiosity rather than a calm claim, but it is a genuinely funny thing for a children's game mechanic to have in its bibliography.</p>
+
+      <div class="callout">
+        <div class="num">0.1 Hz</div>
+        <div>
+          <div class="label">The resonance rate</div>
+          <div class="txt">~6 breaths per minute — the breathing pace at which heart-rate oscillations peak and the baroreflex is maximally engaged. A held hum naturally stretches the exhale toward this territory.</div>
+        </div>
+      </div>
+
+      <p style="margin-top:28px">Then there's the engineering, because "detect a child's hum on a phone" is a genuinely hard signal-processing problem. The HumDial — documented in its own 29-page whitepaper — listens through the microphone and extracts five features per frame from a 2,048-sample (~46&nbsp;ms) window: amplitude, pitch, stability, harmony, and voice confidence.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Pitch tracking"><b>Four interchangeable pitch algorithms.</b> The default is a normalized autocorrelation tracker with parabolic interpolation (&lt;0.5&nbsp;Hz error) and confidence gating; alternates include YIN <cite>(de Cheveigné &amp; Kawahara, 2002)</cite> and SRH <cite>(Drugman &amp; Alwan, 2011)</cite> running on a hand-rolled radix-2 FFT. Detection range 60–800&nbsp;Hz — kids hum around 250–450&nbsp;Hz, adults nearer 120–220, so the dial adapts its range per player.</li>
+        <li data-tag="Four bands"><b>Low · Mid · High · Loud.</b> Band centers at 165 / 230 / 320 / 420&nbsp;Hz (roughly E3, B♭3, E♭4, A♭4). A pitch within ±35&nbsp;Hz of a band center gets gently magnetized toward it — the game is generous on purpose. Matching a band means pitch in tolerance <em>and</em> enough amplitude.</li>
+        <li data-tag="Phone reality"><b>Fighting the phone's own ears.</b> Mobile mics apply automatic gain control that squashes exactly the signal we need, so the chain runs an adaptive noise floor (signal must beat ambient ×1.6), platform-specific gain, a soft-knee compressor, an asymmetric attack/release envelope, and Schmitt-trigger hysteresis so the "is humming" flag doesn't flicker. Total budget: ~0.9&nbsp;ms per frame on mobile.</li>
+        <li data-tag="No child left out"><b>Accessibility as architecture.</b> An amplitude-only mode for children who can't hum (selective mutism, tracheostomy), a no-microphone simulator fallback so the game never blocks, band colors checked against deuteranopia, and gate loops hard-capped at three attempts — after which the game says "Take a slow breath — you've worked hard today" and opens the gate anyway.</li>
+      </ul>
+
+      <div class="pull-quote">The mechanic IS the therapy — not a therapy screen layered on top of a game.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE HUM RIDE -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 04 / The Hum Ride</div>
+      <h2 class="sec-title">A rollercoaster steered by <em>how you actually feel</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ check-in → ride → "you felt 2 steps calmer"</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Each day's ride begins with an emotion check-in — the nine pets, plus intensity sliders — which seeds a stress score. That score does real systemic work: the number of hum gates on today's track is interpolated from it (calm day, 2 gates; stormy day, up to 5), and it sets the starting level of the ride's internal stress engine. The design principle: <b>difficulty scales with state, not skill</b>.</p>
+
+    <ul class="principle-list">
+      <li data-tag="The stress engine"><b>One scalar, honestly modeled.</b> The SpikeEngine tracks arousal on a −1 to +1 axis with crash, stable, and overload states that modulate cart speed. Notably, even the calmest check-in starts the bar at 30–50% — never zero — because managing diabetes always carries some baseline load. The game refuses to pretend otherwise.</li>
+      <li data-tag="Gate choreography"><b>The soundtrack steps aside.</b> When the cart reaches a gate, the music fully mutes — partly for ritual, mostly so the microphone hears only the child. Clear the gate and stress drops a fixed step, the doors take a stately three seconds to slide open, and the cart rolls on. A 10-second fallback guarantees no child is ever stranded at a gate.</li>
+      <li data-tag="Stress blobs"><b>Slicing worry into speed.</b> Between gates, swipeable stress blobs cross the track; each slice snaps the cart to a burst of speed. Worry, converted to momentum, with a trail VFX. This is the correct use of worry.</li>
+      <li data-tag="Breath pauses"><b>The inhale is designed too.</b> Gate sequences include deliberate 0.4–1.0&nbsp;s rest beats between hum steps — those are the inhales, choreographed. The full sequence set progresses Mid → High → Mid-High → High-Loud → Mid-High-Low across gates.</li>
+      <li data-tag="The receipt"><b>Before-and-after, in kid units.</b> The ride logs stress before and after, and the completion screen translates the delta: "You felt 2 steps calmer after humming." Not a chart. A sentence a seven-year-old can own.</li>
+    </ul>
+  </div>
+
+  <div class="gallery">
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/humdial.webp" alt="The HumDial in-game: a glowing radial dial with colored band wedges filling while the player hums" loading="lazy">
+    </figure>
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/ride-countdown.webp" alt="The cart waiting at the start of a magical forest track during the countdown" loading="lazy">
+    </figure>
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/ride-tunnel.webp" alt="The cart racing into a glowing stone gate tunnel whose visuals react to the hum" loading="lazy">
+    </figure>
+  </div>
+
+  <div class="prose">
+    <p>The tunnel itself is a hand-written URP shader on the inside of a cylinder: ring density follows pitch, noise-smear follows instability, and holding a note near the A3–C4–E4 triad for half a second triggers Harmony Mode — the whole tunnel lerps to gold. The child's voice is, quite literally, the lighting rig.</p>
+  </div>
+</section>
+
+<!-- GARDEN + PETS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / The Living Garden</div>
+      <h2 class="sec-title">Nine feelings, nine <em>roommates</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ affect labeling, with fur</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The garden's emotional core is its nine pets — a golden puppy for happy, a blue rain-bird for sad, a white duckling for fear, a leafy-collared wolf pup for disgust, a red-quilled hedgehog for angry, a squirrel for surprised, a chameleon for bored, an otter with permanently crossed arms for irritated, and a sleepy pink bunny for tired. Tap one below, exactly as kids do in the game's check-in.</p>
+  </div>
+
+  <div class="mfr-feel">
+    <div>
+      <h3 style="font-size:22px;font-weight:700;margin:0 0 4px">How are you feeling today?</h3>
+      <p style="font-size:14px;color:var(--muted);margin:0 0 16px">Tap a friend. Every feeling is welcome.</p>
+      <div class="pets" id="mfr-pets" role="group" aria-label="Choose a feeling"></div>
+    </div>
+    <div class="reply" aria-live="polite">
+      <img id="mfr-reply-img" src="../assets/case-studies/my-friend-riley/pet-happy.webp" alt="" width="220" height="220">
+      <p id="mfr-reply">The happy puppy is so glad you came to the garden!</p>
+      <small>every feeling is welcome</small>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:28px">
+    <p>This isn't just charm — it's an affect-labeling machine. Putting a feeling into words measurably dampens the amygdala's response to emotional stimuli while recruiting the prefrontal cortex <cite>(Lieberman et al., 2007, Psychological Science)</cite> — the finding popularized as "name it to tame it." Riley's twist is that labeling happens by <em>choosing a creature</em>, which lowers the ask for kids who can't yet articulate "irritated" but can absolutely point at the otter with crossed arms.</p>
+
+    <p>Two design decisions do the heavy emotional lifting. First, the difficult pets are <b>always present</b> — anger and fear live in the garden like everyone else; they are never banished, because the game must never imply that negative feelings are wrong to have. Second, logging a hard feeling triggers a <b>compassion animation</b> — the happy puppy nuzzles the hedgehog — and the hedgehog says, "Thanks for seeing me. I feel a little less alone." Honest reporting is rewarded with warmth, never corrected.</p>
+
+    <p>Around the pets, the rituals: drag water drops into the <b>Lotus Pond</b> and the lotus climbs from wilted toward radiant bloom; feed last night's hours to the <b>Moon Cactus</b> and it earns its star crown at a full night's sleep; the <b>Hum Statue</b>'s four gem hearts light with each completed ride; and the <b>Rainbow Tree</b> glows only on days when everything aligns — celebrated when it happens, never shamed when it doesn't.</p>
+  </div>
+
+  <div class="gallery">
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/garden.webp" alt="Water logging screen: a lotus pond where each dropped water drop is a cup drunk today" loading="lazy">
+    </figure>
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/care-water.webp" alt="Sleep screen: the moon cactus in a twilight canyon, fed with moon tokens for hours slept" loading="lazy">
+    </figure>
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/journal-today.webp" alt="The Living Journal's Today page: wishes, a gratitude seed, and the daily login bonus in Riley's magic book" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- ZERO PUNISHMENT -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 06 / The Promise</div>
+        <h2 class="sec-title">Nothing in the garden <em>ever wilts</em> because of you.</h2>
+      </div>
+      <div class="sec-kick">↳ zero-punishment, as a hard system constraint</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Most habit products are quietly built on loss aversion: streaks that shatter, plants that die, auras that gray out. That pressure works — on adults, briefly — but aim it at a child who already associates health data with being judged, and you've built a shame engine with a mascot. Riley's answer is a set of non-negotiable system rules, written into the design doc as constraints, not vibes:</p>
+
+      <ul class="principle-list">
+        <li data-tag="Rule 01"><b>No fail state exists.</b> Gates wait forever. Stress in the ride only goes down. A missed day means a sleepy flower waiting for a splash — never a dead one.</li>
+        <li data-tag="Rule 02"><b>Always safe to log.</b> Every emotion is accepted with warmth. Logging "angry" earns the same celebration as logging "happy" — the reward is for honesty, not for feeling the approved thing.</li>
+        <li data-tag="Rule 03"><b>Visual rewards above all.</b> The primary currency is blooms, glows, and particles — things that are beautiful rather than countable. Streaks exist, but the best-ever streak is never lost, and milestones are commemorated, not defended.</li>
+        <li data-tag="Rule 04"><b>Three to five minutes.</b> A full day of care — check-in, ride, water, sleep, journal — is designed to fit inside five minutes. A wellbeing game that demands an hour is a chore with extra steps.</li>
+      </ul>
+
+      <p style="margin-top:24px">There's respectable motivation science underneath — self-determination theory's case that autonomy and warmth beat pressure for behavior that has to last <cite>(Deci &amp; Ryan)</cite> — but the honest origin is simpler: this game is for a child who might be having a genuinely hard week. Every system was audited against one question. <em>What does this feel like on a bad day?</em></p>
+
+      <div class="pull-quote">Rewards for honesty, not perfection. Calm, kind, and never judgy.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GROWNUPS VAULT -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 07 / The Grownups Vault</div>
+      <h2 class="sec-title">Parents see the signal. The child keeps the <em>magic</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ PIN-gated · observational · local-first</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Behind a four-digit PIN keypad lives the adult view: seven-day hydration and sleep charts, an emotion breakdown, hum-session counts, and a "Humming &amp; Health" correlation view that lines humming up against the rest of the week. There's even an exportable guardian report for doctor visits — deliberately written in observational language with its limitations stated, because a children's game should inform a clinical conversation, never impersonate one.</p>
+
+    <p>The data posture is conservative by design: everything is local-first on the device — no backend, no account, no telemetry of feelings leaving the phone. And the planned insight layer is deterministic-first: statistical patterns are computed first, and any AI involvement is restricted to <em>explaining validated patterns, never inventing them</em>, with blood-sugar-adjacent correlations held to exploratory language only. The central principle, verbatim from the spec: the child must feel <b>cared for — never judged, medically monitored, or punished</b>.</p>
+  </div>
+
+  <div class="gallery" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/profile.webp" alt="Wellness profile overview: water, sleep, emotions, humming and streak tiles" loading="lazy">
+    </figure>
+    <figure>
+      <img src="../assets/case-studies/my-friend-riley/vault-insights.webp" alt="Grownup insights: logs over time, key moments, and humming trends behind the vault PIN" loading="lazy">
+    </figure>
+  </div>
+  <span class="note">↑ the default PIN is 1234. grownups: change it. kids: you didn't read this.</span>
+</section>
+
+<!-- THE BUILD -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 08 / The Build</div>
+        <h2 class="sec-title">Two eras, one pivot, and a <em>72-asset</em> AI art pipeline.</h2>
+      </div>
+      <div class="sec-kick">↳ how it actually got made</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Riley has lived two lives. Era one (March 2026) was a "personalized emotional rollercoaster" through the body's inner world — emotion-driven procedural rides, food choices, spike physics. It worked, and it taught us what the real product was. The June 2026 <b>InnerGarden pivot</b> kept the two systems that had proven themselves — the HumDial and the stress engine — and rebuilt everything around them as a daily garden for kids managing T1D. Killing the runner framing was the best design decision of the project; the hum was always the hero, and the pivot finally admitted it.</p>
+
+      <ul class="principle-list">
+        <li data-tag="AI pipeline"><b>Meshy → Blender MCP → Unity.</b> 72 generated 3D assets flowed through text-to-3D, then a Claude-driven Blender cleanup over MCP, into Unity prefabs. The Starflower gate in this page's demo is one of them — a Meshy mesh whose doors were split in Blender so the game (and this very webpage) could swing them open.</li>
+        <li data-tag="Art specs as prompts"><b>ChatGPT as the 2D art department.</b> The pets' art spec is literally written as paste-ready generation prompts against a character identity sheet — nine pets × 14 animation frames each, generated, then dropped into a pipeline that needed no code changes to absorb them.</li>
+        <li data-tag="Claude Code"><b>An AI co-developer in the engine.</b> 163 scripts across 24 assemblies, the ~1,500-line hum tunnel controller and ~1,900-line dial UI among them, built with Claude Code under the same evidence-first bug protocol as my other projects — complete with a BUG_GRAVEYARD where no fix is "done" until verified on a device.</li>
+        <li data-tag="The web page"><b>Even the marketing is a system.</b> The Verse site's Riley page — the source of this page's interactive hero — ships as a scoped, dependency-free embed: all styles namespaced, rAF-batched pointer tracking, reduced-motion support, 2&nbsp;MB total. The hold-to-hum demo you used above is that exact code, re-skinned.</li>
+      </ul>
+    </div>
+
+    <div class="outcome-row">
+      <div class="stat"><div class="n">179</div><div class="l">Commits · Mar–Sep 2026</div></div>
+      <div class="stat"><div class="n">163</div><div class="l">C# scripts · 24 assemblies</div></div>
+      <div class="stat"><div class="n">72</div><div class="l">Meshy-generated 3D assets</div></div>
+      <div class="stat"><div class="n">9</div><div class="l">Emotion pets · 14 frames each</div></div>
+      <div class="stat"><div class="n">~0.9 ms</div><div class="l">HumDial frame budget (mobile)</div></div>
+      <div class="stat"><div class="n">3–5 min</div><div class="l">A full day of care</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAILER + OUTCOME -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 09 / Where It Stands</div>
+      <h2 class="sec-title">In development, playable, and already <em>humming</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ see it move</div>
+  </div>
+
+  <div class="trailer-box">
+    <video controls playsinline preload="none" poster="../assets/case-studies/my-friend-riley/trailer-poster.webp">
+      <source src="../assets/case-studies/my-friend-riley/mfr-trailer-720p.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="prose">
+    <p class="lead">My Friend Riley is in active development at The Verse: the hum ride, garden, pets, rituals, journal, and Grownups Vault are built and playable; themed rides, deeper insight layers, and wearable/CGM integrations are on the roadmap — the long-term ambition being a game whose health-outcome data is worth publishing, not just shipping.</p>
+
+    <p>What I'll carry forward from this one: <b>the mechanic should be the therapy</b>, not decoration around it; externalizing a child's data into creatures they care for turns tracking from a mirror into a friendship; and a genuinely kind system is a set of hard engineering constraints — no fail state, a capped retry loop, a microphone pipeline that adapts to every voice — not a tone of voice in the UI copy.</p>
+  </div>
+
+  <div class="sci">
+    <b>References, for the curious:</b> Baumel et al. (2019), <i>JMIR</i> — objective engagement with mental-health apps · Lehrer &amp; Gevirtz (2014) — HRV biofeedback &amp; resonance breathing · Zaccaro et al. (2018), <i>Front. Hum. Neurosci.</i> — slow-breathing psychophysiology · Vickhoff et al. (2013), <i>Front. Psychol.</i> — song structure &amp; singers' HRV · Weitzberg &amp; Lundberg (2002), <i>AJRCCM</i> — humming &amp; nasal nitric oxide · Lieberman et al. (2007), <i>Psychol. Sci.</i> — affect labeling · de Cheveigné &amp; Kawahara (2002) — YIN · Drugman &amp; Alwan (2011) — SRH · Surwit et al. (2002), <i>Diabetes Care</i> — stress management &amp; glycemic control.
+  </div>
+  <span class="note">↑ yes, a cozy kids' game with a bibliography. as it should be.</span>
+</section>
+
+<!-- NEXT / BACK -->
+<nav class="nextprev">
+  <a href="../index.html#work">← all case studies</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="karma-rpg.html" style="text-align:right">next: The Karma Project →</a>
+</nav>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const A = "../assets/case-studies/my-friend-riley/";
+
+  // ── Riley idle frames (gentle breathing loop) ────────────────────
+  const img = $("mfr-riley-img");
+  if (!img) return;
+  const idle = ["mascot-idle-01", "mascot-idle-03", "mascot-idle-04", "mascot-idle-03"];
+  ["mascot-idle-02", "mascot-happy", ...idle].forEach((n) => { const i = new Image(); i.src = A + n + ".webp"; });
+  let idleIx = 0, holdPose = 0;
+  const setPose = (name) => { img.src = A + name + ".webp"; };
+  if (!reduce) setInterval(() => {
+    if (Date.now() < holdPose || humming) return;
+    idleIx = (idleIx + 1) % idle.length; setPose(idle[idleIx]);
+  }, 700);
+
+  // ── Riley leans toward the pointer (rAF-batched, transform only) ──
+  const wrap = $("mfr-riley-wrap");
+  let px = 0, py = 0, queued = false;
+  if (!reduce) window.addEventListener("pointermove", (e) => {
+    const r = wrap.getBoundingClientRect();
+    px = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 1.2)));
+    py = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 1.2)));
+    if (queued) return; queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      img.style.setProperty("--tilt", (px * 7).toFixed(2) + "deg");
+      img.style.setProperty("--tx", (px * 10).toFixed(1) + "px");
+      img.style.setProperty("--ty", (py * 6).toFixed(1) + "px");
+    });
+  }, { passive: true });
+
+  // ── speech bubble ────────────────────────────────────────────────
+  const bubble = $("mfr-bubble");
+  const say = (text) => {
+    bubble.classList.add("swap");
+    setTimeout(() => { bubble.textContent = text; bubble.classList.remove("swap"); }, reduce ? 0 : 180);
+  };
+
+  // ── sparkle burst ────────────────────────────────────────────────
+  const colors = ["var(--highlight)", "var(--plum)", "var(--lilac)", "var(--ochre)"];
+  const burst = (count = 14) => {
+    if (reduce) return;
+    const r = wrap.getBoundingClientRect().width / 2;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("span");
+      s.className = "spark";
+      const a = (i / count) * Math.PI * 2 + Math.random() * .4;
+      const d = r * (0.75 + Math.random() * 0.45);
+      s.style.setProperty("--dx", (Math.cos(a) * d).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.sin(a) * d).toFixed(0) + "px");
+      s.style.setProperty("--c", colors[i % colors.length]);
+      s.addEventListener("animationend", () => s.remove(), { once: true });
+      wrap.appendChild(s);
+    }
+  };
+
+  // ── tap Riley ────────────────────────────────────────────────────
+  const hellos = [
+    "Hi friend! Want to hum with me?",
+    "You make the garden brighter just by being here.",
+    "Fun fact: humming can calm stormy inside-weather.",
+    "Our lotus is thirsty. Shall we give it a splash?",
+    "Every feeling is welcome in the garden.",
+    "The fireflies are waiting for your magic hum!",
+  ];
+  let helloIx = 0;
+  const rileyBtn = $("mfr-riley");
+  rileyBtn.addEventListener("click", () => {
+    if (humming) return;
+    setPose("mascot-idle-02"); holdPose = Date.now() + 1200;
+    rileyBtn.classList.remove("pop"); void rileyBtn.offsetWidth; rileyBtn.classList.add("pop");
+    say(hellos[helloIx = (helloIx + 1) % hellos.length]);
+    burst(8);
+  });
+
+  // ── hold to hum: fill the dial like the in-game HumDial ──────────
+  const gateEl = $("mfr-gate");
+  let gateCloseTimer = 0;
+  const GATE_OPEN_MS = 4000;
+  const ring = $("mfr-ring");
+  const LEN = 2 * Math.PI * 182;
+  ring.style.setProperty("--len", LEN.toFixed(1));
+  const humBtn = $("mfr-hum"), readout = $("mfr-readout"), gatesEl = $("mfr-gates").querySelector("b");
+  const FILL_MS = 2400;
+  let humming = false, progress = 0, last = 0, gates = 0, raf = 0;
+  const bands = ["mid", "high", "mid", "low"];
+
+  const draw = () => { ring.style.strokeDashoffset = (LEN * (1 - progress)).toFixed(1); };
+  const tick = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    progress = Math.max(0, Math.min(1, progress + (humming ? dt / FILL_MS : -dt / 900)));
+    draw();
+    if (humming) {
+      const hz = 210 + Math.round(Math.sin(t / 160) * 9 + Math.sin(t / 47) * 4);
+      readout.textContent = `~${hz} Hz · ${bands[gates % bands.length]} band`;
+    }
+    if (humming && progress >= 1) return complete();
+    if (humming || progress > 0) raf = requestAnimationFrame(tick); else { raf = 0; last = 0; }
+  };
+  const start = (e) => {
+    if (e) e.preventDefault();
+    if (humming) return;
+    humming = true; humBtn.setAttribute("aria-pressed", "true"); humBtn.textContent = "Humming…";
+    clearTimeout(gateCloseTimer);
+    gateEl.classList.remove("open");
+    say("Mmmmmm… keep going, you're filling the dial!");
+    if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+  };
+  const stop = () => {
+    if (!humming) return;
+    humming = false; humBtn.setAttribute("aria-pressed", "false"); humBtn.textContent = "Hold to hum";
+    if (progress < 1) { readout.textContent = "dial draining…"; say("Almost! Hold a little longer next time."); }
+    if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+  };
+  const complete = () => {
+    humming = false; raf = 0; last = 0; progress = 0;
+    humBtn.setAttribute("aria-pressed", "false"); humBtn.textContent = "Hold to hum";
+    gates += 1; gatesEl.textContent = gates;
+    readout.textContent = "gate open!";
+    setPose("mascot-happy"); holdPose = Date.now() + 1800;
+    rileyBtn.classList.remove("pop"); void rileyBtn.offsetWidth; rileyBtn.classList.add("pop");
+    gateEl.classList.add("open");
+    clearTimeout(gateCloseTimer);
+    gateCloseTimer = setTimeout(() => {
+      gateEl.classList.remove("open");
+      readout.textContent = "dial ready";
+      say("The gate closed behind us. Hold to hum and open another one!");
+    }, GATE_OPEN_MS);
+    burst(18);
+    say(gates === 1 ? "You did it! The gate is sliding open!" : `Gate ${gates} open! Your hum is magic.`);
+    setTimeout(draw, 420);
+  };
+  humBtn.addEventListener("pointerdown", start);
+  ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => humBtn.addEventListener(ev, stop));
+  humBtn.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !e.repeat) start(e); });
+  humBtn.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") stop(); });
+  humBtn.addEventListener("contextmenu", (e) => e.preventDefault());
+  draw();
+
+  // ── feelings picker (the game's own nine pets + lines) ───────────
+  const pets = [
+    ["happy", "Happy", "The happy puppy is so glad you came to the garden!"],
+    ["sad", "Sad", "The rain bird feels a little blue. Sitting together helps."],
+    ["fear", "Fear", "The gentle duck feels wobbly. Slow breaths, little friend."],
+    ["disgust", "Disgust", "The wolf pup wrinkles its nose. Some days are like that!"],
+    ["angry", "Angry", "The hedgehog huffs and puffs. It's okay to feel angry sometimes."],
+    ["surprised", "Surprised", "The squirrel can't believe it! What a day of surprises."],
+    ["bored", "Bored", "The chameleon is taking it slow. Slow days are okay too."],
+    ["irritated", "Irritated", "The otter crosses its arms. Prickly feelings pass."],
+    ["tired", "Tired", "The bunny is so sleepy. Rest is how gardens grow."],
+  ];
+  const petsEl = $("mfr-pets"), replyImg = $("mfr-reply-img"), reply = $("mfr-reply");
+  pets.forEach(([id, label, line], i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "pet"; b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.innerHTML = `<img src="${A}pet-${id}.webp" alt="" width="220" height="220" loading="lazy"><span>${label}</span>`;
+    b.addEventListener("click", () => {
+      petsEl.querySelectorAll(".pet").forEach((p) => p.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      replyImg.src = `${A}pet-${id}-react.webp`;
+      replyImg.alt = `${label} pet reacting`;
+      reply.textContent = line;
+    });
+    petsEl.appendChild(b);
+  });
+})();
+</script>
+
+</body>
+</html>
