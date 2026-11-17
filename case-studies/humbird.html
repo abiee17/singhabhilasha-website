@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HumBird — A Biofeedback Game Flown by Your Hum · Abhilasha Singh</title>
+<meta name="description" content="Case study: HumBird, a voice and breath biofeedback mini game inside My Friend Riley. Your hum carries a hurt hummingbird home, and every flight is a breathing exercise. Try it with your microphone." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+<style>
+/* ── HumBird page: leaf green and a ruby throat join the palette ─────────
+   Layout: the site's case-study frame, plus one playable stage near the top. */
+:root{
+  --leaf:#2f7a45; --leaf-deep:#1f5a31;
+  --mint:#a6e3b5; --mint-ghost:#eef6ea;
+  --rose:#cf4f66;
+  --l-low:#ff8c33; --l-mid:#4dcca6; --l-high:#4d8cf2; --l-vhigh:#a659e6;
+}
+.hero h1 em{color:var(--leaf)}
+.sec-title em{color:var(--leaf)}
+section.block.dark .sec-title em{color:var(--mint)}
+.eyebrow .tick{background:var(--mint)}
+.pull-quote{border-left-color:var(--leaf)}
+section.block.dark .pull-quote{border-left-color:var(--mint)}
+.principle-list li::before{color:var(--leaf)}
+section.block.dark .principle-list li::before{color:var(--mint)}
+.callout .num{color:var(--leaf)}
+section.block.dark .callout .num{color:var(--mint)}
+.outcome-row .stat .n{color:var(--leaf)}
+section.block.dark .outcome-row .stat .n{color:var(--mint)}
+section.block.dark .sec-kick, section.block.dark .note{color:var(--mint)}
+.hero .sub b{background:linear-gradient(transparent 62%,rgba(166,227,181,.75) 62%,rgba(166,227,181,.75) 92%,transparent 92%)}
+.hero-img{margin-bottom:10px}
+.hb-cap{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);margin:10px 0 50px;line-height:1.5}
+section.block.dark .hb-cap{color:#b8ae93}
+
+/* ── the story ── */
+.hb-story{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:center}
+.hb-story .prose p{font-size:19px;line-height:1.6}
+.hb-story .prose .lead{font-size:23px;line-height:1.45}
+.hb-nest{margin:0;justify-self:center;max-width:340px;rotate:2deg}
+.hb-nest img{display:block;width:100%;height:auto}
+.hb-nest figcaption{font-family:"Caveat",cursive;font-weight:700;font-size:24px;color:var(--red);text-align:center;margin-top:6px;rotate:-3deg}
+
+/* ── the playable stage ── */
+.hb-demo{margin:32px 0 10px}
+.hb-stage{
+  --m:20px;position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;
+  border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  background:#f6c3a5;user-select:none;-webkit-user-select:none;outline-offset:4px;
+}
+.hb-stage.on{touch-action:none;cursor:ns-resize}
+.hb-stage:focus-visible{outline:3px solid var(--leaf)}
+.hb-layer{position:absolute;left:0;right:0;background-repeat:repeat-x;pointer-events:none}
+.hb-sky{inset:0;background-size:auto 100%}
+.hb-mid{bottom:0;height:63%;background-size:auto 100%;opacity:.92}
+.hb-near{bottom:0;height:23%;background-size:auto 100%}
+.hb-lane{position:absolute;left:0;right:0;height:calc(var(--m)*2.6);pointer-events:none;opacity:.16;transition:opacity .15s}
+.hb-lane.active{opacity:.46}
+.hb-lane-tag{
+  position:absolute;left:8px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.12em;
+  padding:4px 6px;border:1.5px solid var(--ink);color:var(--ink);pointer-events:none;translate:0 50%;
+}
+.hb-world{position:absolute;left:0;bottom:0;width:0;height:100%;pointer-events:none;will-change:transform}
+.hb-perch{position:absolute;width:calc(var(--m)*2.6);translate:-50% 0;pointer-events:none}
+.hb-perch img{display:block;width:100%;height:auto;max-width:none}
+.hb-drop{position:absolute;width:calc(var(--m)*.62);height:calc(var(--m)*.62);border-radius:50%;translate:-50% 50%;
+  background:radial-gradient(circle at 35% 30%,#fff8d6,#ffc93c 55%,#e69a12);box-shadow:0 0 8px rgba(255,214,90,.9)}
+.hb-drop.got{opacity:0;scale:1.8;transition:opacity .25s,scale .25s}
+.hb-bird{position:absolute;left:26%;width:calc(var(--m)*2.7);translate:-50% 50%;pointer-events:none;will-change:transform,bottom}
+.hb-bird img{display:block;width:100%;height:auto;max-width:none}
+.hb-bird.fly img{animation:hb-flutter .09s linear infinite alternate}
+@keyframes hb-flutter{from{transform:translateY(-1px) scaleY(1)}to{transform:translateY(1px) scaleY(.96)}}
+.hb-hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+  font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);pointer-events:none}
+.hb-song{display:flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--ink);padding:6px 8px;min-width:0}
+.hb-song i{display:block;width:clamp(70px,16vw,170px);height:10px;border:1.5px solid var(--ink);background:#fff}
+.hb-song b{display:block;height:100%;width:100%;background:var(--leaf);transform-origin:left}
+.hb-song.low b{background:var(--red)}
+.hb-count{background:var(--paper);border:1.5px solid var(--ink);padding:6px 8px;display:flex;gap:12px;white-space:nowrap}
+.hb-msg{position:absolute;left:50%;bottom:10px;translate:-50% 0;max-width:calc(100% - 20px);
+  background:var(--ink);color:var(--paper);font:500 13px/1.3 "Space Grotesk",system-ui,sans-serif;padding:7px 12px;text-align:center;pointer-events:none}
+.hb-msg:empty{display:none}
+.hb-cover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(244,236,216,.42)}
+.hb-cover[hidden]{display:none}
+.hb-start{
+  font:700 14px/1 "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  border:1.5px solid var(--ink);background:var(--highlight);padding:16px 22px;cursor:pointer;
+  box-shadow:5px 5px 0 var(--ink);transition:transform .15s,box-shadow .15s;
+}
+.hb-start:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.hb-start:focus-visible{outline:3px solid var(--leaf);outline-offset:4px}
+.hb-help{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.06em;color:var(--muted);margin:18px 0 0;line-height:1.6}
+.hb-help b{color:var(--ink)}
+
+/* ── lanes, tables, goal cards, sprite slots ── */
+.hb-lanes{margin:28px 0;border:1.5px solid var(--ink);max-width:820px}
+.hb-lanes div{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 18px;color:var(--ink);font-weight:700;font-size:15px}
+.hb-lanes div span{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:12px;letter-spacing:.04em;text-align:right}
+.hb-tablewrap{overflow-x:auto;margin:26px 0;max-width:820px;border:1.5px solid currentColor}
+.hb-table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+.hb-table th{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;text-align:left;padding:12px 16px;border-bottom:1.5px solid currentColor;white-space:nowrap}
+.hb-table td{padding:11px 16px;border-top:1px solid currentColor;vertical-align:top}
+.hb-table tr:first-child td{border-top:0}
+.hb-table td.was{text-decoration:line-through;opacity:.6}
+.hb-table td.now{font-weight:700;color:var(--leaf)}
+.drives-grid .drive{border-top-width:6px}
+.hb-goals{grid-template-columns:repeat(5,minmax(0,1fr))}
+.hb-areas{grid-template-columns:repeat(2,minmax(0,1fr))}
+.hb-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+section.block.dark .drives-grid .drive .n,section.block.dark .callout .label,section.block.dark .outcome-row .stat .l{color:#b8ae93}
+.drives-grid .drive p{margin:0}
+.hb-sprites{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:14px;margin:26px 0 8px}
+.hb-sprites figure{margin:0;display:grid;gap:8px;justify-items:center}
+.hb-sprites .slot{position:relative;width:100%;aspect-ratio:1;border:1.5px solid var(--ink);background:var(--mint-ghost)}
+.hb-sprites .slot img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:contain}
+.hb-sprites figcaption{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center}
+.hb-sub{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:44px 0 4px}
+.gallery figure figcaption{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:10px 12px;border-top:1.5px solid var(--ink)}
+
+/* ── video link, mic controls ── */
+.hb-video{
+  display:flex;align-items:center;gap:18px;margin:26px 0 34px;padding:16px 20px;max-width:820px;
+  border:1.5px solid var(--ink);background:var(--mint-ghost);color:var(--ink);text-decoration:none;
+  box-shadow:5px 5px 0 var(--ink);transition:transform .15s,box-shadow .15s;
+}
+.hb-video:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.hb-video:focus-visible{outline:3px solid var(--leaf);outline-offset:4px}
+.hb-video .play{flex:none;width:52px;height:52px;display:grid;place-items:center;background:var(--rose);color:#fff;border:1.5px solid var(--ink);font-size:20px}
+.hb-video b{display:block;font-size:18px;line-height:1.25}
+.hb-video span span{display:block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);margin-top:4px}
+.hb-frame{margin:26px 0 10px;max-width:820px;aspect-ratio:16/9;border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);background:#000}
+.hb-frame iframe{display:block;width:100%;height:100%;border:0}
+.hb-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:18px 0 0}
+.hb-btn{
+  font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  border:1.5px solid var(--ink);background:var(--paper);padding:12px 14px;min-height:44px;cursor:pointer;
+}
+.hb-btn:hover{background:var(--mint-ghost)}
+.hb-btn:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
+.hb-btn[aria-pressed="true"]{background:var(--leaf);color:#fff}
+.hb-btn[hidden]{display:none}
+.hb-read{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--ink);font-variant-numeric:tabular-nums;min-width:0}
+.hb-read i{font-style:normal;display:inline-block;padding:2px 6px;border:1.5px solid var(--ink);margin:0 4px}
+
+/* ── the pre-flight card, redrawn ── */
+.hb-card{
+  max-width:640px;margin:30px 0 8px;padding:22px 22px 20px;background:#fbf4e2;color:#3a2a4d;
+  border:3px solid #6b4fa0;border-radius:22px;box-shadow:0 6px 0 #4a3573;text-align:center;
+}
+.hb-card h3{font-size:22px;margin:0 0 12px;letter-spacing:-.01em}
+.hb-card h3 + .row{margin-bottom:20px}
+.hb-card .row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hb-card button{
+  font:700 15px/1.15 "Space Grotesk",system-ui,sans-serif;color:#fff;border:0;border-radius:14px;
+  padding:12px 14px;min-height:46px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25);
+}
+.hb-card button:focus-visible{outline:3px solid #3a2a4d;outline-offset:3px}
+.hb-card button[aria-pressed="true"]{outline:3px solid #3a2a4d;outline-offset:2px}
+.hb-card .who{background:#7c5cc4;min-width:130px}
+.hb-card .refit{background:transparent;color:#5a3f95;box-shadow:none;border:2px solid #7c5cc4;font-size:13px}
+.hb-card .rule{font-size:13px;line-height:1.45;margin:12px 0}
+.hb-card-say{max-width:640px;min-height:3em;font-size:15px;line-height:1.5;margin:14px 0 0;color:var(--paper)}
+.hb-card-say b{color:var(--mint)}
+.drives-grid .drive.highlight .n{color:var(--ink) !important}
+
+/* ── the stretched range ── */
+.hb-range{position:relative;max-width:820px;margin:34px 0 8px;padding:34px 0 46px}
+.hb-range .bar{display:flex;height:46px;border:1.5px solid var(--ink)}
+.hb-range .bar div{display:grid;place-items:center;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.1em;color:var(--ink);min-width:0;overflow:hidden}
+.hb-range .bar .pad{background:repeating-linear-gradient(45deg,var(--paper-2) 0 6px,transparent 6px 12px)}
+.hb-range .tick{position:absolute;top:34px;height:46px;border-left:1.5px solid var(--ink)}
+.hb-range .tick span{position:absolute;top:52px;left:0;translate:-50% 0;font:500 11px/1 "JetBrains Mono",monospace;white-space:nowrap}
+.hb-range .tick.first span{translate:0 0}
+.hb-range .tick.last span{translate:-100% 0}
+.hb-range .me{position:absolute;top:0;left:29%;translate:-50% 0;height:86px;border-left:3px solid var(--rose)}
+.hb-range .me span{position:absolute;top:0;left:8px;font:700 12px/1.2 "Space Grotesk",system-ui,sans-serif;color:var(--rose);white-space:nowrap}
+
+/* ── journey table, signal chain, two lists ── */
+.hb-tablewrap.wide{max-width:none}
+.hb-tablewrap.wide .hb-table{min-width:980px;font-size:14px;line-height:1.45}
+.hb-table th[scope="row"]{white-space:normal;border-bottom:0;border-top:1px solid currentColor;vertical-align:top;width:120px}
+.hb-table tr:first-child th[scope="row"]{border-top:0}
+.hb-table .plan{background:var(--mint-ghost)}
+section.block.dark .hb-table td.now{color:var(--mint)}
+.hb-flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:22px;margin:30px 0 10px;counter-reset:hb}
+.hb-flow div{position:relative;border:1.5px solid currentColor;padding:12px 12px 14px;font-size:13px;line-height:1.4}
+.hb-flow div:not(:last-child)::after{content:"→";position:absolute;right:-18px;top:50%;translate:0 -50%;font-weight:700;color:var(--mint)}
+.hb-flow b{display:block;font-size:14px;margin-bottom:4px}
+.hb-flow code{display:block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.02em;color:#b8ae93;margin-top:8px;overflow-wrap:anywhere}
+.hb-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px;margin:28px 0 0}
+.hb-two h3{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 12px;padding-bottom:10px;border-bottom:1.5px solid var(--ink)}
+.hb-two ul{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.5}
+.hb-two li{padding:9px 0 9px 26px;border-bottom:1px solid rgba(0,0,0,.14);position:relative}
+.hb-two li::before{position:absolute;left:0;top:9px;font-weight:700}
+.hb-two .in li::before{content:"✓";color:var(--leaf)}
+.hb-two .next li::before{content:"○";color:var(--rose)}
+.hb-two li b{font-weight:700}
+
+@media (max-width:1000px){
+  .hb-flow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hb-flow div:nth-child(3)::after{display:none}
+  .hb-goals{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hb-goals .drive:last-child{grid-column:1/-1}
+  .hb-sprites{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:800px){
+  .hb-flow{grid-template-columns:1fr;gap:22px}
+  .hb-flow div:not(:last-child)::after{content:"↓";display:block;right:auto;left:50%;top:auto;bottom:-21px;translate:-50% 0}
+  .hb-two{grid-template-columns:1fr;gap:28px}
+  .hb-video{gap:12px;padding:12px 14px}
+  .hb-video b{font-size:16px}
+  .hb-card{padding:18px 14px 16px}
+  .hb-card .who{min-width:0;flex:1 1 40%}
+  .hb-range .bar div{font-size:9px;letter-spacing:.02em}
+  .hb-range .tick span{font-size:9px}
+  .hb-range .me span{font-size:11px}
+  .hb-areas{grid-template-columns:1fr}
+  .hb-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hb-sprites{gap:8px}
+  .hb-sprites .slot img{inset:6px;width:calc(100% - 12px);height:calc(100% - 12px)}
+  .hb-sprites figcaption{font-size:8px;letter-spacing:.06em}
+  .hb-story{grid-template-columns:1fr;gap:24px}
+  .hb-story .prose .lead{font-size:20px}
+  .hb-nest{max-width:240px}
+  .hb-stage{box-shadow:5px 5px 0 var(--ink)}
+  .hb-lane-tag{font-size:8px;padding:2px 4px;left:4px}
+  .hb-hud{font-size:9px;top:6px;left:6px;right:6px}
+  .hb-count{gap:8px}
+  .hb-msg{font-size:11px;bottom:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hb-bird.fly img{animation:none}
+  .hb-start,.back,.gallery figure,.hb-video{transition:none}
+}
+</style>
+</head>
+<body>
+
+
+<!-- Top bar -->
+<div class="topbar">
+  <a class="back" href="../index.html">← back to portfolio</a>
+  <div class="crumb">Case Study · My Friend Riley</div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="eyebrow"><span class="tick"></span><span>Case Study · Biofeedback game · My Friend Riley · 2026 · in development</span></div>
+  <h1>HumBird — a biofeedback game where <em>your hum</em> flies a hurt hummingbird home.</h1>
+  <p class="sub">A voice and breath <b>biofeedback</b> mini game inside <b>My Friend Riley</b>. A hummingbird lands hurt on your balcony, and your hum carries her home: from grey city streets, past the suburbs and the outskirts, to the jungle where her family is waiting. The microphone hears your breath as a hum and the bird shows it back to you at once. Hum and she flies. Change your pitch and she changes lane. Stop to breathe and she rests. <b>Every flight is a breathing exercise that never says so.</b></p>
+
+  <dl class="meta-grid">
+    <div><dt>Role</dt><dd>Game &amp; Experience Designer</dd></div>
+    <div><dt>Type</dt><dd>Voice &amp; breath biofeedback game</dd></div>
+    <div><dt>Part of</dt><dd>My Friend Riley · The Verse</dd></div>
+    <div><dt>Timeline</dt><dd>Nov 2026 → present</dd></div>
+    <div><dt>Engine</dt><dd>Unity 6 · URP · Mobile</dd></div>
+    <div><dt>Audience</dt><dd>Kids 6–12 + their grownups</dd></div>
+    <div><dt>Core input</dt><dd>A hum: on, off, and how high</dd></div>
+    <div><dt>Feedback</dt><dd>A bird, a Song meter, four lanes</dd></div>
+  </dl>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/humbird/hero-journey.webp" alt="The hummingbird flying left to right through the game's four areas: a grey city rooftop, a suburb with a white fence, a flower meadow at sunset, and a jungle canopy.">
+  </div>
+  <p class="hb-cap">Her whole way home in one frame, composed for this page from the game's own parallax layers and bird puppet. Not a screenshot.</p>
+</header>
+
+<!-- WHERE IT CAME FROM -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 01 / Where it came from</div>
+      <h2 class="sec-title">She comes to my grapevine <em>every day</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ a backyard, some sun, one small bird</div>
+  </div>
+  <div class="hb-story">
+    <div class="prose">
+      <p class="lead">One day I was sitting in my backyard, enjoying the sun, when a hummingbird came and rested on a branch of the fall grapevine.</p>
+      <p>She comes there every day. We see each other.</p>
+      <p>One day I wondered what her day must look like. She leaves her home somewhere far, far away to come to work at mine. She works tirelessly, many times a day, and takes little rests like this one in between. That is when we catch each other.</p>
+      <p>And then I thought: what if she gets hurt one day, and cannot find her way back home to her babies? What would happen then?</p>
+      <p>That is how the idea for this game came.</p>
+      <div class="pull-quote">A hurt bird on your balcony, and you are helping her find her way back home, lending your hum to her.</div>
+    </div>
+    <figure class="hb-nest">
+      <img src="../assets/case-studies/humbird/finale-family-nest.webp" alt="Game art: a hummingbird at her nest among pink blossoms, feeding two chicks." width="485" height="512">
+      <figcaption>home, to her babies</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- PLAY -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 02 / Watch it, then try it</div>
+      <h2 class="sec-title">Hum to fly. <em>Go quiet to breathe.</em></h2>
+    </div>
+    <div class="sec-kick">↳ the real game on video, a slice of it running here</div>
+  </div>
+
+  <div class="hb-frame">
+    <iframe src="https://www.youtube-nocookie.com/embed/HitVmvY8w4U?rel=0" title="HumBird gameplay video: BioFeedback Humming Bird Game" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <p class="hb-cap" style="margin-bottom:34px">Gameplay recorded from the real game. Press play, or <a href="https://www.youtube.com/watch?v=HitVmvY8w4U" target="_blank" rel="noopener" style="color:inherit">open it on YouTube</a>.</p>
+
+  <div class="prose">
+    <p class="lead">Below is a slice of the flight you can play right here. Turn on your microphone and it listens the way the game does: hum and she flies, hum higher or lower and she changes lane, go quiet on a perch and she breathes her song back in.</p>
+    <p>No microphone, or not somewhere you can hum? Hold the scene instead. Holding stands in for your hum and moving up or down stands in for your pitch, which is the same stand-in the game falls back to when a device has no working mic.</p>
+  </div>
+
+  <div class="hb-demo">
+    <div class="hb-stage" id="hb-stage" tabindex="0" role="application" aria-label="HumBird flight demo. Hold Space to hum, use the up and down arrow keys to change lane, release on a perch to breathe in.">
+      <div class="hb-layer hb-sky" id="hb-sky" style="background-image:url(../assets/case-studies/humbird/demo-sky.webp)"></div>
+      <div class="hb-layer hb-mid" id="hb-mid" style="background-image:url(../assets/case-studies/humbird/demo-mid.webp)"></div>
+      <div id="hb-lanes"></div>
+      <div class="hb-world" id="hb-world"></div>
+      <div class="hb-layer hb-near" id="hb-near" style="background-image:url(../assets/case-studies/humbird/demo-near.webp)"></div>
+      <div class="hb-bird" id="hb-bird"><img id="hb-bird-img" src="../assets/case-studies/humbird/bird-perch.webp" alt=""></div>
+      <div class="hb-hud">
+        <div class="hb-song" id="hb-song"><span>Song</span><i><b id="hb-song-fill"></b></i></div>
+        <div class="hb-count"><span>Nectar <span id="hb-nectar">0</span></span><span>Breaths <span id="hb-breaths">0</span></span></div>
+      </div>
+      <div class="hb-msg" id="hb-msg" aria-live="polite"></div>
+      <div class="hb-cover" id="hb-cover"><button class="hb-start" id="hb-start" type="button">▶ Lend her your hum</button></div>
+    </div>
+    <div class="hb-controls">
+      <button class="hb-btn" id="hb-mic" type="button" aria-pressed="false">Use my microphone</button>
+      <button class="hb-btn" id="hb-refit" type="button" hidden>Fit the lanes to my voice again</button>
+      <span class="hb-read" id="hb-read" aria-hidden="true"></span>
+    </div>
+    <p class="hb-help"><b>With the microphone:</b> slide one hum from low to high and the four lanes fit themselves to your voice. Your sound is analysed on this page, inside your browser. Nothing is recorded and nothing is sent anywhere.<br><b>Without it:</b> hold the scene (or Space) to hum · move up and down (or ↑ ↓) to change pitch · let go on a perch to breathe her song back in. If she drops, she drifts back to her last perch.</p>
+  </div>
+  <div class="prose">
+    <p>This is a browser port, not the Unity build. Unity's web player has no microphone support yet, so the game itself cannot listen from a web page. What runs here is the game's own lane-fitting and flight rules rewritten in JavaScript with the same numbers: 8 seconds of song in a full breath, 2.5 seconds on a perch to breathe it back, a 6 m/s cruise, lanes cut from the range you actually hum, and a climb that tops out at 6.5 m/s after a fall. The part that decides "is this a hum?" is simpler here than Riley's hum engine. Obstacles, bubbles and scoring are left out of this slice. In the real game, in most moods, dropping onto the thorns ends the flight.</p>
+  </div>
+</section>
+
+<!-- THE HIDDEN EXERCISE -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 03 / The biofeedback loop</div>
+        <h2 class="sec-title">Every flight is an <em>exhale</em>. Every perch is a breath in.</h2>
+      </div>
+      <div class="sec-kick">↳ the bird is the read-out, the level is the coach</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Biofeedback means showing a body signal back to the person it belongs to, as it happens, so they can learn to steer it. Here the signal is the breath, heard through the voice, and the read-out is a bird.</p>
+      <p>You cannot hum while you breathe in. So a game where humming is the only thing keeping a bird in the air is a game about long, steady exhales, and I never have to say the words "breathing exercise" to a child.</p>
+    </div>
+    <div class="hb-tablewrap">
+      <table class="hb-table">
+        <tr><th>What the mic hears</th><th>What the child sees, at once</th></tr>
+        <tr><td>A hum starts</td><td>She lifts off and flies</td></tr>
+        <tr><td>The hum stops</td><td>She dips in the same instant, then falls</td></tr>
+        <tr><td>How high the hum is</td><td>Which of the four lanes she flies in</td></tr>
+        <tr><td>How loud the hum is</td><td>A little more speed, up to 30%, and a brighter ribbon behind her</td></tr>
+        <tr><td>How long the breath out has lasted</td><td>The Song meter draining</td></tr>
+        <tr><td>A quiet breath in, on a perch</td><td>The Song meter filling back up</td></tr>
+      </table>
+    </div>
+    <div class="prose">
+      <p>What it does not read is the heart. There is no pulse sensor and no heart-rate number in HumBird. The loop is closed on the breath alone, with the one sensor every phone already has.</p>
+      <p>The Song meter is the breath gauge. It drains only while she is flying on your hum and it refills only while she sits on a perch and you are quiet. Gaps between perches are sized to one comfortable hum: about 4 seconds early in a flight, growing to about 6.5. Add the rest it takes to breathe that much song back and one loop of fly-then-perch takes roughly 5 to 9 seconds.</p>
+
+      <div class="callout">
+        <div class="num">7–11 / min</div>
+        <div>
+          <div class="label">Breaths per minute, by construction</div>
+          <div class="txt">A hum of 4–6.5 s, then 1–2.5 s on the perch to breathe it back. That starts above the roughly 6 breaths a minute that slow-breathing research keeps pointing to <cite>(Lehrer &amp; Gevirtz, 2014; Zaccaro et al., 2018)</cite>, and the longer legs later in a flight pull it down toward it.</div>
+        </div>
+      </div>
+
+      <p style="margin-top:28px">This is a design target, not a clinical result. Nobody has measured a child's heart rate against this game yet. What the structure does guarantee is the shape of the breath: out for the length of a flight, in for the length of a rest, again and again, with a bird to care about instead of a counter.</p>
+
+      <ul class="principle-list">
+        <li data-tag="Song meter"><div><b>One breath, on screen.</b> 8 seconds of song when full. It only goes down while she flies, so gliding in silence costs nothing.</div></li>
+        <li data-tag="Perches"><div><b>The game makes you stop.</b> Song comes back in 2.5 seconds, and only if you are quiet. Humming on the perch does not refill it.</div></li>
+        <li data-tag="Nectar line"><div><b>The tutorial is a dotted line.</b> Nectar drops trace the route to the next perch, lane changes included. Follow the drops and you fly the breath the level was built for.</div></li>
+        <li data-tag="Kind falls"><div><b>Silence is felt at once, and forgiven.</b> She dips the instant the hum stops, so going quiet is never a mystery. And a perch within reach pulls her in.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE TO WINGS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 04 / Voice to wings</div>
+      <h2 class="sec-title">Four lanes, fitted to <em>your</em> voice.</h2>
+    </div>
+    <div class="sec-kick">↳ a six-year-old and a dad both get the whole sky</div>
+  </div>
+  <div class="prose">
+    <p class="lead">Pitch picks the lane. The colours and order are the same four bands as the HumDial in Riley's hum ride, turned on their side, so a child who has done the ride already knows this language.</p>
+  </div>
+  <div class="hb-lanes">
+    <div style="background:var(--l-vhigh)">V-HIGH <span>the top of your range</span></div>
+    <div style="background:var(--l-high)">HIGH <span></span></div>
+    <div style="background:var(--l-mid)">MID <span></span></div>
+    <div style="background:var(--l-low)">LOW <span>the bottom of your range</span></div>
+  </div>
+  <div class="prose">
+    <p>The lanes are not fixed notes. The game listens to the range a player actually hums in, trims a little off each end so nobody has to strain for the top or growl for the bottom, and cuts what is left into four. A child humming at, say, 280–450 Hz and a parent at 120–220 Hz both get four reachable lanes. Until it has heard enough, it falls back to the HumDial's fixed bands.</p>
+    <ul class="principle-list">
+      <li data-tag="Who is flying?"><div><b>One card before take-off.</b> "Me" keeps the saved voice range. "A guest" gets fresh lanes and saves nothing, so a parent trying the game does not stretch the child's lanes. That card exists because of a playtest, told in § 06.</div></li>
+      <li data-tag="Sticky lanes"><div><b>A wobble is not a lane change.</b> Pitch has to move a little past a lane edge before she switches, so a slightly shaky hum holds its lane.</div></li>
+      <li data-tag="Fast ears"><div><b>Stop means stop.</b> Riley's hum engine smooths loudness for the ride's dial, and that smoothing lingers for most of a second. A bird that keeps flying after you have gone quiet feels wrong, so HumBird adds its own quicker gate on the raw signal.</div></li>
+      <li data-tag="No mic? No problem"><div><b>Touch stands in.</b> Hold to hum, finger height for pitch. It is what the demo above uses when the microphone is off.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- BEFORE TAKE-OFF: THE CARD -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 05 / Before take-off</div>
+        <h2 class="sec-title">One card, two questions: <em>what</em> today, and <em>who</em>.</h2>
+      </div>
+      <div class="sec-kick">↳ the same bird, a different breath</div>
+    </div>
+    <div class="prose">
+      <p class="lead">Every session opens on one card. It asks what you would like today, and who is flying. The first answer shapes the course. The second decides whose voice the lanes are fitted to, and whether anything is saved.</p>
+    </div>
+
+    <div class="hb-card" id="hb-card">
+      <h3>What would you like today?</h3>
+      <div class="row">
+        <button type="button" style="background:#ff9e2e" data-goal="0" aria-pressed="false" data-say="<b>Energize.</b> “Bright and lively. The nectar runs along the high lanes.”">Energize</button>
+        <button type="button" style="background:#61a8f2" data-goal="1" aria-pressed="false" data-say="<b>Relax.</b> “Slow and low. Long, soft hums along the low lanes.”">Relax</button>
+        <button type="button" style="background:#5cb873" data-goal="2" aria-pressed="true" data-say="<b>Everyday.</b> “A bit of everything: high and low, quick and calm.”">Everyday</button>
+        <button type="button" style="background:#ed546b" data-goal="3" aria-pressed="false" data-say="<b>Challenge.</b> “Quick drops and climbs, lots of bubbles, points x1.5. Can you beat your best?”">Challenge</button>
+        <button type="button" style="background:#a885ed" data-goal="4" aria-pressed="false" data-say="<b>SOS.</b> “Not feeling great? A long, gentle flight with lots of places to rest.”">SOS</button>
+      </div>
+      <h3>Who is flying?</h3>
+      <div class="row">
+        <button type="button" class="who" data-say="<b>Me.</b> The saved voice range, best score and last mood load. The very first time, a short warm-up fits the lanes to your voice.">Me</button>
+        <button type="button" class="who" data-say="<b>A guest.</b> They get their own warm-up and their own lanes. No range, no best score and no daily log entry is kept, and the results card says “A guest flight: not saved”.">A guest</button>
+      </div>
+      <p class="rule">A guest gets fresh pitch lanes fitted to their own voice.<br>Nothing a guest does is saved, and it never changes yours.</p>
+      <div class="row">
+        <button type="button" class="refit" data-say="<b>Me, and fit again.</b> Throws away the saved range and runs the warm-up again, for a day the voice is different: a cold, a growth spurt, an early morning.">Me, and fit the lanes to my voice again</button>
+      </div>
+    </div>
+    <p class="hb-card-say" id="hb-card-say" aria-live="polite"><b>Everyday.</b> “A bit of everything: high and low, quick and calm.”</p>
+    <p class="hb-cap">The card redrawn for this page with the game's own words. Tap its buttons to see what each one does.</p>
+
+    <div class="prose">
+      <p>The mood does not change the rules. It changes where the nectar line runs, how long the hums are, and how much is in the way. One course builder reads one small profile per mood.</p>
+    </div>
+    <div class="drives-grid hb-goals" id="hb-goals">
+      <div class="drive" style="border-top-color:#ff9e2e"><span class="n">HIGH HUMS</span><div class="d">Energize</div><p>The nectar runs along the two high lanes, about 80% of the way. The low lanes are the cluttered ones. A touch faster, more speed bubbles.</p></div>
+      <div class="drive" style="border-top-color:#61a8f2"><span class="n">LOW HUMS</span><div class="d">Relax</div><p>The mirror image. Long, soft, low hums, slower flight, fewer things that move, mostly shield bubbles.</p></div>
+      <div class="drive highlight" style="border-top-color:#5cb873"><span class="n">BALANCED</span><div class="d">Everyday</div><p>The game exactly as tuned. Hums of about 4 seconds that grow toward 6.5 as the flight goes on.</p></div>
+      <div class="drive" style="border-top-color:#ed546b"><span class="n">POINTS ×1.5</span><div class="d">Challenge</div><p>Short legs, perches sometimes two lanes away, obstacles scattered off the line, a bubble on most legs, and your own best score to beat.</p></div>
+      <div class="drive" style="border-top-color:#a885ed"><span class="n">A HARD DAY</span><div class="d">SOS</div><p>Slow, with no speed-up. A perch about every 20 metres, almost nothing in the way, and no thorns: the flight lasts as long as she wants.</p></div>
+    </div>
+    <div class="prose">
+      <p style="margin-top:22px">SOS matters most to me. Riley is built first for kids managing Type 1 Diabetes, and some days are simply bad days. On those days the game should ask for nothing but the breath. Choosing SOS is never remembered as the default, and it is written into the day's log so a parent can see that it was an SOS day.</p>
+      <p>One rule holds in every mood: the nectar line is always safe. Extra obstacles are only ever placed off the line, never in a lane it is about to cross.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE PLAYTEST -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 06 / The playtest that moved my lanes</div>
+      <h2 class="sec-title">Someone else flew her, and the game stopped <em>hearing me</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ a symptom, a suspicion, a number, a card</div>
+  </div>
+  <div class="prose">
+    <p class="lead">For the first few days I was the only one who had ever hummed at this game. Then we started letting new people try it. And afterwards, the game stopped reading my own voice properly.</p>
+    <p>My low hum, the one that used to put her in the LOW lane, was now being read as MID. Sometimes she fluttered between the two as if she could not decide.</p>
+  </div>
+  <ul class="principle-list">
+    <li data-tag="Symptom"><div><b>A low hum lands in the wrong lane.</b> My voice had not changed. The only new thing was that someone with a much lower voice than mine had just played a round.</div></li>
+    <li data-tag="Suspects"><div><b>The microphone, the hum gate, or the lanes.</b> A flicker can be the mic cutting in and out on quiet low notes. It can also be a pitch sitting exactly on the line between two lanes. From the outside those two look the same.</div></li>
+    <li data-tag="The clue"><div><b>One line in the debug read-out: <code>range 99-365 Hz</code>.</b> My own voice does not go down to 99 Hz. The game believed it did.</div></li>
+    <li data-tag="The cause"><div><b>The lanes could only ever widen.</b> They are fitted to the lowest and highest notes the game has heard, and that range grew but never shrank. One low voice stretched the bottom of it. The four lanes were re-cut across the wider range, and the line between LOW and MID moved up to about 145 Hz, which is right where my low hum sits.</div></li>
+  </ul>
+
+  <div class="hb-range" role="img" aria-label="The four lanes after a lower voice stretched the range to 99 to 365 hertz. The line between LOW and MID sits at about 145 hertz, exactly where the designer's own low hum is.">
+    <div class="me"><span>my low hum sits here</span></div>
+    <div class="bar">
+      <div class="pad" style="width:8%"></div>
+      <div style="width:21%;background:var(--l-low)">LOW</div>
+      <div style="width:21%;background:var(--l-mid)">MID</div>
+      <div style="width:21%;background:var(--l-high)">HIGH</div>
+      <div style="width:21%;background:var(--l-vhigh)">V-HIGH</div>
+      <div class="pad" style="width:8%"></div>
+    </div>
+    <div class="tick first" style="left:0"><span>99 Hz</span></div>
+    <div class="tick" style="left:29%"><span>145 Hz</span></div>
+    <div class="tick" style="left:50%"><span>190</span></div>
+    <div class="tick" style="left:71%"><span>250</span></div>
+    <div class="tick last" style="left:100%"><span>365 Hz</span></div>
+  </div>
+  <p class="hb-cap">The lanes as the game had cut them after the stretch, worked out from the read-out's range and the game's own lane rule. 99 Hz was the guest's lowest note, not mine. Pitch is spaced the way ears hear it, so each lane is the same musical width. The hatched ends are the trim that keeps anyone from straining.</p>
+
+  <div class="prose">
+    <p>Nobody had done anything wrong. The game is built to fit itself to a voice, and it had done exactly that. It had just fitted itself to two people at once and did not know it. The fitting made the game playable for every voice. It also assumed there would only ever be one.</p>
+    <p>A game for a child does not stay in one pair of hands. It gets passed to a parent, a sibling, a friend. So the fix was not a better pitch tracker. It was a question.</p>
+    <div class="pull-quote">Who is flying?</div>
+    <ul class="principle-list">
+      <li data-tag="Me"><div><b>The main player's range is now saved.</b> It used to live in memory only and reset each time the game opened. Now it is kept between sessions, so the lanes are hers from the first hum.</div></li>
+      <li data-tag="A guest"><div><b>A guest starts from nothing and leaves nothing.</b> Their own warm-up, their own lanes, and no saved range, best score or daily log entry. A guest cannot stretch anyone's lanes, or beat a child's best score with a grown-up's lungs.</div></li>
+      <li data-tag="Fit again"><div><b>A way to start over.</b> "Me, and fit the lanes to my voice again" throws the saved range away, because a child's voice is not the same every day.</div></li>
+      <li data-tag="Switch player"><div><b>And a way back.</b> The results card has a Switch player button, so handing the phone over mid-session takes one tap.</div></li>
+      <li data-tag="Still open"><div><b>The flicker had two suspects, and only one is cleared.</b> The stretched range is fixed by the card. The other, the hum gate cutting in and out on my very lowest notes, is not proven either way, so the game now counts lane changes and hum cut-outs in its read-out, and the bug stays logged as open until a device test says otherwise.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FLIGHT FEEL -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 07 / Flight feel</div>
+      <h2 class="sec-title">A bird has <em>weight</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ one playtest note, measured, then fixed</div>
+  </div>
+  <div class="prose">
+    <p class="lead">My note after a playtest: when I stopped humming at the top lane and started again, she shot straight back up "like a paper plane". Almost weightless. I wanted her to feel like a bird climbing height.</p>
+    <p>The flight rules run without the game engine too, so the note could be measured before it was changed. The climb back after a one-second fall was peaking at about 94 metres per second. No wonder. The fix was one rule: when the hum comes back mid-fall, the climb eases in and has a top speed, until she is back in her lane. Ordinary lane changes while humming stay as quick as they were.</p>
+  </div>
+  <div class="hb-tablewrap">
+    <table class="hb-table">
+      <tr><th>Quiet for</th><th>She falls</th><th>Climb back, before</th><th>Climb back, now</th></tr>
+      <tr><td>0.2 s</td><td>0.7 m</td><td class="was">0.12 s</td><td class="now">0.27 s</td></tr>
+      <tr><td>0.4 s</td><td>2.2 m</td><td class="was">0.15 s</td><td class="now">0.48 s</td></tr>
+      <tr><td>1.0 s</td><td>6.7 m</td><td class="was">0.18 s</td><td class="now">1.22 s</td></tr>
+    </table>
+  </div>
+  <div class="prose">
+    <p>A quick breath still costs almost nothing. A long silence now has to be earned back, at about the pace she fell. You can feel the new rule in the demo above: let her drop a long way, then hum.</p>
+  </div>
+</section>
+
+<!-- THE JOURNEY -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 08 / The way home</div>
+      <h2 class="sec-title">City, suburbs, outskirts, jungle, <em>home</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ progress you can see, not a number going up</div>
+  </div>
+  <div class="prose">
+    <p class="lead">A storm blew her into the city. Home is the deep jungle. I planned the level as that one trip, in five beats, so that the reward for flying further is the world itself changing around her.</p>
+    <p>A breathing exercise is the same thing over and over. That is the point of it, and also why children drop it. So everything around the breath had to keep changing. Each area changes four things at once: the light, what the land is made of, where she rests, and what gets in her way.</p>
+  </div>
+
+  <div class="hb-tablewrap wide">
+    <table class="hb-table">
+      <tr><th></th><th>01 · City<br>Grey Streets</th><th>02 · Suburbs<br>Green Edges</th><th>03 · Outskirts<br>Bloom Fields</th><th>04 · Jungle<br>Deep Canopy</th><th class="plan">05 · Home<br>Homecoming · planned</th></tr>
+      <tr><th scope="row">The light</th><td>Grey-blue dawn</td><td>Clear morning blue</td><td>Peach and gold, late afternoon</td><td>Green shade, mist, dusk coming</td><td class="plan">A dusk clearing lit by fireflies</td></tr>
+      <tr><th scope="row">The land</th><td>Skyline, rooftops, a street</td><td>Houses, hedges, a white fence</td><td>Rolling hills and a field of flowers</td><td>Tall trees, giant leaves, hanging vines</td><td class="plan">One nest among blossoms</td></tr>
+      <tr><th scope="row">She rests on</th><td>Traffic light, streetlamp, mailbox, clothesline, café teacup, balcony rail, awning, AC unit</td><td>Fence post, sunflower, washing line</td><td>Mushroom cap, giant leaf, hanging vine, sunflower</td><td>A toucan's branch, a giant leaf, a vine, a monkey's open hand, an elephant's trunk</td><td class="plan">Home</td></tr>
+      <tr><th scope="row">In her way</th><td>Pigeon flock, kite string, an umbrella popping open, a passing bus, scooter smoke</td><td>Sprinkler, frisbee, falling blossom</td><td>Dragonfly, falling blossom</td><td>Swinging monkey, sleepy snake, parrot flock, waterfall, falling mango</td><td class="plan">Nothing. One long, gentle flight.</td></tr>
+      <tr><th scope="row">How close the world is</th><td>Scenery fills 41% of the screen's height</td><td>46%</td><td>63%</td><td>70%</td><td class="plan">—</td></tr>
+    </table>
+  </div>
+  <p class="hb-cap">Columns one to four are what the build draws today, read from its area list. The fifth is designed and its nest is painted, but it is not built yet.</p>
+
+  <ul class="principle-list">
+    <li data-tag="Made → grown → alive"><div><b>Where she rests tells the story.</b> In the city she lands on things people made: a traffic light, an air conditioner. In the suburbs, on things people planted. In the outskirts, on things that grew by themselves. In the jungle, animals hold out a branch, a hand, a trunk. The closer she gets to home, the more the world is on her side.</div></li>
+    <li data-tag="Exposed → sheltered"><div><b>The sky closes in, kindly.</b> Over the city she is a small bird under a big empty sky. Each area the painted scenery stands taller, from 41% of the screen to 70%, until the open sky has become a canopy. It reads as arriving somewhere safe.</div></li>
+    <li data-tag="Traffic → wildlife"><div><b>What is in the way changes character, never intent.</b> Buses and umbrellas, then sprinklers and frisbees, then dragonflies, then monkeys and mangoes. None of it is an enemy. It is just a busy world she has to find a way through, and it gets wilder and more alive as it gets less human.</div></li>
+    <li data-tag="No loading screen"><div><b>The change happens while she flies.</b> One area fades into the next behind her, with a name banner and a burst of stars. Each area is three painted layers scrolling at different speeds, slow clouds, a leafy fringe along the top, and soft shafts of light. No menu ever interrupts the breath.</div></li>
+    <li data-tag="Planned"><div><b>Colour that comes back, and a wing that heals.</b> In the design the picture starts washed-out and regains its colour with distance, driven by a single progress number, and the little leaf bandage on her wing is gone by the outskirts. Distance is meant to add up across sessions, with the suburbs at 800 m, the outskirts at 2,000 m, the jungle at 4,000 m and home at 6,000 m. Today the colour shift is carried by the paintings alone, and the areas change every few hundred metres so I can see all four in one test flight.</div></li>
+  </ul>
+  <div class="gallery hb-areas">
+    <figure><img src="../assets/case-studies/humbird/area-city.webp" alt="Grey Streets: a dawn city skyline and rooftops with string lights." loading="lazy"><figcaption>01 · Grey Streets</figcaption></figure>
+    <figure><img src="../assets/case-studies/humbird/area-suburb.webp" alt="Green Edges: suburban houses behind a white picket fence under a blue sky." loading="lazy"><figcaption>02 · Green Edges</figcaption></figure>
+    <figure><img src="../assets/case-studies/humbird/area-meadow.webp" alt="Bloom Fields: a wildflower meadow at sunset under pink clouds." loading="lazy"><figcaption>03 · Bloom Fields</figcaption></figure>
+    <figure><img src="../assets/case-studies/humbird/area-jungle.webp" alt="Deep Canopy: misty jungle trees hung with vines." loading="lazy"><figcaption>04 · Deep Canopy</figcaption></figure>
+  </div>
+  <p class="hb-cap" style="margin-bottom:0">Each frame is the game's layers stacked the way the scenery code stacks them. Not screenshots.</p>
+
+  <h3 class="hb-sub">Places to rest</h3>
+  <div class="prose"><p>Seventeen perches, each one something a tired bird might really pick in that part of the world. Left to right, city to jungle.</p></div>
+  <div class="hb-sprites">
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-teacup.webp" alt="" loading="lazy"></div><figcaption>Café teacup</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-traffic-light.webp" alt="" loading="lazy"></div><figcaption>Traffic light</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-clothesline.webp" alt="" loading="lazy"></div><figcaption>Clothesline</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-sunflower.webp" alt="" loading="lazy"></div><figcaption>Sunflower</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-mushroom.webp" alt="" loading="lazy"></div><figcaption>Mushroom cap</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-toucan-branch.webp" alt="" loading="lazy"></div><figcaption>Toucan's branch</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-elephant-trunk.webp" alt="" loading="lazy"></div><figcaption>Elephant's trunk</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/plat-monkey-hand.webp" alt="" loading="lazy"></div><figcaption>A monkey's hand</figcaption></figure>
+  </div>
+
+  <h3 class="hb-sub">Things in the way</h3>
+  <div class="prose"><p>Fifteen obstacles, and nothing ever gets shot. A bump is a tumble, not a death. Two bubbles help: one for speed, one that takes a bump for her.</p></div>
+  <div class="hb-sprites">
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-pigeon-flock.webp" alt="" loading="lazy"></div><figcaption>Pigeon flock</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-bus.webp" alt="" loading="lazy"></div><figcaption>Passing bus</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-sprinkler.webp" alt="" loading="lazy"></div><figcaption>Sprinkler</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-dragonfly.webp" alt="" loading="lazy"></div><figcaption>Dragonfly</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-monkey-swing.webp" alt="" loading="lazy"></div><figcaption>Swinging monkey</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/obs-snake.webp" alt="" loading="lazy"></div><figcaption>Sleepy snake</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/boost-speed.webp" alt="" loading="lazy"></div><figcaption>Speed bubble</figcaption></figure>
+    <figure><div class="slot"><img src="../assets/case-studies/humbird/boost-shield.webp" alt="" loading="lazy"></div><figcaption>Shield bubble</figcaption></figure>
+  </div>
+</section>
+
+<!-- FEATURES: IN AND PLANNED -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 09 / Features</div>
+      <h2 class="sec-title">What flies today, and what is <em>still on the map</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ the plan was bigger than the prototype, on purpose</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The spec was written for the whole journey. The build order was the opposite: get one thing right first, the feeling of a hum turning into flight, and only then spend time on everything around it.</p>
+  </div>
+  <div class="hb-two">
+    <div class="in">
+      <h3>In the build</h3>
+      <ul>
+        <li><b>Hum-to-fly on four lanes</b> fitted to the player's own voice, with a warm-up that can be skipped.</li>
+        <li><b>The Song meter:</b> 8 seconds of breath out, 2.5 seconds on a perch to breathe it back.</li>
+        <li><b>Kind landings:</b> a perch within 1.8 m pulls her in.</li>
+        <li><b>A fall with weight,</b> and thorns along the bottom that end the flight (never in SOS).</li>
+        <li><b>The nectar line</b> that draws the route, lane changes included.</li>
+        <li><b>Fifteen obstacles,</b> some that move, none that can be shot.</li>
+        <li><b>Two bubbles:</b> speed (4 s, inside a shield) and shield (7 s, takes a bump for her).</li>
+        <li><b>Points that only go up:</b> nectar streaks, dodges, close calls, perfect legs, a best score to beat.</li>
+        <li><b>Five moods</b> and the <b>Who is flying?</b> card with guest mode.</li>
+        <li><b>Four areas</b> that fade into each other in flight, with clouds, light shafts, sparkles and a ribbon trail.</li>
+        <li><b>Sound made from maths:</b> every effect is generated when the game opens. They are short and bright on purpose, so the microphone does not mistake the game's own sounds for a hum.</li>
+        <li><b>A line in the day's log</b> for the grown-up view: distance flown, and the mood if it was not Everyday.</li>
+      </ul>
+    </div>
+    <div class="next">
+      <h3>Planned, not built</h3>
+      <ul>
+        <li><b>The rescue.</b> The opening on the balcony, where the story does the microphone setup: blow gently to warm her, hum softly to tell her she is safe, hum higher to show her the sky. By lift-off the lanes are fitted and nobody saw a settings screen.</li>
+        <li><b>The homecoming.</b> One long flight through fireflies to the nest, with nothing in the way.</li>
+        <li><b>Sonic Bloom.</b> Hold the top lane steady for two seconds and every obstacle on screen turns into drifting petals. Spectacle with nothing hurt.</li>
+        <li><b>Tailwind Feather.</b> Three seconds of free, fast glide: a breath the game gives back.</li>
+        <li><b>Dew Drop.</b> The world slows by 30% for five seconds. A power-up that is also an accessibility valve.</li>
+        <li><b>A difficulty director.</b> Hum length, obstacle count and landing help adjust to how the last few legs went, and a tired-sounding voice gets more free rides. Always ending on an easy leg.</li>
+        <li><b>A lifetime journey.</b> Distance that adds up across sessions and unlocks each area for good.</li>
+        <li><b>Nectar to spend:</b> a longer Song meter (8 s up to 12), feather trails, gifts for Riley's garden.</li>
+        <li><b>The garden remembers.</b> A feeder appears in Riley's garden when she reaches the outskirts, and after the homecoming she sometimes visits and perches on the Rainbow Tree.</li>
+        <li><b>A web build,</b> so this page can run the real game.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- THE BUILD -->
+<section class="block dark">
+  <div class="inner">
+    <div class="sec-head" style="border-bottom-color:var(--paper)">
+      <div>
+        <div class="sec-num">§ 10 / Under the hood</div>
+        <h2 class="sec-title">Bots fly it <em>before</em> I do.</h2>
+      </div>
+      <div class="sec-kick">↳ from microphone to bird, and how it got built fast</div>
+    </div>
+    <div class="prose">
+      <p class="lead">A biofeedback game lives or dies on delay. If the bird answers late, the child stops believing the bird is them. So the path from microphone to wing is short, and every step of it has one job.</p>
+    </div>
+    <div class="hb-flow">
+      <div><b>Microphone</b>The phone's own. No extra hardware.<code>Unity Microphone</code></div>
+      <div><b>Hum engine</b>Loudness, pitch, and whether a sound is a hum or just breath. Shared with Riley's hum ride.<code>HumTunnelController</code></div>
+      <div><b>Fast ears</b>A quicker on/off gate and pitch follower, read from the unsmoothed signal.<code>HumBirdInput</code></div>
+      <div><b>Your lanes</b>The range you hum, cut into four in musical steps, with sticky edges.<code>VoiceRange · LaneQuantizer</code></div>
+      <div><b>Flight rules</b>Fly, dip, fall, climb, land, and the Song meter. No graphics, so bots can run them.<code>BirdFlightModel · SongMeter</code></div>
+      <div><b>The picture</b>Course, scenery, effects, sound, score, the day's log.<code>HumBirdCourse · HumBirdGreybox · Scenery · Audio · Score</code></div>
+    </div>
+    <div class="hb-tablewrap">
+      <table class="hb-table">
+        <tr><th>The number</th><th>Value</th><th>Why</th></tr>
+        <tr><td>Listening window</td><td>43 ms</td><td>Long enough to find the pitch of a low hum</td></tr>
+        <tr><td>"She stopped" is judged on</td><td>the newest 15 ms</td><td>Going quiet has to be felt at once</td></tr>
+        <tr><td>Grace before the hum counts as over</td><td>40 ms</td><td>One crackle should not drop her</td></tr>
+        <tr><td>A new note needs</td><td>2 readings that agree</td><td>The scratchy start of a hum cannot throw her into the wrong lane</td></tr>
+        <tr><td>Lane edges are sticky by</td><td>4% of the range</td><td>A wobble is not a lane change</td></tr>
+        <tr><td>Trim at each end of the range</td><td>8%</td><td>Nobody strains for the top lane</td></tr>
+        <tr><td>Lanes fit once they have heard</td><td>80 Hz of range</td><td>Before that, fixed bands from the HumDial</td></tr>
+        <tr><td>The range can grow by</td><td>150 Hz a second</td><td>One wrong pitch reading cannot squash every lane</td></tr>
+      </table>
+    </div>
+    <div class="prose">
+      <p style="margin-top:28px">HumBird started as a design spec on November 5 and a grey-box prototype behind the garden's Nature Magic button on November 9. It could move that fast because the hard part already existed.</p>
+      <ul class="principle-list">
+        <li data-tag="The hum engine"><div><b>Riley's ears, reused.</b> The hum ride's controller already hears loudness, pitch, steadiness and whether a sound is a hum or just breath. HumBird reads those and adds only its quicker stop-detection on top.</div></li>
+        <li data-tag="Built in code"><div><b>No scene to wire.</b> The whole game is drawn at runtime as one overlay: lanes, bird puppet, perches, HUD. Every picture is looked up by name with a fallback, so missing art turns into a grey box instead of a crash, and new art needs no code change.</div></li>
+        <li data-tag="Art as prompts"><div><b>ChatGPT as the art department.</b> The art spec is written as paste-ready prompts, batch by batch: the bird and her kit first, then one batch per area. Sheets come back, a script cuts them into named sprites, and the game picks them up.</div></li>
+        <li data-tag="Bots"><div><b>A flight simulator with no screen.</b> The flight rules compile outside Unity, so test bots can fly five minutes per mood per course in seconds: a perfect player, a slow-to-react one, one whose mic drops out. The rule for every mood is that the perfect bot finishes with zero bumps. That is how "the nectar line is always safe" stays true.</div></li>
+        <li data-tag="Claude Code"><div><b>An AI co-developer, on a short leash.</b> Built with Claude Code under the same evidence-first bug protocol as the rest of Riley: diagnose first, smallest fix, and nothing is called fixed until it is seen on a device.</div></li>
+      </ul>
+    </div>
+    <div class="outcome-row hb-stats">
+      <div class="stat"><div class="n">17</div><div class="l">C# scripts · ~6,500 lines</div></div>
+      <div class="stat"><div class="n">84</div><div class="l">Art files in the game</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Areas on the way home</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">Moods to fly in</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">Bumps for the perfect bot, every mood</div></div>
+      <div class="stat"><div class="n">94 → 6</div><div class="l">m/s climb, after "paper plane"</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE IT STANDS -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 11 / Where it stands</div>
+      <h2 class="sec-title">Flying, and still <em>finding her way</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ what is in, what is not</div>
+  </div>
+  <div class="prose">
+    <p class="lead">HumBird is a playable biofeedback prototype inside My Friend Riley. The flight, the four lanes fitted to a voice, perches and the Song meter, all four areas, both bubbles, scoring, the five moods and the Who is flying? card are in and running in the Unity editor.</p>
+    <ul class="principle-list">
+      <li data-tag="Next"><div><b>Phones.</b> It has been tuned at a desk with a laptop microphone. Phone microphones are a different animal, and that testing is still ahead.</div></li>
+      <li data-tag="Open"><div><b>A flutter at the top lane.</b> Going quiet in V-HIGH can make her fall and snap back up in a loop. The likely cause is found, the proof is not, so it is logged as open and not called fixed.</div></li>
+      <li data-tag="Open"><div><b>The low-lane flutter.</b> One of its two suspects went away with the Who is flying? card. The other is still being watched, with counters in the read-out.</div></li>
+      <li data-tag="Next"><div><b>More voices.</b> The first new players found a bug that days of playing alone had not. The next round is children, the people it is for.</div></li>
+      <li data-tag="Next"><div><b>A web build.</b> Unity's web player does not support the microphone, so the real game needs a small bridge from the browser's microphone into the hum engine before it can run on a page like this one.</div></li>
+      <li data-tag="To build"><div><b>The rescue and the homecoming.</b> The opening on the balcony, where warming her and humming to her quietly fits the lanes to your voice, and the last flight to the nest. The nest is painted. She is not home yet.</div></li>
+    </ul>
+    <span class="note">she still comes to the grapevine every day.</span>
+  </div>
+</section>
+
+<nav class="nextprev">
+  <a href="../index.html#work">← all case studies</a>
+  <a class="to-portfolio" href="../index.html">Abhilasha Singh · Portfolio v26</a>
+  <a href="my-friend-riley.html" style="text-align:right">next: My Friend Riley →</a>
+</nav>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const stage = $("hb-stage");
+  if (!stage) return;
+  const A = "../assets/case-studies/humbird/";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // The game's own numbers (HumBirdTuning), in metres and seconds.
+  const T = { lane: 2.6, floor: 2.0, cruise: 6, glideFloor: 4.2, dip: 1.5, gravity: 24, maxSink: 7.5,
+              climb: 6.5, climbSmooth: 0.15, laneSmooth: 0.05, song: 8, refill: 2.5, launchMin: 0.35,
+              magnet: 1.8, magnetAhead: 2.5 };
+  const WORLD_H = T.floor + 4 * T.lane + 0.7;          // metres of sky the stage shows
+  const LANES = [["LOW", "--l-low"], ["MID", "--l-mid"], ["HIGH", "--l-high"], ["V-HIGH", "--l-vhigh"]];
+  const PERCH_ART = ["plat-mushroom", "plat-sunflower", "plat-teacup", "plat-toucan-branch", "plat-clothesline"];
+  const laneY = (i) => T.floor + (i + 0.5) * T.lane;
+
+  const world = $("hb-world"), birdEl = $("hb-bird"), birdImg = $("hb-bird-img");
+  const songEl = $("hb-song"), songFill = $("hb-song-fill"), msgEl = $("hb-msg");
+  const cover = $("hb-cover"), startBtn = $("hb-start");
+  const layers = [[$("hb-sky"), 0.02], [$("hb-mid"), 0.25], [$("hb-near"), 0.6]];
+
+  // Lane bands and tags.
+  const laneEls = LANES.map(([name, color], i) => {
+    const band = document.createElement("div");
+    band.className = "hb-lane";
+    band.style.cssText = `bottom:calc(var(--m)*${T.floor + i * T.lane});background:var(${color})`;
+    const tag = document.createElement("div");
+    tag.className = "hb-lane-tag";
+    tag.textContent = name;
+    tag.style.cssText = `bottom:calc(var(--m)*${laneY(i)});background:var(${color})`;
+    $("hb-lanes").append(band, tag);
+    return band;
+  });
+
+  // One metre = var(--m) pixels inside the stage, so a resize is a single property change.
+  let ppm = 20;
+  const M = (metres) => `calc(var(--m)*${metres.toFixed(3)})`;
+  const fit = () => {
+    ppm = stage.clientHeight / WORLD_H;
+    stage.style.setProperty("--m", ppm + "px");
+    draw();
+  };
+
+  // Unity's SmoothDamp, so lane changes and the weighted climb move the way they do in the game.
+  function smoothDamp(cur, target, vel, smooth, maxSpeed, dt) {
+    const o = 2 / Math.max(1e-4, smooth), x = o * dt, e = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
+    const goal = target, maxCh = maxSpeed * smooth;
+    const ch = Math.max(-maxCh, Math.min(maxCh, cur - target));
+    target = cur - ch;
+    const tmp = (vel + o * ch) * dt;
+    vel = (vel - o * tmp) * e;
+    let out = target + (ch + tmp) * e;
+    if ((goal - cur > 0) === (out > goal)) { out = goal; vel = 0; }
+    return [out, vel];
+  }
+
+  let perches = [], drops = [];
+  const s = { state: "perched", x: 0, y: laneY(1), vx: 0, vy: 0, song: T.song, lane: 1, hum: false,
+              recovering: false, last: null, rest: 1, nectar: 0, breaths: 0, drained: false, note: "", noteUntil: 0 };
+
+  function addPerch(x, lane) {
+    const el = document.createElement("div");
+    el.className = "hb-perch";
+    el.style.left = M(x);
+    el.style.top = `calc(100% - var(--m)*${(laneY(lane) - 0.42).toFixed(3)})`;
+    const img = document.createElement("img");
+    img.src = A + PERCH_ART[perches.length % PERCH_ART.length] + ".webp";
+    img.alt = "";
+    el.append(img);
+    world.append(el);
+    const p = { x, lane, el };
+    perches.push(p);
+    return p;
+  }
+  function extend() {
+    while (perches[perches.length - 1].x < s.x + 60) {
+      const prev = perches[perches.length - 1];
+      let lane = prev.lane + (Math.random() < 0.5 ? -1 : 1);
+      if (lane < 0) lane = 1;
+      if (lane > 3) lane = 2;
+      const next = addPerch(prev.x + 17 + Math.random() * 6, lane);
+      // Nectar traces the route: stay in the old lane, then step to the new one.
+      for (let x = prev.x + 3; x < next.x - 2; x += 2.2) {
+        const y = laneY(x < prev.x + (next.x - prev.x) * 0.45 ? prev.lane : next.lane);
+        const el = document.createElement("div");
+        el.className = "hb-drop";
+        el.style.left = M(x);
+        el.style.bottom = M(y);
+        world.append(el);
+        drops.push({ x, y, el, got: false });
+      }
+    }
+    while (perches.length > 3 && perches[0] !== s.last && perches[0].x < s.x - 30) perches.shift().el.remove();
+    while (drops.length && drops[0].x < Math.min(s.x - 30, s.last.x - 5)) drops.shift().el.remove();
+  }
+  function land(p) {
+    s.state = "perched"; s.x = p.x; s.y = laneY(p.lane); s.vx = s.vy = 0; s.rest = 0;
+    s.recovering = false; s.last = p; s.drained = s.song < T.song * 0.98;
+  }
+  function say(text, seconds) { s.note = text; s.noteUntil = performance.now() + seconds * 1000; }
+  const inp = { key: false, ptr: false, mic: false };       // any one of them counts as a hum
+
+  function step(dt) {
+    const canSing = s.hum && s.song > 0;
+    if (s.state === "perched") {
+      s.rest += dt;
+      if (!s.hum) {
+        const before = s.song;
+        s.song = Math.min(T.song, s.song + dt * T.song / T.refill);
+        if (s.drained && before < T.song && s.song >= T.song) { s.breaths++; s.drained = false; }
+      } else if (s.rest > 0.5 && s.song >= T.song * T.launchMin) {
+        s.state = "flying"; s.vx = T.glideFloor; s.vy = 0;
+      }
+    } else if (s.state === "flying") {
+      if (!canSing) {
+        s.vy = Math.min(Math.max(-3, Math.min(3, s.vy)), -T.dip);     // she dips at once
+        s.state = "gliding";
+      } else {
+        s.song = Math.max(0, s.song - dt);
+        s.vx += Math.max(-12 * dt, Math.min(12 * dt, T.cruise - s.vx));
+        const target = laneY(s.lane);
+        if (s.recovering && target - s.y < 0.15) s.recovering = false;
+        [s.y, s.vy] = s.recovering
+          ? smoothDamp(s.y, target, s.vy, T.climbSmooth, T.climb, dt)
+          : smoothDamp(s.y, target, s.vy, T.laneSmooth, Infinity, dt);
+        s.x += s.vx * dt;
+        for (const p of perches)
+          if (p !== s.last && Math.abs(p.x - s.x) < 0.5 && Math.abs(laneY(p.lane) - s.y) < T.lane * 0.3) { land(p); break; }
+      }
+    } else {                                                           // gliding
+      if (canSing) {
+        if (s.vy < 0) s.vy = 0;
+        s.state = "flying"; s.recovering = true;                       // the climb back has weight
+      } else {
+        s.vy = Math.max(s.vy - T.gravity * dt, -T.maxSink);
+        s.vx += Math.max(-1.5 * dt, Math.min(1.5 * dt, T.glideFloor - s.vx));
+        s.x += s.vx * dt; s.y += s.vy * dt;
+        for (const p of perches) {
+          const ahead = p.x - s.x;
+          if (p !== s.last && ahead > -0.5 && ahead < T.magnetAhead && Math.abs(laneY(p.lane) - s.y) < T.magnet) { land(p); break; }
+        }
+        if (s.state === "gliding" && s.y <= 0.5) {
+          land(s.last);
+          say("She drifts back to her last perch. Nothing is lost.", 2.6);
+        }
+      }
+    }
+    for (const d of drops)
+      if (!d.got && Math.abs(d.x - s.x) < 0.7 && Math.abs(d.y - s.y) < 1.0) { d.got = true; d.el.classList.add("got"); s.nectar++; }
+    extend();
+  }
+
+  let lastState = "", lastMsg = null;
+  function draw() {
+    const cam = s.x - (stage.clientWidth * 0.26) / ppm;
+    world.style.transform = `translateX(${(-cam * ppm).toFixed(1)}px)`;
+    for (const [el, k] of layers) el.style.backgroundPositionX = (-cam * ppm * k).toFixed(1) + "px";
+    birdEl.style.bottom = M(s.y);
+    const tilt = s.state === "perched" ? 0 : Math.max(-28, Math.min(22, -s.vy * 3.2));
+    birdEl.style.transform = `rotate(${tilt}deg)`;
+    if (s.state !== lastState) {
+      birdImg.src = A + (s.state === "perched" ? "bird-perch" : "bird-fly") + ".webp";
+      birdEl.classList.toggle("fly", s.state === "flying" && !reduce);
+      lastState = s.state;
+    }
+    laneEls.forEach((el, i) => el.classList.toggle("active", i === s.lane));
+    songFill.style.transform = `scaleX(${(s.song / T.song).toFixed(3)})`;
+    songEl.classList.toggle("low", s.song < T.song * 0.25);
+    $("hb-nectar").textContent = s.nectar;
+    $("hb-breaths").textContent = s.breaths;
+    let msg = "";
+    if (performance.now() < s.noteUntil) msg = s.note;
+    else if (!playing) msg = "";
+    else if (s.state === "perched") msg = s.hum && s.song < T.song * T.launchMin ? (mic.on ? "Go quiet to breathe in first." : "Let go to breathe in first.") : s.song < T.song ? (s.hum ? (mic.on ? "Go quiet and she breathes her song back in." : "") : "Breathing in…") : (mic.on ? "Hum and she lifts off." : "Hold to hum and she lifts off.");
+    else if (s.state === "gliding") msg = s.song <= 0 ? "Out of song. Glide to a perch." : "Hum to catch her.";
+    else if (s.song < T.song * 0.25) msg = "Song is running low. Find a perch.";
+    if (msg !== lastMsg) { msgEl.textContent = msg; lastMsg = msg; }
+  }
+
+  // ── microphone: the game's lane fitting, ported. Sound is analysed here and goes nowhere. ──
+  const micBtn = $("hb-mic"), refitBtn = $("hb-refit"), readEl = $("hb-read");
+  const mic = { on: false, wanted: false, opening: false, ctx: null, stream: null, an: null, buf: null, half: null, diff: null,
+                floor: 0.003, voiced: false, quiet: 0, recent: [], locked: false, hz: 0,
+                lo: 0, hi: 0, has: false, qLane: 1, shown: 0 };
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+  // VoiceRange: the lowest and highest notes heard, widening at a limited rate.
+  function observe(hz, dt) {
+    if (hz < 60 || hz > 800) return;
+    if (!mic.has) { mic.lo = mic.hi = hz; mic.has = true; return; }
+    const grow = 150 * dt;
+    if (hz < mic.lo) mic.lo = Math.max(hz, mic.lo - grow);
+    else if (hz > mic.hi) mic.hi = Math.min(hz, mic.hi + grow);
+  }
+  const fitted = () => mic.has && mic.hi - mic.lo >= 80;
+  function pitch01(hz) {                                   // 0-1 across the range, in octaves, 8% trimmed off each end
+    let lo = 140, hi = 495, inset = 0;                     // the HumDial's fixed bands until the range is known
+    if (fitted()) { lo = mic.lo; hi = mic.hi; inset = 0.08; }
+    const a = Math.log2(lo), b = Math.log2(hi), pad = (b - a) * inset;
+    return clamp01((Math.log2(Math.max(hz, 1)) - a - pad) / (b - a - 2 * pad));
+  }
+  function quantize(p) {                                   // LaneQuantizer.Step with 4% sticky edges
+    for (let guard = 0; guard < 4; guard++) {
+      if (mic.qLane < 3 && p > (mic.qLane + 1) / 4 + 0.04) mic.qLane++;
+      else if (mic.qLane > 0 && p < mic.qLane / 4 - 0.04) mic.qLane--;
+      else break;
+    }
+    return mic.qLane;
+  }
+
+  // Loudness and pitch of the newest window of sound (YIN's normalised difference, at half the sample rate).
+  function listen(buf, rate) {
+    let sum = 0;
+    for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+    const rms = Math.sqrt(sum / buf.length);
+    const n = buf.length >> 1, h = mic.half, d = mic.diff, r = rate / 2;
+    for (let i = 0; i < n; i++) h[i] = 0.5 * (buf[2 * i] + buf[2 * i + 1]);
+    const minLag = Math.max(2, Math.floor(r / 800)), maxLag = Math.min(Math.ceil(r / 60), n >> 1), span = n - maxLag;
+    let running = 0;
+    for (let lag = 1; lag <= maxLag; lag++) {
+      let acc = 0;
+      for (let i = 0; i < span; i++) { const x = h[i] - h[i + lag]; acc += x * x; }
+      running += acc;
+      d[lag] = running > 0 ? acc * lag / running : 1;
+    }
+    let at = -1;
+    for (let lag = minLag; lag <= maxLag; lag++)
+      if (d[lag] < 0.15) { while (lag < maxLag && d[lag + 1] < d[lag]) lag++; at = lag; break; }
+    if (at < 0) { let low = 1; for (let lag = minLag; lag <= maxLag; lag++) if (d[lag] < low) { low = d[lag]; at = lag; } }
+    if (at < 0) return { rms, hz: 0, clear: 0 };
+    let nudge = 0;
+    if (at > 1 && at < maxLag) { const a = d[at - 1], b = d[at], c = d[at + 1], den = a - 2 * b + c; if (den > 1e-9) nudge = 0.5 * (a - c) / den; }
+    return { rms, hz: r / (at + nudge), clear: 1 - d[at] };
+  }
+
+  function micFrame(dt) {
+    mic.an.getFloatTimeDomainData(mic.buf);
+    const f = listen(mic.buf, mic.ctx.sampleRate);
+    // The room's own noise level: drops at once, creeps up slowly, and is left alone while she is humming.
+    if (!mic.voiced) mic.floor = Math.max(0.0005, Math.min(0.05, f.rms < mic.floor ? f.rms : mic.floor + (f.rms - mic.floor) * Math.min(1, dt * 0.5)));
+    const tone = f.hz >= 60 && f.hz <= 800;
+    const on = tone && f.clear > 0.75 && f.rms > Math.max(0.006, mic.floor * 3.5);
+    const still = tone && f.clear > 0.5 && f.rms > Math.max(0.004, mic.floor * 2.2);
+    if (!mic.voiced) { if (on) { mic.voiced = true; mic.quiet = 0; } }
+    else if (still) mic.quiet = 0;
+    else if ((mic.quiet += dt) >= 0.06) mic.voiced = false;
+
+    if (!mic.voiced) { mic.recent.length = 0; mic.locked = false; }
+    else if (still) {                                       // HumBirdInput's pitch follower
+      const q = mic.recent;
+      q.unshift(f.hz); if (q.length > 3) q.pop();
+      const pair = q.length >= 2 ? 0.5 * (q[0] + q[1]) : 0;
+      if (!mic.locked) {
+        if (q.length >= 2 && Math.abs(q[0] - q[1]) <= 0.12 * q[1]) { mic.hz = pair; mic.locked = true; }   // two readings must agree
+      } else if (q.length >= 2 && Math.abs(q[0] - q[1]) <= 0.06 * q[1] && Math.abs(pair - mic.hz) > 0.10 * mic.hz) {
+        mic.hz = pair;                                      // a deliberate step to a new note: go now
+      } else {
+        const target = q.length >= 3 ? Math.max(Math.min(q[0], q[1]), Math.min(Math.max(q[0], q[1]), q[2])) : q[0];
+        mic.hz += (target - mic.hz) * (1 - Math.exp(-40 * dt));
+      }
+      if (mic.locked) { observe(mic.hz, dt); s.lane = quantize(pitch01(mic.hz)); }
+    }
+    inp.mic = mic.voiced;
+
+    const now = performance.now();
+    if (now - mic.shown > 120) {
+      mic.shown = now;
+      const range = fitted() ? `your lanes ${Math.round(mic.lo)}–${Math.round(mic.hi)} Hz` : "fixed lanes until it has heard more of your range";
+      readEl.innerHTML = mic.voiced && mic.locked
+        ? `hearing ${Math.round(mic.hz)} Hz<i style="background:var(${LANES[s.lane][1]})">${LANES[s.lane][0]}</i>${range}`
+        : `listening… ${range}`;
+    }
+  }
+
+  function micButtons() {
+    micBtn.setAttribute("aria-pressed", String(mic.wanted));
+    micBtn.textContent = mic.wanted ? "Microphone on · turn off" : "Use my microphone";
+    refitBtn.hidden = !mic.on;
+    if (!mic.on) readEl.textContent = "";
+  }
+  async function micOn() {
+    if (mic.on || mic.opening) return;
+    const devices = navigator.mediaDevices;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!devices || !devices.getUserMedia || !Ctx) { mic.wanted = false; micButtons(); say("No microphone is available here. Hold the scene instead.", 5); return; }
+    mic.opening = true;
+    let stream;
+    try {
+      // Phone-call clean-up filters treat a steady hum as noise and remove it, so they are all off.
+      stream = await devices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    } catch (_) {
+      mic.opening = false; mic.wanted = false; micButtons();
+      say("The microphone was not allowed here. Hold the scene instead.", 5);
+      draw();
+      return;
+    }
+    mic.opening = false;
+    if (!mic.wanted || !playing) { stream.getTracks().forEach((t) => t.stop()); return; }
+    mic.stream = stream;
+    mic.ctx = new Ctx();
+    if (mic.ctx.state === "suspended") { try { await mic.ctx.resume(); } catch (_) {} }
+    mic.an = mic.ctx.createAnalyser();
+    mic.an.fftSize = mic.ctx.sampleRate > 60000 ? 4096 : 2048;         // about 43 ms, the game's own window
+    mic.an.smoothingTimeConstant = 0;
+    mic.ctx.createMediaStreamSource(stream).connect(mic.an);           // analysed only: never played, never stored
+    mic.buf = new Float32Array(mic.an.fftSize);
+    mic.half = new Float32Array(mic.an.fftSize >> 1);
+    mic.diff = new Float32Array((mic.an.fftSize >> 2) + 2);
+    mic.voiced = false; mic.locked = false; mic.recent.length = 0; mic.floor = 0.003; mic.qLane = s.lane;
+    mic.on = true; inp.ptr = false;
+    micButtons();
+    say(fitted() ? "Listening. Hum and she flies." : "Listening. Slide one hum from low to high to fit the lanes to your voice.", 5);
+  }
+  function micOff() {
+    if (mic.stream) mic.stream.getTracks().forEach((t) => t.stop());
+    if (mic.ctx) mic.ctx.close().catch(() => {});
+    mic.stream = mic.ctx = mic.an = null;
+    mic.on = false; mic.voiced = false; inp.mic = false;
+    micButtons();
+  }
+  micBtn.addEventListener("click", () => {
+    mic.wanted = !mic.wanted;
+    micButtons();
+    if (!mic.wanted) { micOff(); return; }
+    if (playing) micOn(); else start();
+  });
+  refitBtn.addEventListener("click", () => {                // "Me, and fit the lanes to my voice again"
+    mic.has = false; mic.lo = mic.hi = 0;
+    say("Lanes cleared. Slide one hum from low to high.", 4);
+    stage.focus({ preventScroll: true });
+  });
+
+  // ── running ──
+  let playing = false, raf = 0, prev = 0;
+  function frame(now) {
+    const dt = Math.min(0.05, (now - prev) / 1000);
+    prev = now;
+    if (mic.on) micFrame(dt);
+    s.hum = inp.key || inp.ptr || inp.mic;
+    step(dt); draw();
+    if (playing) raf = requestAnimationFrame(frame);
+  }
+  function start() {
+    if (playing) return;
+    playing = true;
+    cover.hidden = true;
+    stage.classList.add("on");
+    stage.focus({ preventScroll: true });
+    prev = performance.now();
+    raf = requestAnimationFrame(frame);
+    if (mic.wanted) micOn();
+  }
+  function pause() {
+    if (!playing) return;
+    playing = false; s.hum = inp.key = inp.ptr = inp.mic = false;
+    micOff();
+    cancelAnimationFrame(raf);
+    stage.classList.remove("on");
+    startBtn.textContent = "▶ Keep flying";
+    cover.hidden = false;
+    draw();
+  }
+
+  // ── input: hold = hum, height = pitch ──
+  function laneFromPointer(e) {
+    const r = stage.getBoundingClientRect();
+    const y = (r.bottom - e.clientY) / ppm;
+    s.lane = Math.max(0, Math.min(3, Math.floor((y - T.floor) / T.lane)));
+  }
+  stage.addEventListener("pointerdown", (e) => {
+    if (!playing || mic.on) return;                                    // with a working mic, touch is not a stand-in
+    e.preventDefault();
+    try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+    laneFromPointer(e); inp.ptr = true;
+  });
+  stage.addEventListener("pointermove", (e) => { if (playing && !mic.on && (e.pointerType === "mouse" || inp.ptr)) laneFromPointer(e); });
+  for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) stage.addEventListener(type, () => { inp.ptr = false; });
+  stage.addEventListener("keydown", (e) => {
+    if (!playing) return;
+    if (e.code === "Space") { inp.key = true; e.preventDefault(); }
+    else if (e.code === "ArrowUp") { s.lane = Math.min(3, s.lane + 1); e.preventDefault(); }
+    else if (e.code === "ArrowDown") { s.lane = Math.max(0, s.lane - 1); e.preventDefault(); }
+    else if (e.key >= "1" && e.key <= "4") s.lane = +e.key - 1;
+    else if (e.key === "Escape") pause();
+  });
+  stage.addEventListener("keyup", (e) => { if (e.code === "Space") { inp.key = false; e.preventDefault(); } });
+  stage.addEventListener("blur", () => { inp.key = inp.ptr = false; });
+  startBtn.addEventListener("click", start);
+  if ("IntersectionObserver" in window)
+    new IntersectionObserver((entries) => { if (!entries[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(stage);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+  // ── first frame: she is sitting on her first perch with a full song ──
+  s.last = addPerch(0, 1);
+  extend();
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(stage);
+  window.addEventListener("resize", fit);
+  fit();
+})();
+
+// The pre-flight card: each button says what it does in the game.
+(() => {
+  const card = document.getElementById("hb-card"), out = document.getElementById("hb-card-say"), goals = document.getElementById("hb-goals");
+  if (!card || !out) return;
+  card.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-say]");
+    if (!b) return;
+    out.innerHTML = b.dataset.say;
+    if (b.dataset.goal === undefined) return;
+    card.querySelectorAll("button[data-goal]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    if (goals) [...goals.children].forEach((x, i) => x.classList.toggle("highlight", i === +b.dataset.goal));
+  });
+})();
+</script>
+
+</body>
+</html>
