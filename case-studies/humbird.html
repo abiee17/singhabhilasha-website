@@ -18,6 +18,7 @@
   --rose:#cf4f66;
   --l-low:#ff8c33; --l-mid:#4dcca6; --l-high:#4d8cf2; --l-vhigh:#a659e6;
 }
+.hero h1{font-size:clamp(38px,6vw,80px);line-height:.96}
 .hero h1 em{color:var(--leaf)}
 .sec-title em{color:var(--leaf)}
 section.block.dark .sec-title em{color:var(--mint)}
@@ -46,6 +47,7 @@ section.block.dark .hb-cap{color:#b8ae93}
 
 /* ── the playable stage ── */
 .hb-demo{margin:32px 0 10px}
+.hero .hb-demo{margin:8px 0 44px}
 .hb-stage{
   --m:20px;position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;
   border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
@@ -83,15 +85,32 @@ section.block.dark .hb-cap{color:#b8ae93}
 .hb-msg{position:absolute;left:50%;bottom:10px;translate:-50% 0;max-width:calc(100% - 20px);
   background:var(--ink);color:var(--paper);font:500 13px/1.3 "Space Grotesk",system-ui,sans-serif;padding:7px 12px;text-align:center;pointer-events:none}
 .hb-msg:empty{display:none}
-.hb-cover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(244,236,216,.42)}
+.hb-cover{position:absolute;inset:0;display:grid;place-items:center;padding:10px;background:rgba(244,236,216,.5)}
 .hb-cover[hidden]{display:none}
-.hb-start{
-  font:700 14px/1 "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
-  border:1.5px solid var(--ink);background:var(--highlight);padding:16px 22px;cursor:pointer;
-  box-shadow:5px 5px 0 var(--ink);transition:transform .15s,box-shadow .15s;
+.hb-pick{width:100%;max-width:560px;padding:20px 22px;text-align:center;background:var(--paper);border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.hb-pick-t{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em;margin:0 0 14px}
+.hb-pick-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hb-opt{
+  font-family:inherit;color:var(--ink);border:1.5px solid var(--ink);background:var(--highlight);
+  padding:14px 12px;min-height:48px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;
 }
-.hb-start:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-.hb-start:focus-visible{outline:3px solid var(--leaf);outline-offset:4px}
+.hb-opt + .hb-opt{background:var(--mint)}
+.hb-opt:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.hb-opt:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
+.hb-opt:disabled{opacity:.55;cursor:wait;transform:none}
+.hb-opt b{display:block;font:700 13px/1.25 "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.hb-opt span{display:block;font-size:13px;line-height:1.3;margin-top:6px}
+.hb-pick-n{font:500 11px/1.5 "JetBrains Mono",monospace;letter-spacing:.04em;color:var(--muted);margin:12px 0 0}
+.hb-go{
+  position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;
+  font:700 calc(var(--m)*4.4)/1 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.03em;color:var(--highlight);
+  text-shadow:4px 4px 0 var(--ink),-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink);
+}
+.hb-go[hidden]{display:none}
+.hb-go.pop{animation:hb-pop .6s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes hb-pop{from{transform:scale(1.7);opacity:0}30%{opacity:1}to{transform:scale(1);opacity:1}}
+.hb-switch{display:flex}
+.hb-switch .hb-btn + .hb-btn{border-left:0}
 .hb-help{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.06em;color:var(--muted);margin:18px 0 0;line-height:1.6}
 .hb-help b{color:var(--ink)}
 
@@ -142,6 +161,7 @@ section.block.dark .drives-grid .drive .n,section.block.dark .callout .label,sec
 .hb-btn:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
 .hb-btn[aria-pressed="true"]{background:var(--leaf);color:#fff}
 .hb-btn[hidden]{display:none}
+.hb-btn:disabled{opacity:.55;cursor:wait}
 .hb-read{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--ink);font-variant-numeric:tabular-nums;min-width:0}
 .hb-read i{font-style:normal;display:inline-block;padding:2px 6px;border:1.5px solid var(--ink);margin:0 4px}
 
@@ -226,6 +246,15 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   .hb-story .prose .lead{font-size:20px}
   .hb-nest{max-width:240px}
   .hb-stage{box-shadow:5px 5px 0 var(--ink)}
+  .hb-cover{padding:6px}
+  .hb-pick{padding:10px 10px 12px;box-shadow:4px 4px 0 var(--ink)}
+  .hb-pick-t{font-size:14px;margin:0 0 8px}
+  .hb-pick-row{gap:8px}
+  .hb-opt{padding:8px 6px;min-height:44px;box-shadow:3px 3px 0 var(--ink)}
+  .hb-opt b{font-size:11px;letter-spacing:.06em}
+  .hb-opt span,.hb-pick-n{display:none}
+  .hb-switch{width:100%}
+  .hb-switch .hb-btn{flex:1}
   .hb-lane-tag{font-size:8px;padding:2px 4px;left:4px}
   .hb-hud{font-size:9px;top:6px;left:6px;right:6px}
   .hb-count{gap:8px}
@@ -233,7 +262,8 @@ section.block.dark .hb-table td.now{color:var(--mint)}
 }
 @media (prefers-reduced-motion:reduce){
   .hb-bird.fly img{animation:none}
-  .hb-start,.back,.gallery figure,.hb-video{transition:none}
+  .hb-opt,.back,.gallery figure,.hb-video{transition:none}
+  .hb-go.pop{animation:none}
 }
 </style>
 </head>
@@ -250,6 +280,43 @@ section.block.dark .hb-table td.now{color:var(--mint)}
 <header class="hero">
   <div class="eyebrow"><span class="tick"></span><span>Case Study · Biofeedback game · My Friend Riley · 2026 · in development</span></div>
   <h1>HumBird — a biofeedback game where <em>your hum</em> flies a hurt hummingbird home.</h1>
+
+  <div class="hb-demo" id="hb-demo">
+    <div class="hb-stage" id="hb-stage" tabindex="0" role="application" aria-label="HumBird flight demo. Choose microphone or no microphone to begin. Without a microphone, hold Space to hum, use the up and down arrow keys to change lane, and release on a perch to breathe in.">
+      <div class="hb-layer hb-sky" id="hb-sky" style="background-image:url(../assets/case-studies/humbird/demo-sky.webp)"></div>
+      <div class="hb-layer hb-mid" id="hb-mid" style="background-image:url(../assets/case-studies/humbird/demo-mid.webp)"></div>
+      <div id="hb-lanes"></div>
+      <div class="hb-world" id="hb-world"></div>
+      <div class="hb-layer hb-near" id="hb-near" style="background-image:url(../assets/case-studies/humbird/demo-near.webp)"></div>
+      <div class="hb-bird" id="hb-bird"><img id="hb-bird-img" src="../assets/case-studies/humbird/bird-perch.webp" alt=""></div>
+      <div class="hb-hud">
+        <div class="hb-song" id="hb-song"><span>Song</span><i><b id="hb-song-fill"></b></i></div>
+        <div class="hb-count"><span>Nectar <span id="hb-nectar">0</span></span><span>Breaths <span id="hb-breaths">0</span></span></div>
+      </div>
+      <div class="hb-msg" id="hb-msg" aria-live="polite"></div>
+      <div class="hb-go" id="hb-go" aria-live="assertive" hidden></div>
+      <div class="hb-cover" id="hb-cover">
+        <div class="hb-pick">
+          <p class="hb-pick-t" id="hb-pick-t">Lend her your hum. How will you fly?</p>
+          <div class="hb-pick-row">
+            <button class="hb-opt" type="button" data-mode="mic"><b>Use my microphone</b><span>Hum and she flies</span></button>
+            <button class="hb-opt" type="button" data-mode="touch"><b>No microphone</b><span>Hold the scene and she flies</span></button>
+          </div>
+          <p class="hb-pick-n" id="hb-pick-n" role="status">Your sound stays in your browser. Nothing is recorded or sent.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hb-controls">
+      <div class="hb-switch" role="group" aria-label="How to fly">
+        <button class="hb-btn" type="button" data-mode="mic" aria-pressed="false">Microphone</button>
+        <button class="hb-btn" type="button" data-mode="touch" aria-pressed="false">No microphone</button>
+      </div>
+      <button class="hb-btn" id="hb-refit" type="button" hidden>Fit the lanes to my voice again</button>
+      <span class="hb-read" id="hb-read" aria-hidden="true"></span>
+    </div>
+    <p class="hb-help"><b>Play it right here.</b> Pick how to fly, wait for 3-2-1, go. You can switch any time with the two buttons above.<br><b>With the microphone:</b> slide one hum from low to high and the four lanes fit themselves to your voice. Your sound is analysed on this page, inside your browser. Nothing is recorded and nothing is sent anywhere.<br><b>Without it:</b> hold the scene (or Space) to hum · move up and down (or ↑ ↓) to change pitch · let go on a perch to breathe her song back in. If she drops, she drifts back to her last perch.</p>
+  </div>
+
   <p class="sub">A voice and breath <b>biofeedback</b> mini game inside <b>My Friend Riley</b>. A hummingbird lands hurt on your balcony, and your hum carries her home: from grey city streets, past the suburbs and the outskirts, to the jungle where her family is waiting. The microphone hears your breath as a hum and the bird shows it back to you at once. Hum and she flies. Change your pitch and she changes lane. Stop to breathe and she rests. <b>Every flight is a breathing exercise that never says so.</b></p>
 
   <dl class="meta-grid">
@@ -263,10 +330,6 @@ section.block.dark .hb-table td.now{color:var(--mint)}
     <div><dt>Feedback</dt><dd>A bird, a Song meter, four lanes</dd></div>
   </dl>
 
-  <div class="hero-img">
-    <img src="../assets/case-studies/humbird/hero-journey.webp" alt="The hummingbird flying left to right through the game's four areas: a grey city rooftop, a suburb with a white fence, a flower meadow at sunset, and a jungle canopy.">
-  </div>
-  <p class="hb-cap">Her whole way home in one frame, composed for this page from the game's own parallax layers and bird puppet. Not a screenshot.</p>
 </header>
 
 <!-- WHERE IT CAME FROM -->
@@ -298,10 +361,10 @@ section.block.dark .hb-table td.now{color:var(--mint)}
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 02 / Watch it, then try it</div>
+      <div class="sec-num">§ 02 / Watch it</div>
       <h2 class="sec-title">Hum to fly. <em>Go quiet to breathe.</em></h2>
     </div>
-    <div class="sec-kick">↳ the real game on video, a slice of it running here</div>
+    <div class="sec-kick">↳ the real game, on video</div>
   </div>
 
   <div class="hb-frame">
@@ -310,34 +373,8 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   <p class="hb-cap" style="margin-bottom:34px">Gameplay recorded from the real game. Press play, or <a href="https://www.youtube.com/watch?v=HitVmvY8w4U" target="_blank" rel="noopener" style="color:inherit">open it on YouTube</a>.</p>
 
   <div class="prose">
-    <p class="lead">Below is a slice of the flight you can play right here. Turn on your microphone and it listens the way the game does: hum and she flies, hum higher or lower and she changes lane, go quiet on a perch and she breathes her song back in.</p>
-    <p>No microphone, or not somewhere you can hum? Hold the scene instead. Holding stands in for your hum and moving up or down stands in for your pitch, which is the same stand-in the game falls back to when a device has no working mic.</p>
-  </div>
-
-  <div class="hb-demo">
-    <div class="hb-stage" id="hb-stage" tabindex="0" role="application" aria-label="HumBird flight demo. Hold Space to hum, use the up and down arrow keys to change lane, release on a perch to breathe in.">
-      <div class="hb-layer hb-sky" id="hb-sky" style="background-image:url(../assets/case-studies/humbird/demo-sky.webp)"></div>
-      <div class="hb-layer hb-mid" id="hb-mid" style="background-image:url(../assets/case-studies/humbird/demo-mid.webp)"></div>
-      <div id="hb-lanes"></div>
-      <div class="hb-world" id="hb-world"></div>
-      <div class="hb-layer hb-near" id="hb-near" style="background-image:url(../assets/case-studies/humbird/demo-near.webp)"></div>
-      <div class="hb-bird" id="hb-bird"><img id="hb-bird-img" src="../assets/case-studies/humbird/bird-perch.webp" alt=""></div>
-      <div class="hb-hud">
-        <div class="hb-song" id="hb-song"><span>Song</span><i><b id="hb-song-fill"></b></i></div>
-        <div class="hb-count"><span>Nectar <span id="hb-nectar">0</span></span><span>Breaths <span id="hb-breaths">0</span></span></div>
-      </div>
-      <div class="hb-msg" id="hb-msg" aria-live="polite"></div>
-      <div class="hb-cover" id="hb-cover"><button class="hb-start" id="hb-start" type="button">▶ Lend her your hum</button></div>
-    </div>
-    <div class="hb-controls">
-      <button class="hb-btn" id="hb-mic" type="button" aria-pressed="false">Use my microphone</button>
-      <button class="hb-btn" id="hb-refit" type="button" hidden>Fit the lanes to my voice again</button>
-      <span class="hb-read" id="hb-read" aria-hidden="true"></span>
-    </div>
-    <p class="hb-help"><b>With the microphone:</b> slide one hum from low to high and the four lanes fit themselves to your voice. Your sound is analysed on this page, inside your browser. Nothing is recorded and nothing is sent anywhere.<br><b>Without it:</b> hold the scene (or Space) to hum · move up and down (or ↑ ↓) to change pitch · let go on a perch to breathe her song back in. If she drops, she drifts back to her last perch.</p>
-  </div>
-  <div class="prose">
-    <p>This is a browser port, not the Unity build. Unity's web player has no microphone support yet, so the game itself cannot listen from a web page. What runs here is the game's own lane-fitting and flight rules rewritten in JavaScript with the same numbers: 8 seconds of song in a full breath, 2.5 seconds on a perch to breathe it back, a 6 m/s cruise, lanes cut from the range you actually hum, and a climb that tops out at 6.5 m/s after a fall. The part that decides "is this a hum?" is simpler here than Riley's hum engine. Obstacles, bubbles and scoring are left out of this slice. In the real game, in most moods, dropping onto the thorns ends the flight.</p>
+    <p class="lead">The flight at the top of this page is a slice of this game that runs in your browser, with your microphone if you let it.</p>
+    <p>It is a browser port, not the Unity build. Unity's web player has no microphone support yet, so the game itself cannot listen from a web page. What runs here is the game's own lane-fitting and flight rules rewritten in JavaScript with the same numbers: 8 seconds of song in a full breath, 2.5 seconds on a perch to breathe it back, a 6 m/s cruise, lanes cut from the range you actually hum, and a climb that tops out at 6.5 m/s after a fall. The part that decides "is this a hum?" is simpler here than Riley's hum engine. Obstacles, bubbles and scoring are left out of this slice. In the real game, in most moods, dropping onto the thorns ends the flight.</p>
   </div>
 </section>
 
@@ -414,7 +451,7 @@ section.block.dark .hb-table td.now{color:var(--mint)}
       <li data-tag="Who is flying?"><div><b>One card before take-off.</b> "Me" keeps the saved voice range. "A guest" gets fresh lanes and saves nothing, so a parent trying the game does not stretch the child's lanes. That card exists because of a playtest, told in § 06.</div></li>
       <li data-tag="Sticky lanes"><div><b>A wobble is not a lane change.</b> Pitch has to move a little past a lane edge before she switches, so a slightly shaky hum holds its lane.</div></li>
       <li data-tag="Fast ears"><div><b>Stop means stop.</b> Riley's hum engine smooths loudness for the ride's dial, and that smoothing lingers for most of a second. A bird that keeps flying after you have gone quiet feels wrong, so HumBird adds its own quicker gate on the raw signal.</div></li>
-      <li data-tag="No mic? No problem"><div><b>Touch stands in.</b> Hold to hum, finger height for pitch. It is what the demo above uses when the microphone is off.</div></li>
+      <li data-tag="No mic? No problem"><div><b>Touch stands in.</b> Hold to hum, finger height for pitch. It is what the demo at the top of this page uses when you pick "No microphone".</div></li>
     </ul>
   </div>
 </section>
@@ -546,7 +583,7 @@ section.block.dark .hb-table td.now{color:var(--mint)}
     </table>
   </div>
   <div class="prose">
-    <p>A quick breath still costs almost nothing. A long silence now has to be earned back, at about the pace she fell. You can feel the new rule in the demo above: let her drop a long way, then hum.</p>
+    <p>A quick breath still costs almost nothing. A long silence now has to be earned back, at about the pace she fell. You can feel the new rule in the demo at the top of this page: let her drop a long way, then hum.</p>
   </div>
 </section>
 
@@ -563,6 +600,11 @@ section.block.dark .hb-table td.now{color:var(--mint)}
     <p class="lead">A storm blew her into the city. Home is the deep jungle. I planned the level as that one trip, in five beats, so that the reward for flying further is the world itself changing around her.</p>
     <p>A breathing exercise is the same thing over and over. That is the point of it, and also why children drop it. So everything around the breath had to keep changing. Each area changes four things at once: the light, what the land is made of, where she rests, and what gets in her way.</p>
   </div>
+
+  <div class="hero-img">
+    <img src="../assets/case-studies/humbird/hero-journey.webp" alt="The hummingbird flying left to right through the game's four areas: a grey city rooftop, a suburb with a white fence, a flower meadow at sunset, and a jungle canopy.">
+  </div>
+  <p class="hb-cap">Her whole way home in one frame, composed for this page from the game's own parallax layers and bird puppet. Not a screenshot.</p>
 
   <div class="hb-tablewrap wide">
     <table class="hb-table">
@@ -769,7 +811,7 @@ section.block.dark .hb-table td.now{color:var(--mint)}
 
   const world = $("hb-world"), birdEl = $("hb-bird"), birdImg = $("hb-bird-img");
   const songEl = $("hb-song"), songFill = $("hb-song-fill"), msgEl = $("hb-msg");
-  const cover = $("hb-cover"), startBtn = $("hb-start");
+  const cover = $("hb-cover"), demo = $("hb-demo"), goEl = $("hb-go"), pickTitle = $("hb-pick-t"), pickNote = $("hb-pick-n");
   const layers = [[$("hb-sky"), 0.02], [$("hb-mid"), 0.25], [$("hb-near"), 0.6]];
 
   // Lane bands and tags.
@@ -931,8 +973,8 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   }
 
   // ── microphone: the game's lane fitting, ported. Sound is analysed here and goes nowhere. ──
-  const micBtn = $("hb-mic"), refitBtn = $("hb-refit"), readEl = $("hb-read");
-  const mic = { on: false, wanted: false, opening: false, ctx: null, stream: null, an: null, buf: null, half: null, diff: null,
+  const refitBtn = $("hb-refit"), readEl = $("hb-read");
+  const mic = { on: false, ctx: null, stream: null, an: null, buf: null, half: null, diff: null,
                 floor: 0.003, voiced: false, quiet: 0, recent: [], locked: false, hz: 0,
                 lo: 0, hi: 0, has: false, qLane: 1, shown: 0 };
   const clamp01 = (v) => Math.max(0, Math.min(1, v));
@@ -989,8 +1031,10 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   function micFrame(dt) {
     mic.an.getFloatTimeDomainData(mic.buf);
     const f = listen(mic.buf, mic.ctx.sampleRate);
-    // The room's own noise level: drops at once, creeps up slowly, and is left alone while she is humming.
-    if (!mic.voiced) mic.floor = Math.max(0.0005, Math.min(0.05, f.rms < mic.floor ? f.rms : mic.floor + (f.rms - mic.floor) * Math.min(1, dt * 0.5)));
+    // The room's own noise level: drops at once, creeps up slowly, and only ever learns from sound that
+    // is not a clear note, so a steady hum that has not opened the gate yet cannot raise the bar on itself.
+    if (f.rms < mic.floor) mic.floor = Math.max(0.0005, f.rms);
+    else if (!mic.voiced && f.clear < 0.5) mic.floor = Math.min(0.02, mic.floor + (f.rms - mic.floor) * Math.min(1, dt * 0.5));
     const tone = f.hz >= 60 && f.hz <= 800;
     const on = tone && f.clear > 0.75 && f.rms > Math.max(0.006, mic.floor * 3.5);
     const still = tone && f.clear > 0.5 && f.rms > Math.max(0.004, mic.floor * 2.2);
@@ -1025,66 +1069,57 @@ section.block.dark .hb-table td.now{color:var(--mint)}
     }
   }
 
-  function micButtons() {
-    micBtn.setAttribute("aria-pressed", String(mic.wanted));
-    micBtn.textContent = mic.wanted ? "Microphone on · turn off" : "Use my microphone";
-    refitBtn.hidden = !mic.on;
-    if (!mic.on) readEl.textContent = "";
-  }
-  async function micOn() {
-    if (mic.on || mic.opening) return;
-    const devices = navigator.mediaDevices;
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!devices || !devices.getUserMedia || !Ctx) { mic.wanted = false; micButtons(); say("No microphone is available here. Hold the scene instead.", 5); return; }
-    mic.opening = true;
+  // Asks for the microphone and starts listening. Resolves false if there is none or it was refused.
+  async function micOpen() {
+    if (mic.on) return true;
+    const devices = navigator.mediaDevices, Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!devices || !devices.getUserMedia || !Ctx) return false;
+    const ctx = new Ctx();                                             // made inside the click, so it is allowed to run
     let stream;
     try {
       // Phone-call clean-up filters treat a steady hum as noise and remove it, so they are all off.
       stream = await devices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
     } catch (_) {
-      mic.opening = false; mic.wanted = false; micButtons();
-      say("The microphone was not allowed here. Hold the scene instead.", 5);
-      draw();
-      return;
+      ctx.close().catch(() => {});
+      return false;
     }
-    mic.opening = false;
-    if (!mic.wanted || !playing) { stream.getTracks().forEach((t) => t.stop()); return; }
-    mic.stream = stream;
-    mic.ctx = new Ctx();
-    if (mic.ctx.state === "suspended") { try { await mic.ctx.resume(); } catch (_) {} }
-    mic.an = mic.ctx.createAnalyser();
-    mic.an.fftSize = mic.ctx.sampleRate > 60000 ? 4096 : 2048;         // about 43 ms, the game's own window
+    if (ctx.state === "suspended") { try { await ctx.resume(); } catch (_) {} }
+    mic.stream = stream; mic.ctx = ctx;
+    mic.an = ctx.createAnalyser();
+    mic.an.fftSize = ctx.sampleRate > 60000 ? 4096 : 2048;             // about 43 ms, the game's own window
     mic.an.smoothingTimeConstant = 0;
-    mic.ctx.createMediaStreamSource(stream).connect(mic.an);           // analysed only: never played, never stored
+    ctx.createMediaStreamSource(stream).connect(mic.an);               // analysed only: never played, never stored
     mic.buf = new Float32Array(mic.an.fftSize);
     mic.half = new Float32Array(mic.an.fftSize >> 1);
     mic.diff = new Float32Array((mic.an.fftSize >> 2) + 2);
     mic.voiced = false; mic.locked = false; mic.recent.length = 0; mic.floor = 0.003; mic.qLane = s.lane;
     mic.on = true; inp.ptr = false;
-    micButtons();
-    say(fitted() ? "Listening. Hum and she flies." : "Listening. Slide one hum from low to high to fit the lanes to your voice.", 5);
+    refitBtn.hidden = false;
+    return true;
   }
   function micOff() {
     if (mic.stream) mic.stream.getTracks().forEach((t) => t.stop());
     if (mic.ctx) mic.ctx.close().catch(() => {});
     mic.stream = mic.ctx = mic.an = null;
     mic.on = false; mic.voiced = false; inp.mic = false;
-    micButtons();
+    refitBtn.hidden = true; readEl.textContent = "";
   }
-  micBtn.addEventListener("click", () => {
-    mic.wanted = !mic.wanted;
-    micButtons();
-    if (!mic.wanted) { micOff(); return; }
-    if (playing) micOn(); else start();
-  });
   refitBtn.addEventListener("click", () => {                // "Me, and fit the lanes to my voice again"
     mic.has = false; mic.lo = mic.hi = 0;
     say("Lanes cleared. Slide one hum from low to high.", 4);
     stage.focus({ preventScroll: true });
   });
 
-  // ── running ──
-  let playing = false, raf = 0, prev = 0;
+  // ── running: pick how to fly, 3-2-1, go ──
+  const PRIVACY = pickNote.textContent;
+  const modeBtns = [...demo.querySelectorAll("button[data-mode]")];
+  let playing = false, raf = 0, prev = 0, mode = null, busy = false, counting = false, countTimer = 0;
+  function sync() {
+    for (const b of modeBtns) {
+      if (b.hasAttribute("aria-pressed")) b.setAttribute("aria-pressed", String(mode === b.dataset.mode));
+      b.disabled = busy;
+    }
+  }
   function frame(now) {
     const dt = Math.min(0.05, (now - prev) / 1000);
     prev = now;
@@ -1096,23 +1131,67 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   function start() {
     if (playing) return;
     playing = true;
-    cover.hidden = true;
     stage.classList.add("on");
     stage.focus({ preventScroll: true });
     prev = performance.now();
     raf = requestAnimationFrame(frame);
-    if (mic.wanted) micOn();
+  }
+  function countdown() {
+    counting = true;
+    cover.hidden = true; goEl.hidden = false;
+    say(mode === "mic" ? "Get ready to hum." : "Get ready. Hold the scene to hum.", 2.4);
+    draw();
+    const steps = ["3", "2", "1", "Go!"];
+    let i = 0;
+    (function tick() {
+      goEl.textContent = steps[i];
+      goEl.classList.remove("pop"); void goEl.offsetWidth; goEl.classList.add("pop");
+      if (++i < steps.length) { countTimer = setTimeout(tick, 750); return; }
+      counting = false;
+      if (mode === "mic" && !fitted()) say("Slide one hum from low to high to fit the lanes to your voice.", 5);
+      start();
+      countTimer = setTimeout(() => { goEl.hidden = true; }, 650);
+    })();
+  }
+  // One entry point for the overlay's two options and the switch under the stage.
+  async function choose(next) {
+    if (busy || counting) return;
+    if (next === "mic" && !mic.on) {
+      busy = true; sync();
+      pickNote.textContent = "Waiting for the microphone…";
+      const ok = await micOpen();
+      busy = false;
+      if (!ok) {
+        const why = "The microphone is not available here. Choose No microphone and hold the scene to fly.";
+        pickNote.textContent = why;
+        if (playing) say(why, 5);
+        sync();
+        return;
+      }
+    } else if (next === "touch") micOff();
+    mode = next;
+    pickNote.textContent = PRIVACY;
+    sync();
+    if (!playing) { countdown(); return; }
+    say(mode === "touch" ? "Microphone off. Hold the scene to hum."
+      : fitted() ? "Microphone on. Hum and she flies." : "Microphone on. Slide one hum from low to high to fit the lanes.", 4);
+    stage.focus({ preventScroll: true });
   }
   function pause() {
-    if (!playing) return;
+    if (!playing && !counting) return;
+    clearTimeout(countTimer); counting = false; goEl.hidden = true;
     playing = false; s.hum = inp.key = inp.ptr = inp.mic = false;
     micOff();
     cancelAnimationFrame(raf);
     stage.classList.remove("on");
-    startBtn.textContent = "▶ Keep flying";
+    pickTitle.textContent = "Paused. How will you keep flying?";
     cover.hidden = false;
-    draw();
+    sync(); draw();
   }
+  demo.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-mode]");
+    if (b) choose(b.dataset.mode);
+  });
 
   // ── input: hold = hum, height = pitch ──
   function laneFromPointer(e) {
@@ -1138,7 +1217,6 @@ section.block.dark .hb-table td.now{color:var(--mint)}
   });
   stage.addEventListener("keyup", (e) => { if (e.code === "Space") { inp.key = false; e.preventDefault(); } });
   stage.addEventListener("blur", () => { inp.key = inp.ptr = false; });
-  startBtn.addEventListener("click", start);
   if ("IntersectionObserver" in window)
     new IntersectionObserver((entries) => { if (!entries[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(stage);
   document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
