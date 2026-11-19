@@ -1,0 +1,97 @@
+/* HumBird playable demo. Shared by the HumBird and My Friend Riley case studies. Needs case-study.css for the paper and ink tokens. */
+.hb-demo{--leaf:#2f7a45;--mint:#a6e3b5;--mint-ghost:#eef6ea;--rose:#cf4f66;--l-low:#ff8c33;--l-mid:#4dcca6;--l-high:#4d8cf2;--l-vhigh:#a659e6}
+.hb-demo{margin:32px 0 10px}
+.hb-stage{--m:20px;position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);background:#f6c3a5;user-select:none;-webkit-user-select:none;outline-offset:4px;}
+.hb-stage.on{touch-action:none;cursor:ns-resize}
+.hb-stage:focus-visible{outline:3px solid var(--leaf)}
+.hb-layer{position:absolute;left:0;right:0;background-repeat:repeat-x;pointer-events:none}
+.hb-sky{inset:0;background-size:auto 100%}
+.hb-mid{bottom:0;height:63%;background-size:auto 100%;opacity:.92}
+.hb-near{bottom:0;height:23%;background-size:auto 100%}
+.hb-lane{position:absolute;left:0;right:0;height:calc(var(--m)*2.6);pointer-events:none;opacity:.16;transition:opacity .15s}
+.hb-lane.active{opacity:.46}
+.hb-lane-tag{position:absolute;left:8px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.12em;padding:4px 6px;border:1.5px solid var(--ink);color:var(--ink);pointer-events:none;translate:0 50%;}
+.hb-world{position:absolute;left:0;bottom:0;width:0;height:100%;pointer-events:none;will-change:transform}
+.hb-perch{position:absolute;width:calc(var(--m)*2.6);translate:-50% 0;pointer-events:none}
+.hb-perch img{display:block;width:100%;height:auto;max-width:none}
+.hb-drop{position:absolute;width:calc(var(--m)*.62);height:calc(var(--m)*.62);border-radius:50%;translate:-50% 50%;background:radial-gradient(circle at 35% 30%,#fff8d6,#ffc93c 55%,#e69a12);box-shadow:0 0 8px rgba(255,214,90,.9)}
+.hb-drop.got{opacity:0;scale:1.8;transition:opacity .25s,scale .25s}
+.hb-bird{position:absolute;left:26%;width:calc(var(--m)*2.7);translate:-50% 50%;pointer-events:none;will-change:transform,bottom}
+.hb-bird img{display:block;width:100%;height:auto;max-width:none}
+.hb-bird.fly img{animation:hb-flutter .09s linear infinite alternate}
+@keyframes hb-flutter{from{transform:translateY(-1px) scaleY(1)}to{transform:translateY(1px) scaleY(.96)}}
+.hb-hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);pointer-events:none}
+.hb-song{display:flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--ink);padding:6px 8px;min-width:0}
+.hb-song i{display:block;width:clamp(70px,16vw,170px);height:10px;border:1.5px solid var(--ink);background:#fff}
+.hb-song b{display:block;height:100%;width:100%;background:var(--leaf);transform-origin:left}
+.hb-song.low b{background:var(--red)}
+.hb-count{background:var(--paper);border:1.5px solid var(--ink);padding:6px 8px;display:flex;gap:12px;white-space:nowrap}
+.hb-msg{position:absolute;left:50%;bottom:10px;translate:-50% 0;max-width:calc(100% - 20px);background:var(--ink);color:var(--paper);font:500 13px/1.3 "Space Grotesk",system-ui,sans-serif;padding:7px 12px;text-align:center;pointer-events:none}
+.hb-msg:empty{display:none}
+.hb-cover{position:absolute;inset:0;display:grid;place-items:center;padding:10px;background:rgba(244,236,216,.5)}
+.hb-cover[hidden]{display:none}
+.hb-pick{width:100%;max-width:560px;padding:20px 22px;text-align:center;background:var(--paper);border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.hb-pick-t{font-size:20px;font-weight:700;line-height:1.25;letter-spacing:-.01em;margin:0 0 14px}
+.hb-pick-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hb-opt{font-family:inherit;color:var(--ink);border:1.5px solid var(--ink);background:var(--highlight);padding:14px 12px;min-height:48px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;}
+.hb-opt + .hb-opt{background:var(--mint)}
+.hb-opt:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.hb-opt:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
+.hb-opt:disabled{opacity:.55;cursor:wait;transform:none}
+.hb-opt b{display:block;font:700 13px/1.25 "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.hb-opt span{display:block;font-size:13px;line-height:1.3;margin-top:6px}
+.hb-pick-n{font:500 11px/1.5 "JetBrains Mono",monospace;letter-spacing:.04em;color:var(--muted);margin:12px 0 0}
+.hb-go{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font:700 calc(var(--m)*4.4)/1 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.03em;color:var(--highlight);text-shadow:4px 4px 0 var(--ink),-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink);}
+.hb-go[hidden]{display:none}
+.hb-go.pop{animation:hb-pop .6s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes hb-pop{from{transform:scale(1.7);opacity:0}30%{opacity:1}to{transform:scale(1);opacity:1}}
+.hb-warm{position:absolute;left:50%;top:50%;translate:-50% -50%;width:calc(100% - 20px);max-width:520px;padding:16px 18px;text-align:center;background:var(--paper);border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.hb-warm[hidden]{display:none}
+.hb-warm-t{font-size:19px;font-weight:700;line-height:1.25;letter-spacing:-.01em;margin:0 0 12px}
+.hb-warm-bar{height:14px;border:1.5px solid var(--ink);background:#fff}
+.hb-warm-bar b{display:block;height:100%;background:linear-gradient(90deg,var(--l-low),var(--l-mid),var(--l-high),var(--l-vhigh));clip-path:inset(0 100% 0 0)}
+.hb-warm-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.hb-warm-hz{font:500 12px/1.3 "JetBrains Mono",monospace;letter-spacing:.02em;text-align:left;font-variant-numeric:tabular-nums}
+.hb-switch{display:flex}
+.hb-switch .hb-btn + .hb-btn{border-left:0}
+.hb-help{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.06em;color:var(--muted);margin:18px 0 0;line-height:1.6}
+.hb-help b{color:var(--ink)}
+.hb-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:18px 0 0}
+.hb-btn{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);border:1.5px solid var(--ink);background:var(--paper);padding:12px 14px;min-height:44px;cursor:pointer;}
+.hb-btn:hover{background:var(--mint-ghost)}
+.hb-btn:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
+.hb-btn[aria-pressed="true"]{background:var(--leaf);color:#fff}
+.hb-btn[hidden]{display:none}
+.hb-btn:disabled{opacity:.55;cursor:wait}
+.hb-read{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--ink);font-variant-numeric:tabular-nums;min-width:0}
+.hb-read i{font-style:normal;display:inline-block;padding:2px 6px;border:1.5px solid var(--ink);margin:0 4px}
+@media (max-width:800px){
+  .hb-stage{box-shadow:5px 5px 0 var(--ink)}
+  .hb-cover{padding:6px}
+  .hb-pick{padding:10px 10px 12px;box-shadow:4px 4px 0 var(--ink)}
+  .hb-pick-t{font-size:14px;margin:0 0 8px}
+  .hb-pick-row{gap:8px}
+  .hb-opt{padding:8px 6px;min-height:44px;box-shadow:3px 3px 0 var(--ink)}
+  .hb-opt b{font-size:11px;letter-spacing:.06em}
+  .hb-opt span,.hb-pick-n{display:none}
+  .hb-warm{padding:8px 10px;box-shadow:4px 4px 0 var(--ink)}
+  .hb-warm-t{font-size:13px;margin:0 0 6px}
+  .hb-warm-bar{height:8px}
+  .hb-warm-row{margin-top:6px}
+  .hb-warm-hz{font-size:10px}
+  .hb-warm .hb-btn{min-height:36px;padding:6px 12px}
+  .hb-switch{width:100%}
+  .hb-switch .hb-btn{flex:1}
+  .hb-lane-tag{font-size:8px;padding:2px 4px;left:4px}
+  .hb-hud{font-size:9px;top:6px;left:6px;right:6px}
+  .hb-count{gap:8px}
+  .hb-msg{font-size:11px;bottom:6px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hb-bird.fly img{animation:none}
+  .hb-opt{transition:none}
+  .hb-go.pop{animation:none}
+}
+.hb-more{display:inline-block;font:700 12px/1.2 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);background:var(--highlight);padding:12px 14px;box-shadow:4px 4px 0 var(--ink)}
+.hb-more:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.hb-more:focus-visible{outline:3px solid var(--ink);outline-offset:3px}

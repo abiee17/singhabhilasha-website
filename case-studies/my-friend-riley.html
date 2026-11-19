@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="case-study.css">
+<link rel="stylesheet" href="humbird-demo.css">
 <style>
 /* ── Riley page: purple joins the palette ─────────────────────────────
    One accent family, used sparingly where ochre usually sits.          */
@@ -297,11 +298,76 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
   </div>
 </section>
 
+<!-- HUMBIRD (playable) -->
+<section class="block">
+  <div class="sec-head">
+    <div>
+      <div class="sec-num">§ 05 / HumBird</div>
+      <h2 class="sec-title">The same hum, flying a bird <em>home</em>.</h2>
+    </div>
+    <div class="sec-kick">↳ a second game on the same voice engine · play it here</div>
+  </div>
+  <div class="prose">
+    <p class="lead">The hum engine behind the ride also powers a second game in Riley's garden: <b>HumBird: The Way Home</b>. A hurt hummingbird lands on your balcony, and your hum carries her home.</p>
+    <p>Where the ride asks for one note at a gate, HumBird asks for the whole breath. Humming keeps her in the air, how high you hum picks one of four lanes fitted to your own voice, and she can only breathe her song back in on a perch, while you are quiet. Every flight is an exhale and every perch is a breath in. Try it with your microphone:</p>
+  </div>
+
+  <div class="hb-demo" id="hb-demo" data-assets="../assets/case-studies/humbird/">
+    <div class="hb-stage" id="hb-stage" tabindex="0" role="application" aria-label="HumBird flight demo. Choose microphone or no microphone to begin. Without a microphone, hold Space to hum, use the up and down arrow keys to change lane, and release on a perch to breathe in.">
+      <div class="hb-layer hb-sky" id="hb-sky" style="background-image:url(../assets/case-studies/humbird/demo-sky.webp)"></div>
+      <div class="hb-layer hb-mid" id="hb-mid" style="background-image:url(../assets/case-studies/humbird/demo-mid.webp)"></div>
+      <div id="hb-lanes"></div>
+      <div class="hb-world" id="hb-world"></div>
+      <div class="hb-layer hb-near" id="hb-near" style="background-image:url(../assets/case-studies/humbird/demo-near.webp)"></div>
+      <div class="hb-bird" id="hb-bird"><img id="hb-bird-img" src="../assets/case-studies/humbird/bird-perch.webp" alt=""></div>
+      <div class="hb-hud">
+        <div class="hb-song" id="hb-song"><span>Song</span><i><b id="hb-song-fill"></b></i></div>
+        <div class="hb-count"><span>Nectar <span id="hb-nectar">0</span></span><span>Breaths <span id="hb-breaths">0</span></span></div>
+      </div>
+      <div class="hb-msg" id="hb-msg" aria-live="polite"></div>
+      <div class="hb-go" id="hb-go" aria-live="assertive" hidden></div>
+      <div class="hb-warm" id="hb-warm" hidden>
+        <p class="hb-warm-t" id="hb-warm-t" role="status">Hum from your lowest to your highest to set your range</p>
+        <div class="hb-warm-bar" aria-hidden="true"><b id="hb-warm-fill"></b></div>
+        <div class="hb-warm-row">
+          <span class="hb-warm-hz" id="hb-warm-hz" aria-hidden="true">listening…</span>
+          <button class="hb-btn" id="hb-warm-skip" type="button">Skip</button>
+        </div>
+      </div>
+      <div class="hb-cover" id="hb-cover">
+        <div class="hb-pick">
+          <p class="hb-pick-t" id="hb-pick-t">Lend her your hum. How will you fly?</p>
+          <div class="hb-pick-row">
+            <button class="hb-opt" type="button" data-mode="mic"><b>Use my microphone</b><span>Hum and she flies</span></button>
+            <button class="hb-opt" type="button" data-mode="touch"><b>No microphone</b><span>Hold the scene and she flies</span></button>
+          </div>
+          <p class="hb-pick-n" id="hb-pick-n" role="status">Your sound stays in your browser. Nothing is recorded or sent.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hb-controls">
+      <div class="hb-switch" role="group" aria-label="How to fly">
+        <button class="hb-btn" type="button" data-mode="mic" aria-pressed="false">Microphone</button>
+        <button class="hb-btn" type="button" data-mode="touch" aria-pressed="false">No microphone</button>
+      </div>
+      <button class="hb-btn" id="hb-refit" type="button" hidden>New player · reset voice range</button>
+      <span class="hb-read" id="hb-read" aria-hidden="true"></span>
+    </div>
+    <p class="hb-help"><b>Play it right here.</b> Pick how to fly, wait for 3-2-1, go. You can switch any time with the two buttons above.<br><b>With the microphone:</b> first a short warm-up. Hum from your lowest to your highest and the four lanes fit themselves to your voice, then she flies. Handing over to someone else? Press <b>New player</b> and the range is set again for them. Your sound is analysed on this page, inside your browser. Nothing is recorded and nothing is sent anywhere.<br><b>Without it:</b> hold the scene (or Space) to hum · move up and down (or ↑ ↓) to change pitch · let go on a perch to breathe her song back in. If she drops, she drifts back to her last perch.</p>
+  </div>
+
+  <div class="prose">
+    <p>This is a slice of the flight running in your browser with the game's own numbers, not the Unity build. The full story, from the backyard hummingbird that started it to the playtest that led to guest mode, is in its own case study.</p>
+    <p><a class="hb-more" href="humbird.html">Read the HumBird case study →</a></p>
+  </div>
+</section>
+<!-- /HUMBIRD -->
+
 <!-- GARDEN + PETS -->
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 05 / The Living Garden</div>
+      <div class="sec-num">§ 06 / The Living Garden</div>
       <h2 class="sec-title">Nine feelings, nine <em>roommates</em>.</h2>
     </div>
     <div class="sec-kick">↳ affect labeling, with fur</div>
@@ -358,7 +424,7 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
   <div class="inner">
     <div class="sec-head" style="border-bottom-color:var(--paper)">
       <div>
-        <div class="sec-num">§ 06 / The Promise</div>
+        <div class="sec-num">§ 07 / The Promise</div>
         <h2 class="sec-title">Nothing in the garden <em>ever wilts</em> because of you.</h2>
       </div>
       <div class="sec-kick">↳ zero-punishment, as a hard system constraint</div>
@@ -384,7 +450,7 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 07 / The Grownups Vault</div>
+      <div class="sec-num">§ 08 / The Grownups Vault</div>
       <h2 class="sec-title">Parents see the signal. The child keeps the <em>magic</em>.</h2>
     </div>
     <div class="sec-kick">↳ PIN-gated · observational · local-first</div>
@@ -411,7 +477,7 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
   <div class="inner">
     <div class="sec-head" style="border-bottom-color:var(--paper)">
       <div>
-        <div class="sec-num">§ 08 / The Build</div>
+        <div class="sec-num">§ 09 / The Build</div>
         <h2 class="sec-title">Two eras, one pivot, and a <em>72-asset</em> AI art pipeline.</h2>
       </div>
       <div class="sec-kick">↳ how it actually got made</div>
@@ -442,7 +508,7 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
 <section class="block">
   <div class="sec-head">
     <div>
-      <div class="sec-num">§ 09 / Where It Stands</div>
+      <div class="sec-num">§ 10 / Where It Stands</div>
       <h2 class="sec-title">In development, playable, and already <em>humming</em>.</h2>
     </div>
     <div class="sec-kick">↳ see it move</div>
@@ -644,5 +710,6 @@ section.block.dark .outcome-row .stat .n{color:var(--lilac)}
 })();
 </script>
 
+<script src="humbird-demo.js"></script>
 </body>
 </html>
